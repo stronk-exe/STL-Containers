@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/10/11 16:20:07 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:23:57 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ namespace ft
 						(void)alloc;
 						v = new T[n];
 						// v = alloc.allocate(n);
-						std::cout << "vector default constractor called!" << std::endl;
+						std::cout << "ft_vector default constractor called!" << std::endl;
 					};	// default constactor
 					explicit ft_vector (
 						int n, const T& val = T(), 
@@ -46,7 +46,7 @@ namespace ft
 							v[i] = val;
 							std::cout << v[i] << std::endl;
 						}
-						std::cout << "vector fill constractor called!" << std::endl;
+						std::cout << "ft_vector fill constractor called!" << std::endl;
 					};	// fill constractor
 			/*		template <class InputIterator> ft_vector (
 						InputIterator first, InputIterator last,
@@ -68,13 +68,13 @@ namespace ft
 						{
 							std::cout << this->v[i] << std::endl;
 						}
-						std::cout << "vector copy constractor called!" << std::endl;
+						std::cout << "ft_vector copy constractor called!" << std::endl;
 					};					// copy constractor
 
 				// -- Deconstructors
 					~ft_vector()
 					{
-						std::cout << "vector Deconstractor called!" << std::endl;
+						std::cout << "ft_vector Deconstractor called!" << std::endl;
 					};		/*										// deconstractor
 
 				// -- Operator=
