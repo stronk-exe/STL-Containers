@@ -6,10 +6,11 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 18:54:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/10/10 08:36:05 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/10/10 13:25:37 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
 #include <iostream>
 #include <string>
 #include <deque>
@@ -127,4 +128,13 @@ char** argv) {
 	std::cout << std::endl;
 	std::cout << "Yo again" << std::endl;
 	return (0);
+}
+*/
+
+#include "vector/ft_vector.hpp"
+
+int main()
+{
+	ft::vector<int> v1;
+	std::cout << "Hello vector" << v1 << std::endl;
 }

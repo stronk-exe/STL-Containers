@@ -5,14 +5,15 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/09/01 19:06:41 by ael-asri          #+#    #+#              #
-#    Updated: 2022/10/10 13:34:25 by ael-asri         ###   ########.fr        #
+#    Created: 2022/10/10 13:34:48 by ael-asri          #+#    #+#              #
+#    Updated: 2022/10/11 10:02:32 by ael-asri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_containers
+NAME = ft_vector
 
-SRCS =  main.cpp
+SRCS =  ft_vector.cpp \
+		main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
