@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/10/11 16:23:57 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/10/15 13:17:51 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ namespace ft
 		typedef T				value_type;
 		typedef Allocator		allocator_type;
 		typedef size_t			size_type;
-		typedef	vector<T>::iterator		iterator;
+		// typedef	typename vector<T>::iterator		iterator;
 
 		private:
 			size_type	n;
@@ -35,18 +35,18 @@ namespace ft
 					explicit vector (const allocator_type& alloc = allocator_type())
 					{
 						n = 0;
-						(void)alloc;
-						v = new T[n];
-						// v = alloc.allocate(n);
+						// (void)alloc;
+					//	v = new T[n];
+						v = alloc.allocate(n);
 						std::cout << "vector default constractor called!" << std::endl;
 					};	// default constactor
 					// explicit ft_vector (int n, const T& val = T(), const T& alloc = T())					
 					explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 					{
 						this->n = n;
-						(void)alloc;
-						//  v = alloc.allocate(n);
-						v = new T[n];
+						// (void)alloc;
+						 v = alloc.allocate(n);
+						// v = new T[n];
 						for (size_type i=0; i<n; i++)
 						{
 							v[i] = val;
@@ -89,17 +89,17 @@ namespace ft
 
 	*/		// Iterators
 			// begin
-			iterator begin()
-			{
-				return v;
-			};
-			// end
-			iterator end()
-			{
-				while (*v)
-					*(v)++;
-				return v;
-			}
+			// iterator begin()
+			// {
+			// 	return v;
+			// };
+			// // end
+			// iterator end()
+			// {
+			// 	while (*v)
+			// 		*(v)++;
+			// 	return v;
+			// }
 	/*		rbegin
 			rend
 			cbegin
