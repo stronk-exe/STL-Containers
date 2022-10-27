@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/10/15 13:17:51 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/10/27 14:13:17 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,13 @@ namespace ft
 	{
 		// definin
 		typedef T				value_type;
-		typedef Allocator		allocator_type;
+		typedef T*				pointer;
+		typedef T&				reference;
+		typedef const T*		const_pointer;
+		typedef const T&		const_reference;
 		typedef size_t			size_type;
+		typedef ptrdiff_t		difference_type;
+		typedef Allocator		allocator_type;
 		// typedef	typename vector<T>::iterator		iterator;
 
 		private:
@@ -30,8 +35,8 @@ namespace ft
 			T			*v;
 		public:
 			// Member functions
-				// -- Constructors
-					// explicit ft_vector ( const T& alloc = T() )
+				//----	Constractors
+					// default constactor
 					explicit vector (const allocator_type& alloc = allocator_type())
 					{
 						n = 0;
@@ -39,8 +44,9 @@ namespace ft
 					//	v = new T[n];
 						v = alloc.allocate(n);
 						std::cout << "vector default constractor called!" << std::endl;
-					};	// default constactor
-					// explicit ft_vector (int n, const T& val = T(), const T& alloc = T())					
+					};
+
+					// fill constractor				
 					explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 					{
 						this->n = n;
@@ -53,9 +59,10 @@ namespace ft
 							std::cout << v[i] << std::endl;
 						}
 						std::cout << "vector fill constractor called!" << std::endl;
-					};	// fill constractor
-					// template <class InputIterator> ft_vector (InputIterator first, InputIterator last, const T& alloc = T())
-			/*		template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+					};
+
+					// range constractor
+					template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
 					{
 						int i=0;
 						while (first != last)
@@ -65,8 +72,9 @@ namespace ft
 							i++;
 						}
 						std::cout << "vector range constractor called!" << std::endl;
-					};*/	// range constractor
-					// ft_vector (const ft_vector& v)
+					};
+
+					// copy constractor
 					vector (const vector& x)
 					{
 						*this = x;
@@ -75,67 +83,117 @@ namespace ft
 							std::cout << this->v[i] << std::endl;
 						}
 						std::cout << "vector copy constractor called!" << std::endl;
-					};					// copy constractor
+					};
 
-				// -- Deconstructors
-					// ~ft_vector()
+					// deconstractor
 					~vector()
 					{
 						std::cout << "vector Deconstractor called!" << std::endl;
-					};												// deconstractor
-/*
-				// -- Operator=
-					vector& operator= (const vector& x);					// copy assignement operator
+					};
 
-	*/		// Iterators
-			// begin
-			// iterator begin()
-			// {
-			// 	return v;
-			// };
-			// // end
-			// iterator end()
-			// {
-			// 	while (*v)
-			// 		*(v)++;
-			// 	return v;
-			// }
-	/*		rbegin
-			rend
-			cbegin
-			cend
-			crbegin
-			crend
+					// operator=
+					vector& operator=(const vector& x) {};
 
-			// Capacity
-			size
-			max_size
-			resize
-			capacity
-			empty
-			reserve
-			shrink_to_fit
+				//----	Iterators
+					// begin
+					iterator begin() {};
+					const_iterator begin() const {};
 
-			// Element access
-			operator[]
-			at
-			front
-			back
-			data
+					// end
+					iterator end() {};
+					const_iterator	end() const {};
 
-			// Modifiers
-			assign
-			push_back
-			pop_back
-			insert
-			erase
-			swap
-			clear
-			emplace
-			emplace_back
+					// rbegin
+					reverse_iterator	rbegin() {};
+					const_reverse_iterator	rbegin() const {};
 
-			// Allocator
-			get_allocator*/
+					// rend
+					reverse_iterator	rend() {};
+					reverse_iterator	rend() const {};
+
+					// cbegin
+					const_iterator	cbegin() const {};
+
+					// cend
+					const_iterator	cend() const {};
+
+					// crbegin
+					const_reverse_iterator	crbegin() const {};
+
+					// crend
+					const_reverse_iterator	crend() const {};
+
+				//----	Capacity
+					// size
+					size_type	size() const {};
+
+					// max_size
+					size_type	max_size() const {};
+
+					// resize
+					void	resize(size_type n, value_type val = value_type()) {};
+
+					// capacity
+					size_type	capacity() const {};
+
+					// empty
+					bool	empty() const {};
+
+					// reserve
+					void	reserve(size_type n) {};
+
+					// shrink_to_fit
+					void	shrink_to_fit() {};
+
+				//----	Element access
+					// operator[]
+					reference	operator[](sizt_type n) {};
+					const_reference	operator[](size_type n) const {};
+
+					// at
+					reference	at(size_type n) {};
+					const_reference	at(size_type n) const {};
+
+					// front
+					reference	front() {};
+					const_reference	front() const;
+
+					// back
+					reference	back() {};
+					const_reference	back() const {};
+
+					// data
+					value_type*	data() {};
+					value_type*	data() const {};
+
+				//----	Modifiers
+					// assigne
+					void	assigne(size_type n, const value_type& val) {};
+					// push_back
+					void	push_back(const value_type& val) {};
+					// pop_back
+					void	pop_back() {};
+					// insert
+					iterator	insert(iterator position, const value_type& val) {};
+					void	insert(iterator position, size_type n, const_value_type& val) {};
+					template <class InputIterator>void	insert(iterator position, InputIterator first, InputIterator last) {};
+					// erase
+					iterator	erase(iterator position) {};
+					iterator	erease(iterator first, iterator last) {};
+					// swap
+					void	swap(vector& x) {};
+					// clear
+					void	clear() {};
+					// emplace
+					template <class... Args>iterator emplace(const_iterator position, Args&&... args) {};
+					
+					// emplace_back
+					template <class... Args>void	emplace_back(Args&&... args) {};
+					
+
+				//----	Allocator
+					// get_allocator
+					allocator_type	get_allocator() const {};
 	};
 }
 

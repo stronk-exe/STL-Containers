@@ -6,14 +6,13 @@
 #    By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/10 13:34:48 by ael-asri          #+#    #+#              #
-#    Updated: 2022/10/11 10:02:32 by ael-asri         ###   ########.fr        #
+#    Updated: 2022/10/27 14:14:47 by ael-asri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_vector
 
-SRCS =  ft_vector.cpp \
-		main.cpp
+SRCS =  main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
