@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/10/27 14:13:17 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/10/27 16:25:54 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,9 @@ namespace ft
 
 				//----	Allocator
 					// get_allocator
-					allocator_type	get_allocator() const {};
+					allocator_type	get_allocator() const {
+						return this->allocate;
+					};
 	};
 }
 
