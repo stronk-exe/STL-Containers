@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/10/27 16:25:54 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/10/29 16:31:07 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ namespace ft
 						std::cout << "vector default constractor called!" << std::endl;
 					};
 
-					// fill constractor				
+					// fill constractor
 					explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 					{
 						this->n = n;
@@ -125,25 +125,66 @@ namespace ft
 
 				//----	Capacity
 					// size
-					size_type	size() const {};
+					size_type	size() const
+					{
+						for(size_t i=0; v[i] != NULL; i++)
+							;
+						return i;
+					};
 
 					// max_size
 					size_type	max_size() const {};
 
 					// resize
-					void	resize(size_type n, value_type val = value_type()) {};
+					void	resize(size_type n, value_type val = value_type())
+					{
+						if (n<this->n)
+						{
+							size_type i;
+							for (i=0; i<n; i++)
+								;
+							for (i=0; i<n; i++)
+							{
+								delete[v[i]];
+							}
+							this->n = n;
+						}
+						else
+						{
+							size_type i=v.size();
+							for (i=0; i<n; i++)
+							{
+								v.push_back(val);
+							}
+							this->n = n;
+						}
+					};
 
 					// capacity
 					size_type	capacity() const {};
 
 					// empty
-					bool	empty() const {};
+					bool	empty() const
+					{
+						if (!v.size())
+							return true;
+						return false;
+					};
 
 					// reserve
-					void	reserve(size_type n) {};
+					void	reserve(size_type n)
+					{
+						if (n > v.capacity())
+						{
+							v.capacity() = this->n;
+						}
+					};
 
 					// shrink_to_fit
-					void	shrink_to_fit() {};
+					void	shrink_to_fit()
+					{
+						v.capacity() = c.size();
+					};
 
 				//----	Element access
 					// operator[]
@@ -151,8 +192,14 @@ namespace ft
 					const_reference	operator[](size_type n) const {};
 
 					// at
-					reference	at(size_type n) {};
-					const_reference	at(size_type n) const {};
+					reference	at(size_type n)
+					{
+						return &v[n];
+					};
+					const_reference	at(size_type n) const
+					{
+						return &v[n];
+					};
 
 					// front
 					reference	front() {};
@@ -193,7 +240,8 @@ namespace ft
 
 				//----	Allocator
 					// get_allocator
-					allocator_type	get_allocator() const {
+					allocator_type	get_allocator() const
+					{
 						return this->allocate;
 					};
 	};
