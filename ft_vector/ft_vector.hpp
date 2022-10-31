@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/10/29 16:31:07 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:47:26 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #define FT_VECTOR_HPP
 
 #include <iostream>
+#include "Iterator_traits.hpp"
+#include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -92,36 +94,75 @@ namespace ft
 					};
 
 					// operator=
-					vector& operator=(const vector& x) {};
+					vector& operator=(const vector& x)
+					{
+						v = x;
+					};
 
 				//----	Iterators
 					// begin
-					iterator begin() {};
-					const_iterator begin() const {};
+					iterator begin()
+					{
+						return iterator(*this, 0);
+					};
+					const_iterator begin() const
+					{
+						return iterator(*this, 0);
+					};
 
 					// end
-					iterator end() {};
-					const_iterator	end() const {};
+					iterator end()
+					{
+						return iterator(*this, v.size());
+					};
+					const_iterator	end() const
+					{
+						return const_iterator(*this, v.size());
+					};
 
 					// rbegin
-					reverse_iterator	rbegin() {};
-					const_reverse_iterator	rbegin() const {};
+					reverse_iterator	rbegin()
+					{
+						return reverse_iterator(*this, 0);
+					};
+					const_reverse_iterator	rbegin() const
+					{
+						return const_reverse_iterator(*this, 0);
+					};
 
 					// rend
-					reverse_iterator	rend() {};
-					reverse_iterator	rend() const {};
+					reverse_iterator	rend()
+					{
+						return reverse_iterator(*this, v.size());
+					};
+					reverse_iterator	rend() const
+					{
+						return reverse_iterator(*this, v.size());
+					};
 
 					// cbegin
-					const_iterator	cbegin() const {};
+					const_iterator	cbegin() const
+					{
+						return const_iterator(*this, 0);
+					};
 
 					// cend
-					const_iterator	cend() const {};
+					const_iterator	cend() const
+					{
+						return const_iterator(*this, v.size());
+					};
 
 					// crbegin
-					const_reverse_iterator	crbegin() const {};
+					const_reverse_iterator	crbegin() const
+					{
+						return const_reverse_iterator(*this, 0);
+					};
 
 					// crend
-					const_reverse_iterator	crend() const {};
+					const_reverse_iterator	crend() const
+					{
+						return const_reverse_iterator(*this, v.size());
+					};
 
 				//----	Capacity
 					// size
@@ -145,7 +186,7 @@ namespace ft
 								;
 							for (i=0; i<n; i++)
 							{
-								delete[v[i]];
+								delete v[i];
 							}
 							this->n = n;
 						}
@@ -188,8 +229,18 @@ namespace ft
 
 				//----	Element access
 					// operator[]
-					reference	operator[](sizt_type n) {};
-					const_reference	operator[](size_type n) const {};
+					reference	operator[](sizt_type n)
+					{
+						if (n<0 || n>this->n)
+							throw invalidIndex();
+						return v[n];
+					};
+					const_reference	operator[](size_type n) const
+					{
+						if (n<0 || n>this->n)
+							throw invalidIndex();
+						return v[n];
+					};
 
 					// at
 					reference	at(size_type n)
@@ -202,12 +253,28 @@ namespace ft
 					};
 
 					// front
-					reference	front() {};
-					const_reference	front() const;
+					reference	front()
+					{
+						return *v;
+					};
+					const_reference	front() const
+					{
+						return *v;
+					};
 
 					// back
-					reference	back() {};
-					const_reference	back() const {};
+					reference	back()
+					{
+						while (v->next != NULL)
+							v = v->next;
+						return *v;
+					};
+					const_reference	back() const
+					{
+						while (v->next != NULL)
+							v = v->next;
+						return *v;
+					};
 
 					// data
 					value_type*	data() {};
@@ -215,6 +282,7 @@ namespace ft
 
 				//----	Modifiers
 					// assigne
+					template <class InputIterator>void	assigne(InputIterator first, InputIterator last) {};
 					void	assigne(size_type n, const value_type& val) {};
 					// push_back
 					void	push_back(const value_type& val) {};
@@ -228,9 +296,24 @@ namespace ft
 					iterator	erase(iterator position) {};
 					iterator	erease(iterator first, iterator last) {};
 					// swap
-					void	swap(vector& x) {};
+					void	swap(vector& x) 
+					{
+						while (x != NULL)
+						{
+							v[i] = x[i];
+							x = x->next;
+						}
+					};
 					// clear
-					void	clear() {};
+					void	clear()
+					{
+						while (v != NULL)
+						{
+							delete v[i];
+							v = v->next;
+						}
+						this->n = 0;
+					};
 					// emplace
 					template <class... Args>iterator emplace(const_iterator position, Args&&... args) {};
 					
