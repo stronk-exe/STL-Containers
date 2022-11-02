@@ -6,12 +6,12 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/02 17:08:16 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/02 18:27:24 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
-#define ECTOR_HPP
+#define VECTOR_HPP
 
 #include <iostream>
 #include "Iterator_traits.hpp"
@@ -34,6 +34,7 @@ namespace ft
 
 		private:
 			size_type	n;
+			size_type	len;
 			T			*v;
 		public:
 			// Member functions
@@ -103,65 +104,77 @@ namespace ft
 					// begin
 					iterator begin()
 					{
-						return iterator(*this, 0);
+						// return iterator(*this, 0);
+						return {iterator::*this, 0};
 					};
 					const_iterator begin() const
 					{
-						return iterator(*this, 0);
+						// return iterator(*this, 0);
+						return {const_iterator::*this, 0};
 					};
 
 					// end
 					iterator end()
 					{
-						return iterator(*this, v.size());
+						// return iterator(*this, v.size());
+						return {iterator::*this, len};
 					};
 					const_iterator	end() const
 					{
-						return const_iterator(*this, v.size());
+						// return const_iterator(*this, v.size());
+						return {const_iterator::*this, len};
 					};
 
 					// rbegin
 					reverse_iterator	rbegin()
 					{
-						return reverse_iterator(*this, 0);
+						// return reverse_iterator(*this, 0);
+						return {reverse_iterator:*this, 0};
 					};
 					const_reverse_iterator	rbegin() const
 					{
-						return const_reverse_iterator(*this, 0);
+						// return const_reverse_iterator(*this, 0);
+						return {const_reverse_iterator::*this, len};
 					};
 
 					// rend
 					reverse_iterator	rend()
 					{
-						return reverse_iterator(*this, v.size());
+						// return reverse_iterator(*this, v.size());
+						return {reverse_iterator::*this, len};
 					};
 					reverse_iterator	rend() const
 					{
-						return reverse_iterator(*this, v.size());
+						// return reverse_iterator(*this, v.size());
+						return {reverse_iterator::*this, len};
 					};
 
 					// cbegin
 					const_iterator	cbegin() const
 					{
-						return const_iterator(*this, 0);
+						// return const_iterator(*this, 0);
+						return {const_iterator:*this, 0};
 					};
 
 					// cend
 					const_iterator	cend() const
 					{
-						return const_iterator(*this, v.size());
+						// return const_iterator(*this, v.size());
+						return {const_iterator::*this, len};
 					};
 
 					// crbegin
 					const_reverse_iterator	crbegin() const
 					{
-						return const_reverse_iterator(*this, 0);
+						// return const_reverse_iterator(*this, 0);
+						return {const_reverse_iterator:*this, 0};
 					};
 
 					// crend
 					const_reverse_iterator	crend() const
 					{
-						return const_reverse_iterator(*this, v.size());
+						// return const_reverse_iterator(*this, v.size());
+						return {const_reverse_iterator::*this, len};
 					};
 
 				//----	Capacity

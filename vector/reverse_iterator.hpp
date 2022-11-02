@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:08:58 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/10/30 14:21:59 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/02 18:12:15 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ namespace ft
 	template <class Iterator> class reverse_iterator
 	{
 		private:
+			size_type	pos;
 			typedef Iterator										iterator_type;
 			typedef iterator_traits<Iterator>::iterator_category	iterator_category;
 			typedef iterator_traits<Iterator>::value_type			value_type
@@ -40,14 +41,27 @@ namespace ft
 						iterator_type	base() const {};
 
 						// oprator*
-						reference	operator*() const {};
+						reference	operator*() const
+						{
+							return this->iterator[this->pos];
+						};
 
 						// operator+
-						reverse_iterator	operator+(difference_type n) const {};
+						reverse_iterator	operator+(difference_type n) const
+						{
+							return this->iterator[this->pos];
+						};
 
 						// operator++
-						reverse_iterator&	operator++() {};
-						reverse_iterator	operator++(int) {};
+						reverse_iterator&	operator++()
+						{
+							++this->pos;
+							return *this;
+						};
+						reverse_iterator	operator++(int)
+						{
+							return {&:this->iterator, pos++};
+						};
 						
 						// operator+=
 						reverse_iterator&	operator+=(difference_type n) {};
@@ -56,8 +70,15 @@ namespace ft
 						reverse_iterator	operator-(difference_type n) const {};
 
 						// operator--
-						reverse_iterator&	operator--() {};
-						reverse_iterator	operator--(int) {};
+						reverse_iterator&	operator--()
+						{
+							--this->pos;
+							return *this;
+						};
+						reverse_iterator	operator--(int)
+						{
+							return {&:this->iterator, pos--};
+						};
 
 						// operator-=
 						reverse_iterator&	operator-=(difference_type n) {};
@@ -69,8 +90,14 @@ namespace ft
 						reference	operator[](difference_type n) const {};
 		// Non-member function overloads
 			//---- relational operators
-			template <class Iterator> bool	operator==(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs) {};
-			template <class Iterator> bool	operator!=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs) {};
+			template <class Iterator> bool	operator==(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+			{
+				return &lhs.data == &rhs.data && lhs.pos == rhs.pos;
+			};
+			template <class Iterator> bool	operator!=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+			{
+				return !(lhs == rhs);
+			};
 			template <class Iterator> bool	operator<(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs) {};
 			template <class Iterator> bool	operator<=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs) {};
 			template <class Iterator> bool	operator>(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs) {};

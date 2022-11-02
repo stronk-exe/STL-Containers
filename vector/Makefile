@@ -6,11 +6,11 @@
 #    By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/10 13:34:48 by ael-asri          #+#    #+#              #
-#    Updated: 2022/11/02 17:07:36 by ael-asri         ###   ########.fr        #
+#    Updated: 2022/11/02 17:16:22 by ael-asri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft::vector
+NAME = ft_vector
 
 SRCS =  main.cpp
 
