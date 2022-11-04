@@ -25,8 +25,8 @@ int main ()
 	hlwa2 = hlwa1;
 	// hlwa1 = ft::vector<int>();
 
-	std::cout << "Size of hlwa1: " << hlwa1.size() << " Capacity of hlwa1: " << int(hlwa1.capacity()) << '\n';
-	std::cout << "Size of hlwa2: " << hlwa2.size() << " Capacity of hlwa2: " << int(hlwa2.capacity()) << '\n';
+	std::cout << "Size of hlwa1: " << hlwa1.size() << " Capacity of hlwa1: " << hlwa1.capacity() << '\n';
+	std::cout << "Size of hlwa2: " << hlwa2.size() << " Capacity of hlwa2: " << hlwa2.capacity() << '\n';
 	std::cout << "^^^^^^^^^^^^^^" << std::endl;
 	
 	
@@ -79,9 +79,60 @@ int main ()
 	hlwa.pop_back();
 	hlwa.pop_back();
 	std::cout << "hlwas size after " << hlwa.size() << std::endl;
+	hlwa.shrink_to_fit();
+	std::cout << "hlwas capacity after " << hlwa.capacity() << std::endl;
 	std::cout << "^^^^^^^^^^^^^^" << std::endl;
 	std::cout << "^^^^^^^^^^^^^^" << std::endl;
 	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	std::cout << "resizing some" << std::endl;
+	ft::vector<int> myvector;
+	for (int i=1;i<10;i++) myvector.push_back(i);
+	myvector.resize(5);
+	myvector.resize(8,100);
+	myvector.resize(12);
+	std::cout << "myvector contains:";
+	for (size_t i=0;i<myvector.size();i++)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	std::cout << "^^^ at ^^^" << std::endl;
+	ft::vector<int> myvector2 (10);
+	for (unsigned i=0; i<myvector2.size(); i++)
+		myvector2.at(i)=i;
+	for (unsigned i=0; i<myvector2.size(); i++)
+		std::cout << ' ' << myvector2.at(i);
+	std::cout << '\n';
+	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	std::cout << "^^^ front & back ^^^" << std::endl;
+	ft::vector<int> myvector3;
+	myvector3.push_back(78);
+	myvector3.push_back(16);
+	myvector3.front() -= myvector3.back();
+	std::cout << "myvector.front() is now " << myvector3.front() << '\n';
+	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	std::cout << "^^^ data ^^^" << std::endl;
+	ft::vector<int> myvector4 (5);
+	int* p = myvector4.data();
+	*p = 10;
+	++p;
+	*p = 20;
+	p[2] = 100;
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector4.size(); ++i)
+		std::cout << ' ' << myvector4[i];
+	std::cout << '\n';
+	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	std::cout << "^^^ get_allocator ^^^" << std::endl;
+	ft::vector<int> myvector5;
+	int * p2;
+	unsigned int i;
+	p2 = myvector5.get_allocator().allocate(5);
+	for (i=0; i<5; i++) myvector5.get_allocator().construct(&p2[i],i);
+	std::cout << "The allocated array contains:";
+	for (i=0; i<5; i++) std::cout << ' ' << p2[i];
+	std::cout << '\n';
+	for (i=0; i<5; i++) myvector4.get_allocator().destroy(&p2[i]);
+	myvector4.get_allocator().deallocate(p2,5);
 	// // the iterator constructor can also be used to construct from arrays:
 	// int myints[] = {16,2,77,29};
 	// ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );

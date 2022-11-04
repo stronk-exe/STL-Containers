@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/03 17:12:57 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/04 19:25:13 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #define VECTOR_HPP
 
 #include <iostream>
-// #include "Iterator_traits.hpp"
+#include "../exceptions.hpp"
+#include "Iterator_traits.hpp"
 // #include "reverse_iterator.hpp"
 
 namespace ft
@@ -30,10 +31,10 @@ namespace ft
 		typedef size_t			size_type;
 		typedef ptrdiff_t		difference_type;
 		typedef Allocator		allocator_type;
-		// typedef	typename vector<T>::iterator		iterator;
+		typedef	typename vector<T>::iterator		iterator;
 
 		private:
-			size_type		n;
+			size_type		capcity;
 			size_type		len;
 			T				*v;
 			Allocator		_allocator;
@@ -43,13 +44,13 @@ namespace ft
 			// Member functions
 				//----	Constractors
 					// default constactor
-					explicit vector (const allocator_type& alloc = allocator_type()) : len(0), _allocator(alloc)
+					explicit vector (const allocator_type& alloc = allocator_type()) : capcity(0), len(0), _allocator(alloc)
 					{
 						// len = 0;
 						// (void)alloc;
 					//	v = new T[n];
 						// _allocator = alloc;
-						v = _allocator.allocate(len);
+						v = _allocator.allocate(capcity);
 						// v = alloc;
 						// len = 0;
 						// v = new T[len];
@@ -57,13 +58,13 @@ namespace ft
 					};
 
 					// fill constractor
-					explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : len(n), _allocator(alloc)
+					explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : capcity(n), len(n), _allocator(alloc)
 					{
 						// this->n = n;
 						// (void)alloc;
-						 v = _allocator.allocate(len);
+						v = _allocator.allocate(capcity);
 						// v = new T[n];
-						for (size_type i=0; i<len; i++)
+						for (size_type i=0; i<capcity; i++)
 						{
 							v[i] = val;
 							// std::cout << v[i] << std::endl;
@@ -85,7 +86,7 @@ namespace ft
 					};
 
 			*/		// copy constractor
-					vector (const vector& x) : len(x.len), v(x.v)
+					vector (const vector& x) : capcity(x.capcity), len(x.len), v(x.v)
 					{
 						// len = x.len;
 						// v = x.v;
@@ -106,31 +107,33 @@ namespace ft
 					// operator=
 					vector& operator=(const vector& x)
 					{
+						capcity = x.capcity;
 						len = x.len;
 						v = x.v;
 						return *this;
 					};
 
-		/*		//----	Iterators
+				//----	Iterators
 					// begin
 					iterator begin()
 					{
-						// return iterator(*this, 0);
-						return {iterator::*this, 0};
+						return iterator(v);
+						// return {iterator::*this, 0};
+						// return *v;
 					};
-					const_iterator begin() const
-					{
-						// return iterator(*this, 0);
-						return {const_iterator::*this, 0};
-					};
+					// const_iterator begin() const
+					// {
+					// 	return const_iterator(v);
+					// 	// return {const_iterator::*this, 0};
+					// };
 
 					// end
 					iterator end()
 					{
-						// return iterator(*this, v.size());
-						return {iterator::*this, len};
+						return iterator(*this+len);
+						// return {iterator::*this, len};
 					};
-					const_iterator	end() const
+			/*		const_iterator	end() const
 					{
 						// return const_iterator(*this, v.size());
 						return {const_iterator::*this, len};
@@ -198,39 +201,31 @@ namespace ft
 						return len;
 					};
 
-		/*			// max_size
+					// max_size
 					size_type	max_size() const
 					{
-						return std::distance(begin(), end());
+						// return std::distance(begin(), end());
+						return capcity;
 					};
 
 					// resize
 					void	resize(size_type n, value_type val = value_type())
 					{
 						if (n<len)
-						{
-							// size_type i;
 							for (size_type i=n; i<len; i++)
-							{
-								delete v[i];
-							}
-							len = n;
-						}
+								_allocator.destroy(v+i);
 						else
-						{
-							size_type i=v.size();
-							for (i=0; i<n; i++)
-							{
-								v.push_back(val);
-							}
-							this->n = n;
-						}
+							for (size_type i=len; i<n; i++)
+								push_back(val);
+						len = n;
+						// capcity = n;
 					};
 
-			*/		// capacity
+					// capacity
 					size_type	capacity() const
 					{
-						return 2<<(len-2);
+						// return 2<<(len-2);
+						return capcity;
 					};
 
 					// empty
@@ -241,32 +236,37 @@ namespace ft
 						return false;
 					};
 
-			/*		// reserve
+					// reserve
 					void	reserve(size_type n)
 					{
-						if (n > v.capacity())
+						if (n > capcity)
 						{
-							v.capacity() = this->n;
+							capcity = n;
+							this->_allocator(capcity);
 						}
+						// else
+						// {
+							
+						// }
 					};
 
 					// shrink_to_fit
 					void	shrink_to_fit()
 					{
-						v.capacity() = c.size();
+						capcity = len;
 					};
 
 				//----	Element access
-			*/		// operator[]
+					// operator[]
 					reference	operator[](size_type n)
 					{
-						// if (n < 0 || n > len)
-						// 	throw invalidIndex();
+						if (n < 0 || n > len)
+							throw invalidIndex();
 						return v[n];
 					};
-			/*		const_reference	operator[](size_type n) const
+					const_reference	operator[](size_type n) const
 					{
-						if (n<0 || n>this->n)
+						if (n < 0 || n > len)
 							throw invalidIndex();
 						return v[n];
 					};
@@ -274,17 +274,19 @@ namespace ft
 					// at
 					reference	at(size_type n)
 					{
-						return &v[n];
+						return *(v+n);
 					};
 					const_reference	at(size_type n) const
 					{
-						return &v[n];
+						// return &v[n];
+						return *(v+n);
 					};
 
 					// front
 					reference	front()
 					{
 						return *v;
+						
 					};
 					const_reference	front() const
 					{
@@ -294,22 +296,28 @@ namespace ft
 					// back
 					reference	back()
 					{
-						while (v->next != NULL)
-							v = v->next;
-						return *v;
+						// while (v->next != NULL)
+						// 	v = v->next;
+						return *(v+(len-1));
 					};
 					const_reference	back() const
 					{
-						while (v->next != NULL)
-							v = v->next;
-						return *v;
+						// while (v->next != NULL)
+						// 	v = v->next;
+						return *(v+(len-1));
 					};
 
 					// data
-					value_type*	data() {};
-					value_type*	data() const {};
+					value_type*	data()
+					{
+						return v;
+					};
+					value_type*	data() const
+					{
+						return v;
+					};
 
-				//----	Modifiers
+			/*	//----	Modifiers
 					// assigne
 					template <class InputIterator>void	assigne(InputIterator first, InputIterator last) {};
 					void	assigne(size_type n, const value_type& val) {};
@@ -368,6 +376,7 @@ namespace ft
 						// 	// v = v->next;
 						// }
 						_allocator.destroy(v);
+						capcity = 0;
 						len = 0;
 					};
 			/*		// emplace
@@ -386,5 +395,7 @@ namespace ft
 					};
 	};
 }
+
+
 
 #endif
