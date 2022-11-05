@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/04 19:25:13 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/05 16:13:35 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ namespace ft
 		typedef size_t			size_type;
 		typedef ptrdiff_t		difference_type;
 		typedef Allocator		allocator_type;
-		typedef	typename vector<T>::iterator		iterator;
+		// typedef	typename vector<T>::iterator		iterator;
+		using iterator = iterator<vector<T> >;
 
 		private:
 			size_type		capcity;
@@ -44,7 +45,7 @@ namespace ft
 			// Member functions
 				//----	Constractors
 					// default constactor
-					explicit vector (const allocator_type& alloc = allocator_type()) : capcity(0), len(0), _allocator(alloc)
+					explicit vector (const allocator_type& alloc = allocator_type()) : capcity(0), len(0), v(nullptr), _allocator(alloc)
 					{
 						// len = 0;
 						// (void)alloc;
