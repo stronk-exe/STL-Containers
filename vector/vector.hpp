@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/05 16:13:35 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/06 15:09:46 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,12 @@ namespace ft
 		typedef ptrdiff_t		difference_type;
 		typedef Allocator		allocator_type;
 		// typedef	typename vector<T>::iterator		iterator;
-		using iterator = iterator<vector<T> >;
+		// using iterator = iterator<vector<T> >;
+		typedef iterator<vector<T> >	iterator;
+		typedef InputIterator<vector<T> >	InputIterator;
+		typedef const_iterator<vector<T> >	const_iterator;
+		// typedef reverse_iterator<vector<T> >	reverse_iterator;
+		// typedef const_reverse_iterator<vector<T> >	const_reverse_iterator;
 
 		private:
 			size_type		capcity;
@@ -73,20 +78,24 @@ namespace ft
 						std::cout << "vector fill constractor called!" << std::endl;
 					};
 
-			/*		// range constractor
-					template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+					// range constractor
+				/*	template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) : _allocator(alloc)
 					{
 						int i=0;
-						while (first != last)
+						// v = _allocator.allocate();
+						// while (first != last)
+						for (InputIterator it=first; it != last; ++it)
 						{
-							v[i] = *first;
-							std::cout << v[i] << std::endl;
+							// v[i] = val;
+							// std::cout << v[i] << std::endl;
 							i++;
 						}
+						capcity = i;
+						len = i;
 						std::cout << "vector range constractor called!" << std::endl;
-					};
+					};*/
 
-			*/		// copy constractor
+					// copy constractor
 					vector (const vector& x) : capcity(x.capcity), len(x.len), v(x.v)
 					{
 						// len = x.len;
@@ -122,74 +131,74 @@ namespace ft
 						// return {iterator::*this, 0};
 						// return *v;
 					};
-					// const_iterator begin() const
-					// {
-					// 	return const_iterator(v);
-					// 	// return {const_iterator::*this, 0};
-					// };
+					const_iterator begin() const
+					{
+						return const_iterator(v);
+						// return {const_iterator::*this, 0};
+					};
 
 					// end
 					iterator end()
 					{
-						return iterator(*this+len);
+						return iterator(v+len);
 						// return {iterator::*this, len};
 					};
-			/*		const_iterator	end() const
+					const_iterator	end() const
 					{
-						// return const_iterator(*this, v.size());
-						return {const_iterator::*this, len};
+						return const_iterator(v+len);
+						// return {const_iterator::*this, len};
 					};
 
-					// rbegin
+				/*	// rbegin
 					reverse_iterator	rbegin()
 					{
-						// return reverse_iterator(*this, 0);
-						return {reverse_iterator:*this, 0};
+						return reverse_iterator(v);
+						// return {reverse_iterator:*this, 0};
 					};
 					const_reverse_iterator	rbegin() const
 					{
-						// return const_reverse_iterator(*this, 0);
-						return {const_reverse_iterator::*this, len};
+						return const_reverse_iterator(v);
+						// return {const_reverse_iterator::*this, len};
 					};
 
 					// rend
 					reverse_iterator	rend()
 					{
-						// return reverse_iterator(*this, v.size());
-						return {reverse_iterator::*this, len};
+						return reverse_iterator(v+len);
+						// return {reverse_iterator::*this, len};
 					};
 					reverse_iterator	rend() const
 					{
-						// return reverse_iterator(*this, v.size());
-						return {reverse_iterator::*this, len};
+						return reverse_iterator(v+len);
+						// return {reverse_iterator::*this, len};
 					};
 
 					// cbegin
 					const_iterator	cbegin() const
 					{
-						// return const_iterator(*this, 0);
-						return {const_iterator:*this, 0};
+						return const_iterator(v);
+						// return {const_iterator:*this, 0};
 					};
 
 					// cend
 					const_iterator	cend() const
 					{
-						// return const_iterator(*this, v.size());
-						return {const_iterator::*this, len};
+						return const_iterator(v+len);
+						// return {const_iterator::*this, len};
 					};
 
 					// crbegin
 					const_reverse_iterator	crbegin() const
 					{
-						// return const_reverse_iterator(*this, 0);
-						return {const_reverse_iterator:*this, 0};
+						return const_reverse_iterator(v);
+						// return {const_reverse_iterator:*this, 0};
 					};
 
 					// crend
 					const_reverse_iterator	crend() const
 					{
-						// return const_reverse_iterator(*this, v.size());
-						return {const_reverse_iterator::*this, len};
+						return const_reverse_iterator(v+len);
+						// return {const_reverse_iterator::*this, len};
 					};
 
 		*/		//----	Capacity

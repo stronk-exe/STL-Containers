@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 15:50:40 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/05 15:50:42 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/06 15:07:28 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,22 @@
 int main ()
 {
 	/*		constractors, deconstractor, copy assignment and iterators		*/
+	// std::cout << "^^^ old things ^^^" << std::endl;
+	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	// ft::vector<int> f;                                // empty vector of ints
+	// ft::vector<int> s (4,100);                       // four ints with value 100
+	// ft::vector<int> t (s.begin(),s.end());  // iterating through second
+	// ft::vector<int> fo (t);                       // a copy of third
 
+	// // the iterator constructor can also be used to construct from arrays:
+	// int myint[] = {16,2,77,29};
+	// ft::vector<int> ff (myint, myint + sizeof(myint) / sizeof(int) );
+
+	// std::cout << "The contents of fifth are:";
+	// for (ft::vector<int>::iterator it = ff.begin(); it != ff.end(); ++it)
+	// 	std::cout << ' ' << *it;
+	// std::cout << '\n';
+	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
 	// constructors used in the same order as described above:
 	ft::vector<int> first;                                // empty vector of ints
 	ft::vector<int> second (4,100);                       // four ints with value 100
@@ -145,6 +160,11 @@ int main ()
 	std::cout << '\n';
 	for (i=0; i<5; i++) myvector4.get_allocator().destroy(&p2[i]);
 	myvector4.get_allocator().deallocate(p2,5);
+	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	std::cout << "^^^ iterators ^^^" << std::endl;
+	typedef std::iterator_traits<int*> traits;
+	if (typeid(traits::iterator_category)==typeid(std::random_access_iterator_tag))
+		std::cout << "int* is a random-access iterator\n";
 	// // the iterator constructor can also be used to construct from arrays:
 	// int myints[] = {16,2,77,29};
 	// ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
