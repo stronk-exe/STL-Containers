@@ -6,16 +6,18 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 10:33:44 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/06 13:26:06 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/08 17:07:06 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_TRAITS_HPP
 #define ITERATOR_TRAITS_HPP
 
+#include "vector.hpp"
+
 namespace ft
 {
-	template <typename vector> class InputIterator
+/*	template <typename vector> class InputIterator
 	{
 		// private:
 		// 	typedef Iterator					iterator_traits_iterator;
@@ -68,9 +70,9 @@ namespace ft
 			}
 		private:
 			pointer	ptr;
-	};
+	};*/
 	
-	template <typename vector> class iterator
+	template <typename T> class Vectoriterator
 	{
 		// private:
 		// 	typedef Iterator					iterator_traits_iterator;
@@ -85,9 +87,9 @@ namespace ft
 		// 	typedef Iterator::iterator_category	iterator_category;
 		
 		public:
-			typedef typename vector::T				value_type;
-			typedef typename vector::T*				pointer;
-			typedef typename vector::T&				reference;
+			typedef T				vt;
+			typedef T*				ptr;
+			typedef T&				ref;
 			// using valueType = typename vector::valueType;
 			// using pointerType = valueType*;
 			// using pointerType = valueType&;
@@ -97,51 +99,50 @@ namespace ft
 			// iterator_traits() {};
 			// explicit	iterator_traits(T *data) {};
 			// iterator_traits(iterator_traits &v) {};
-			iterator(pointer _ptr) : ptr(_ptr) {};
+			Vectoriterator(ptr _p) : p(_p) {};
 
-			iterator&	operator++()
+			Vectoriterator&	operator++()
 			{
-				ptr++;
+				p++;
 				return *this;
 			}
-			iterator	operator++(int)
+			Vectoriterator	operator++(int)
 			{
-				iterator it = *this;
+				Vectoriterator it = *this;
 				++(*this);
 				return it;
 			}
-			iterator&	operator--()
+			Vectoriterator&	operator--()
 			{
-				ptr--;
+				p--;
 				return *this;
 			}
-			iterator	operator--(int)
+			Vectoriterator	operator--(int)
 			{
-				iterator it = *this;
+				Vectoriterator it = *this;
 				--(*this);
 				return it;
 			}
-			iterator	operator*(int)
+			ref	operator[](int index)
 			{
-				// iterator it = *this;
-				// --(*this);
-				return *this;
+				return *(p+index);
+			};
+			Vectoriterator	operator*()
+			{
+				return 1;
 			}
-			iterator	operator!=(int)
+			bool	operator==(const Vectoriterator& other) const
 			{
-				iterator it = *this;
-				--(*this);
-				return it;
+				return p == other.p;
 			}
-			iterator	operator=(int)
+			bool	operator!=(const Vectoriterator& other) const
 			{
-				iterator it = *this;
-				--(*this);
-				return it;
+				return !(*this == other);
 			}
 		private:
-			pointer	ptr;
+			ptr	p;
 	};
+	// template <class Vectoriterator> bool operator<()
 	template <typename vector> class const_iterator
 	{
 		// private:

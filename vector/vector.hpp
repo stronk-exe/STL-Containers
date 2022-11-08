@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/06 15:09:46 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:53:08 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,23 @@ namespace ft
 {
 	template <class T, class Allocator = std::allocator<T> > class vector
 	{
-		// definin
-		typedef T				value_type;
-		typedef T*				pointer;
-		typedef T&				reference;
-		typedef const T*		const_pointer;
-		typedef const T&		const_reference;
-		typedef size_t			size_type;
-		typedef ptrdiff_t		difference_type;
-		typedef Allocator		allocator_type;
-		// typedef	typename vector<T>::iterator		iterator;
-		// using iterator = iterator<vector<T> >;
-		typedef iterator<vector<T> >	iterator;
-		typedef InputIterator<vector<T> >	InputIterator;
-		typedef const_iterator<vector<T> >	const_iterator;
-		// typedef reverse_iterator<vector<T> >	reverse_iterator;
-		// typedef const_reverse_iterator<vector<T> >	const_reverse_iterator;
+		public:
+			// definin
+			typedef T				value_type;
+			typedef T*				pointer;
+			typedef T&				reference;
+			typedef const T*		const_pointer;
+			typedef const T&		const_reference;
+			typedef size_t			size_type;
+			typedef ptrdiff_t		difference_type;
+			typedef Allocator		allocator_type;
+			// typedef	typename vector<T>::iterator		iterator;
+			// using iterator = Vectoriterator<vector<T> >;
+			typedef Vectoriterator<T>		iterator;
+			// typedef InputIterator<vector<T> >	InputIterator;
+			typedef const_iterator<vector<T> >	const_iterator;
+			// typedef reverse_iterator<vector<T> >	reverse_iterator;
+			// typedef const_reverse_iterator<vector<T> >	const_reverse_iterator;
 
 		private:
 			size_type		capcity;
@@ -78,8 +79,8 @@ namespace ft
 						std::cout << "vector fill constractor called!" << std::endl;
 					};
 
-					// range constractor
-				/*	template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) : _allocator(alloc)
+				/*	// range constractor
+					template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) : _allocator(alloc)
 					{
 						int i=0;
 						// v = _allocator.allocate();
@@ -111,7 +112,7 @@ namespace ft
 					~vector()
 					{
 						// _allocator.dealocate();
-						std::cout << "vector Deconstractor called!" << std::endl;
+						// std::cout << "vector Deconstractor called!" << std::endl;
 					};
 
 					// operator=
@@ -127,25 +128,25 @@ namespace ft
 					// begin
 					iterator begin()
 					{
-						return iterator(v);
+						return v;
 						// return {iterator::*this, 0};
 						// return *v;
 					};
 					const_iterator begin() const
 					{
-						return const_iterator(v);
+						return v;
 						// return {const_iterator::*this, 0};
 					};
 
 					// end
 					iterator end()
 					{
-						return iterator(v+len);
+						return v+len;
 						// return {iterator::*this, len};
 					};
 					const_iterator	end() const
 					{
-						return const_iterator(v+len);
+						return v+len;
 						// return {const_iterator::*this, len};
 					};
 
@@ -173,21 +174,21 @@ namespace ft
 						// return {reverse_iterator::*this, len};
 					};
 
-					// cbegin
+				*/	// cbegin
 					const_iterator	cbegin() const
 					{
-						return const_iterator(v);
+						return v;
 						// return {const_iterator:*this, 0};
 					};
 
 					// cend
 					const_iterator	cend() const
 					{
-						return const_iterator(v+len);
+						return v+len;
 						// return {const_iterator::*this, len};
 					};
 
-					// crbegin
+				/*	// crbegin
 					const_reverse_iterator	crbegin() const
 					{
 						return const_reverse_iterator(v);
@@ -199,9 +200,9 @@ namespace ft
 					{
 						return const_reverse_iterator(v+len);
 						// return {const_reverse_iterator::*this, len};
-					};
+					};*/
 
-		*/		//----	Capacity
+				//----	Capacity
 					// size
 					size_type	size() const
 					{

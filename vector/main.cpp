@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 15:50:40 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/06 15:07:28 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/08 17:05:31 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,8 @@ int main ()
 
 	// // the iterator constructor can also be used to construct from arrays:
 	// int myint[] = {16,2,77,29};
-	// ft::vector<int> ff (myint, myint + sizeof(myint) / sizeof(int) );
-
-	// std::cout << "The contents of fifth are:";
-	// for (ft::vector<int>::iterator it = ff.begin(); it != ff.end(); ++it)
-	// 	std::cout << ' ' << *it;
-	// std::cout << '\n';
-	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	
+	std::cout << "^^^^^^^^^^^^^^" << std::endl;
 	// constructors used in the same order as described above:
 	ft::vector<int> first;                                // empty vector of ints
 	ft::vector<int> second (4,100);                       // four ints with value 100
@@ -165,6 +160,23 @@ int main ()
 	typedef std::iterator_traits<int*> traits;
 	if (typeid(traits::iterator_category)==typeid(std::random_access_iterator_tag))
 		std::cout << "int* is a random-access iterator\n";
+	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	ft::vector<int> values;
+	values.push_back(1);
+	values.push_back(2);
+	values.push_back(3);
+	values.push_back(4);
+	values.push_back(5);
+	std::cout << "not using iterators" << std::endl;
+	for (unsigned int i=0; i<values.size(); i++)
+		std::cout << values[i] << std::endl;
+	// std::cout << "Range-based for loop" << std::endl;
+	// for (unsigned int value : values)
+	// 	std::cout << value << std::endl;
+	std::cout << "using iterators" << std::endl;
+	for (ft::vector<int>::iterator it = values.begin(); it != values.end(); it++)
+		std::cout << *it << std::endl;
+	// std::cout << '\n';
 	// // the iterator constructor can also be used to construct from arrays:
 	// int myints[] = {16,2,77,29};
 	// ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
