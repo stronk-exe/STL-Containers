@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/08 15:53:08 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:27:51 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <iostream>
 #include "../exceptions.hpp"
 #include "Iterator_traits.hpp"
+#include "Iterators.hpp"
 // #include "reverse_iterator.hpp"
 
 namespace ft
@@ -34,9 +35,9 @@ namespace ft
 			typedef Allocator		allocator_type;
 			// typedef	typename vector<T>::iterator		iterator;
 			// using iterator = Vectoriterator<vector<T> >;
-			typedef Vectoriterator<T>		iterator;
+			typedef Iterator<T>		iterator;
 			// typedef InputIterator<vector<T> >	InputIterator;
-			typedef const_iterator<vector<T> >	const_iterator;
+			typedef Iterator<const T >	const_iterator;
 			// typedef reverse_iterator<vector<T> >	reverse_iterator;
 			// typedef const_reverse_iterator<vector<T> >	const_reverse_iterator;
 
@@ -390,14 +391,19 @@ namespace ft
 						capcity = 0;
 						len = 0;
 					};
-			/*		// emplace
-					template <class... Args>iterator emplace(const_iterator position, Args&&... args) {};
+					// emplace
+			/*		template <class... Args>iterator emplace(const_iterator position, Args&&... args)
+					{
+					};
 					
 					// emplace_back
-					template <class... Args>void	emplace_back(Args&&... args) {};
-					
+					template <class... Args>void	emplace_back(Args&&... args)
+					{
+						std::cout << args << std::endl;
+					};
+			*/		
 
-			*/	//----	Allocator
+				//----	Allocator
 					// get_allocator
 					allocator_type	get_allocator() const
 					{
