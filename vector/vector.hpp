@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/14 15:27:51 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:21:54 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,33 +25,30 @@ namespace ft
 	{
 		public:
 			// definin
-			typedef T				value_type;
-			typedef T*				pointer;
-			typedef T&				reference;
-			typedef const T*		const_pointer;
-			typedef const T&		const_reference;
-			typedef size_t			size_type;
-			typedef ptrdiff_t		difference_type;
-			typedef Allocator		allocator_type;
-			// typedef	typename vector<T>::iterator		iterator;
-			// using iterator = Vectoriterator<vector<T> >;
-			typedef Iterator<T>		iterator;
-			// typedef InputIterator<vector<T> >	InputIterator;
-			typedef Iterator<const T >	const_iterator;
-			// typedef reverse_iterator<vector<T> >	reverse_iterator;
-			// typedef const_reverse_iterator<vector<T> >	const_reverse_iterator;
+			typedef T							value_type;
+			typedef T*							pointer;
+			typedef T&							reference;
+			typedef const T*					const_pointer;
+			typedef const T&					const_reference;
+			typedef size_t						size_type;
+			typedef ptrdiff_t					difference_type;
+			typedef Allocator					allocator_type;
+			typedef Iterator<T>					iterator;
+			typedef Iterator<const T >			const_iterator;
+			typedef Reverse_iterator<T>			reverse_iterator;
+			typedef Reverse_iterator<const T>	const_reverse_iterator;
 
 		private:
 			size_type		capcity;
 			size_type		len;
 			T				*v;
 			Allocator		_allocator;
-			// InputIterator	first;
-			// InputIterator	last;
+
 		public:
 			// Member functions
 				//----	Constractors
 					// default constactor
+					// vector() : capcity(0), len(0), v(nullptr) {};
 					explicit vector (const allocator_type& alloc = allocator_type()) : capcity(0), len(0), v(nullptr), _allocator(alloc)
 					{
 						// len = 0;
@@ -80,13 +77,12 @@ namespace ft
 						std::cout << "vector fill constractor called!" << std::endl;
 					};
 
-				/*	// range constractor
-					template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) : _allocator(alloc)
+					// range constractor
+					template <class iterator> vector (iterator first, iterator last, const allocator_type& alloc = allocator_type()) : _allocator(alloc)
 					{
 						int i=0;
-						// v = _allocator.allocate();
 						// while (first != last)
-						for (InputIterator it=first; it != last; ++it)
+						for (iterator it=first; it != last; ++it)
 						{
 							// v[i] = val;
 							// std::cout << v[i] << std::endl;
@@ -94,11 +90,12 @@ namespace ft
 						}
 						capcity = i;
 						len = i;
+						v = _allocator.allocate(i);
 						std::cout << "vector range constractor called!" << std::endl;
-					};*/
+					};
 
 					// copy constractor
-					vector (const vector& x) : capcity(x.capcity), len(x.len), v(x.v)
+					vector( const vector& other ) : capcity(other.capcity), len(other.len), v(other.v)
 					{
 						// len = x.len;
 						// v = x.v;
@@ -117,12 +114,39 @@ namespace ft
 					};
 
 					// operator=
-					vector& operator=(const vector& x)
+					void assign( size_type count, const T& value )
 					{
-						capcity = x.capcity;
-						len = x.len;
-						v = x.v;
-						return *this;
+						v = _allocator.allocate(count);
+						for (unsigned int i=0; i<count; i++)
+						{
+							v[i] = value;
+							// std::cout << v[i] << std::endl;
+							// i++;
+						}
+						capcity = count;
+						len = count;
+					};
+
+					// assigne
+					// template< class iterator >void assign( iterator first, iterator last )
+					// {
+					// 	int i=0;
+					// 	for (iterator it=first; it != last; ++it)
+					// 	{
+					// 		v[i] = *first;
+					// 		// std::cout << v[i] << std::endl;
+					// 		i++;
+					// 	}
+					// 	capcity = i;
+					// 	len = i;
+					// };
+					// void	assigne(size_type n, const value_type& val) {};
+
+					// get_allocator
+					allocator_type	get_allocator() const
+					{
+						// return this->allocate;
+						return _allocator;
 					};
 
 				//----	Iterators
@@ -133,11 +157,11 @@ namespace ft
 						// return {iterator::*this, 0};
 						// return *v;
 					};
-					const_iterator begin() const
-					{
-						return v;
-						// return {const_iterator::*this, 0};
-					};
+					// const_iterator begin() const
+					// {
+					// 	return v;
+					// 	// return {const_iterator::*this, 0};
+					// };
 
 					// end
 					iterator end()
@@ -145,63 +169,63 @@ namespace ft
 						return v+len;
 						// return {iterator::*this, len};
 					};
-					const_iterator	end() const
-					{
-						return v+len;
-						// return {const_iterator::*this, len};
-					};
+					// const_iterator	end() const
+					// {
+					// 	return v+len;
+					// 	// return {const_iterator::*this, len};
+					// };
 
-				/*	// rbegin
+					// rbegin
 					reverse_iterator	rbegin()
 					{
-						return reverse_iterator(v);
+						return v;
 						// return {reverse_iterator:*this, 0};
 					};
 					const_reverse_iterator	rbegin() const
 					{
-						return const_reverse_iterator(v);
+						return v;
 						// return {const_reverse_iterator::*this, len};
 					};
 
 					// rend
 					reverse_iterator	rend()
 					{
-						return reverse_iterator(v+len);
+						return v+len;
 						// return {reverse_iterator::*this, len};
 					};
 					reverse_iterator	rend() const
 					{
-						return reverse_iterator(v+len);
+						return v+len;
 						// return {reverse_iterator::*this, len};
 					};
 
-				*/	// cbegin
-					const_iterator	cbegin() const
-					{
-						return v;
-						// return {const_iterator:*this, 0};
-					};
+					// cbegin
+					// const_iterator	cbegin() const
+					// {
+					// 	return v;
+					// 	// return {const_iterator:*this, 0};
+					// };
 
-					// cend
-					const_iterator	cend() const
-					{
-						return v+len;
-						// return {const_iterator::*this, len};
-					};
+					// // cend
+					// const_iterator	cend() const
+					// {
+					// 	return v+len;
+					// 	// return {const_iterator::*this, len};
+					// };
 
-				/*	// crbegin
-					const_reverse_iterator	crbegin() const
-					{
-						return const_reverse_iterator(v);
-						// return {const_reverse_iterator:*this, 0};
-					};
+					// // crbegin
+					// const_reverse_iterator	crbegin() const
+					// {
+					// 	return v;
+					// 	// return {const_reverse_iterator:*this, 0};
+					// };
 
-					// crend
-					const_reverse_iterator	crend() const
-					{
-						return const_reverse_iterator(v+len);
-						// return {const_reverse_iterator::*this, len};
-					};*/
+					// // crend
+					// const_reverse_iterator	crend() const
+					// {
+					// 	return v+len;
+					// 	// return {const_reverse_iterator::*this, len};
+					// };
 
 				//----	Capacity
 					// size
@@ -330,9 +354,7 @@ namespace ft
 					};
 
 			/*	//----	Modifiers
-					// assigne
-					template <class InputIterator>void	assigne(InputIterator first, InputIterator last) {};
-					void	assigne(size_type n, const value_type& val) {};
+					
 				*/	// push_back
 					void	push_back(const value_type& val)
 					{
@@ -355,9 +377,35 @@ namespace ft
 						// for (size_type i=0; i<len; i++)
 						// 	std::cout << "hlwa after popin " << v[i] << std::endl;
 					};
-			/*		// insert
-					iterator	insert(iterator position, const value_type& val) {};
-					void	insert(iterator position, size_type n, const_value_type& val) {};
+					// insert
+					iterator insert( const_iterator pos, const T& value )
+					{
+						// typedef ft::vector<int>::iterator ci;
+						// ci from (v->begin());
+						// typedef const_iterator ci=v->begin();
+						
+						unsigned int i=0,x=0;
+						T temp = _allocator.alloc(len+1);
+						T val = _allocator.alloc(sizeof(T));
+						val = value;
+						// while (first != last)
+						// while (ci != pos)
+						for (iterator it=v->begin(); it != pos; ++it)
+						{
+							temp[x] = v[i];
+							// ci++;
+							i++;
+						}
+						temp[x] = val;
+						x++;
+						while (i<len)
+						{
+							temp[x] = v[i];
+							i++;
+						}
+						
+					};
+			/*		void	insert(iterator position, size_type n, const_value_type& val) {};
 					template <class InputIterator>void	insert(iterator position, InputIterator first, InputIterator last) {};
 					// erase
 					iterator	erase(iterator position) {};
@@ -404,12 +452,7 @@ namespace ft
 			*/		
 
 				//----	Allocator
-					// get_allocator
-					allocator_type	get_allocator() const
-					{
-						// return this->allocate;
-						return _allocator;
-					};
+					
 	};
 }
 

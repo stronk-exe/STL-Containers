@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iterators.hpp                                      :+:      :+:    :+:   */
+/*   Iterators.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:37:29 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/14 14:12:24 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/15 14:07:08 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATORS_HPP
 #define ITERATORS_HPP
+
+#include <iterator>
 
 namespace ft
 {
@@ -210,6 +212,67 @@ namespace ft
 	// {
 		
 	// };
+	template< class Iter > class Reverse_iterator
+	{
+		public:
+			typedef Iter													iterator_type;
+			typedef typename std::iterator_traits<Iter>::iterator_category	iterator_category;
+			typedef typename std::iterator_traits<Iter>::value_type			value_type;
+			typedef typename std::iterator_traits<Iter>::difference_type	difference_type;
+			typedef typename std::iterator_traits<Iter>::pointer			pointer;
+			typedef typename std::iterator_traits<Iter>::reference			reference;
+			
+			Reverse_iterator(pointer _p) : p(_p) {};
+			Reverse_iterator&	operator++()
+			{
+				p++;
+				return *this;
+			}
+			Reverse_iterator	operator++(int)
+			{
+				Reverse_iterator it = *this;
+				++(*this);
+				return it;
+			}
+			Reverse_iterator&	operator--()
+			{
+				p--;
+				return *this;
+			}
+			Reverse_iterator	operator--(int)
+			{
+				Reverse_iterator it = *this;
+				--(*this);
+				return it;
+			}
+			Reverse_iterator	operator[](int index)
+			{
+				return *(p+index);
+			};
+			Reverse_iterator	operator*()
+			{
+				return *p;
+			}
+			bool	operator==(const Reverse_iterator& other) const
+			{
+				return p == other.p;
+			}
+			bool	operator!=(const Reverse_iterator& other) const
+			{
+				return !(*this == other);
+			}
+			operator Reverse_iterator<const Iter>()
+			{
+				return (const pointer) p;
+			}
+			// ~reverse_iterator()
+			// {
+				
+			// };
+		private:
+			pointer p;
+	};
+
 }
 
 #endif
