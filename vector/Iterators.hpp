@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:37:29 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/15 14:07:08 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:47:24 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ namespace ft
 			// iterator_traits() {};
 			// explicit	iterator_traits(T *data) {};
 			// iterator_traits(iterator_traits &v) {};
+			Iterator() : p(nullptr) {};
 			Iterator(pointer _p) : p(_p) {};
 
 			Iterator&	operator++()

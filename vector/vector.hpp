@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/15 16:21:54 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/16 17:29:59 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ namespace ft
 					// operator=
 					void assign( size_type count, const T& value )
 					{
-						v = _allocator.allocate(count);
+						// v = _allocator.allocate(count);
 						for (unsigned int i=0; i<count; i++)
 						{
 							v[i] = value;
@@ -128,18 +128,18 @@ namespace ft
 					};
 
 					// assigne
-					// template< class iterator >void assign( iterator first, iterator last )
-					// {
-					// 	int i=0;
-					// 	for (iterator it=first; it != last; ++it)
-					// 	{
-					// 		v[i] = *first;
-					// 		// std::cout << v[i] << std::endl;
-					// 		i++;
-					// 	}
-					// 	capcity = i;
-					// 	len = i;
-					// };
+					template< class iterator >void assign( iterator first, iterator last )
+					{
+						int i=0;
+						for (iterator it=first; it != last; ++it)
+						{
+							v[i] = it;
+							// std::cout << v[i] << std::endl;
+							i++;
+						}
+						capcity = i;
+						len = i;
+					};
 					// void	assigne(size_type n, const value_type& val) {};
 
 					// get_allocator
@@ -378,12 +378,36 @@ namespace ft
 						// 	std::cout << "hlwa after popin " << v[i] << std::endl;
 					};
 					// insert
-					iterator insert( const_iterator pos, const T& value )
+				/*	iterator insert( const_iterator pos, const T& value )
 					{
 						// typedef ft::vector<int>::iterator ci;
 						// ci from (v->begin());
 						// typedef const_iterator ci=v->begin();
 						
+						unsigned int i=0,x=0;
+						value_type temp = _allocator.alloc(len+1);
+						value_type val = _allocator.alloc(sizeof(T));
+						val = value;
+						// while (first != last)
+						// while (ci != pos)
+						iterator it;
+						for (it=v.begin(); it != pos; ++it)
+						{
+							temp[x] = v[i];
+							// ci++;
+							i++;
+						}
+						temp[x] = val;
+						x++;
+						while (i<len)
+						{
+							temp[x] = v[i];
+							i++;
+						}
+						return it;
+					};
+					iterator insert( const_iterator pos, size_type count, const T& value )
+					{
 						unsigned int i=0,x=0;
 						T temp = _allocator.alloc(len+1);
 						T val = _allocator.alloc(sizeof(T));
@@ -403,14 +427,42 @@ namespace ft
 							temp[x] = v[i];
 							i++;
 						}
+						return it;
+					};
+					constexpr iterator  insert( const_iterator pos, size_type count, const T& value )
+					{
 						
 					};
-			/*		void	insert(iterator position, size_type n, const_value_type& val) {};
-					template <class InputIterator>void	insert(iterator position, InputIterator first, InputIterator last) {};
-					// erase
-					iterator	erase(iterator position) {};
-					iterator	erease(iterator first, iterator last) {};
-			*/		// swap
+					template< class InputIt > iterator insert( const_iterator pos, InputIt first, InputIt last )
+					{
+						
+					};
+			*/		// erase
+					iterator erase( iterator pos )
+					{
+						unsigned int i=0;
+						// while (first != last)
+						iterator it;
+						for (it=v->begin(); it != pos; ++it)
+						{
+							// v[i] = val;
+							// std::cout << v[i] << std::endl;
+							i++;
+						}
+						_allocator.deallocate(v[i]);
+						return it;
+					};
+					iterator erase( iterator first, iterator last )
+					{
+						// unsigned int i=0;
+						iterator it;
+						for (it=first; it!=last; ++it)
+						{
+							_allocator.deallocate(*this);
+						}
+						return it;
+					};
+					// swap
 					void	swap(vector& x)
 					{
 						// while (x != NULL)

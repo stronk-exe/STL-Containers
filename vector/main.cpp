@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 15:50:40 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/15 16:24:38 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:56:59 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int main ()
 
 	// std::cout << *(second.begin())+1 << std::endl;
 	std::cout << "size before " << first.size() << std::endl;
-	first.assign(4, 7);
-	typedef ft::vector<int>::const_iterator ci;
-	ci from (first.begin());
+	// first.assign(4, 7);
+	// typedef ft::vector<int>::const_iterator ci;
+	// ci gg (first.end());
 	// ft::iterator it = first.begin();
-	first.insert(ci, 2);
+	// first.insert(gg, 2);
 	// const std::string extra(4, 7);
 	// first.assign(extra.begin(), extra.end());
 	std::cout << "size after " << first.size() << std::endl;
