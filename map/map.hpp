@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/17 12:39:35 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/17 12:52:41 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,65 +47,65 @@ namespace ft
 
 		public:
 			// >> Member functions
-					//	Constructors
-						map() :  capcity(0), len(0)
+				//----	Constructors
+					map() :  capcity(0), len(0)
+					{
+						std::cout << "map default constractor called" << std::endl;
+					};
+					explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : _allocator(alloc), capcity(0), len(0)
+					{
+						m = alloc.allocate(len);
+						(void)comp;
+						std::cout << "map default constractor called" << std::endl;
+					};
+					template< class InputIt > map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) : _allocator(alloc)
+					{
+						int i=0;
+						// while (first != last)
+						for (iterator it=first; it != last; ++it)
 						{
-							std::cout << "map default constractor called" << std::endl;
-						};
-						explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : _allocator(alloc), capcity(0), len(0)
-						{
-							m = alloc.allocate(len);
-							(void)comp;
-							std::cout << "map default constractor called" << std::endl;
-						};
-						template< class InputIt > map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) : _allocator(alloc)
-						{
-							int i=0;
-							// while (first != last)
-							for (iterator it=first; it != last; ++it)
-							{
-								// v[i] = val;
-								// std::cout << v[i] << std::endl;
-								i++;
-							}
-							capcity = i;
-							len = i;
-							m = _allocator.allocate(i);
-							(void)comp;
-							std::cout << "map range constractor called!" << std::endl;
-						};
-						map( const map& other ) : capcity(other.capcity), len(other.len), m(other.m)
-						{
-							std::cout << "map copy constractor called!" << std::endl;
-						};
+							// v[i] = val;
+							// std::cout << v[i] << std::endl;
+							i++;
+						}
+						capcity = i;
+						len = i;
+						m = _allocator.allocate(i);
+						(void)comp;
+						std::cout << "map range constractor called!" << std::endl;
+					};
+					map( const map& other ) : capcity(other.capcity), len(other.len), m(other.m)
+					{
+						std::cout << "map copy constractor called!" << std::endl;
+					};
 
-					//	Destructor
-						~map()
-						{
-							// int i=0;
-							// while (m[i])
-							// {
-							// 	_allocator.deallocate(m[i]);
-							// 	i++;
-							// }
-							std::cout << "map destructor called" << std::endl;
-						};
+				//----	Destructor
+					~map()
+					{
+						// int i=0;
+						// while (m[i])
+						// {
+						// 	_allocator.deallocate(m[i]);
+						// 	i++;
+						// }
+						std::cout << "map destructor called" << std::endl;
+					};
 
-					//	operator=
-						map& operator=( const map& other )
-						{
-							capcity = other.capcity;
-							len = other.len;
-							m = other.m;
-							std::cout << "map assignement operator called" << std::endl;
-							return *this;
-						};
+				//----	operator=
+					map& operator=( const map& other )
+					{
+						capcity = other.capcity;
+						len = other.len;
+						m = other.m;
+						std::cout << "map assignement operator called" << std::endl;
+						return *this;
+					};
 
-					//	get_allocator
-						allocator_type get_allocator() const
-						{
-							return _allocator;
-						};
+				//----	get_allocator
+					allocator_type get_allocator() const
+					{
+						return _allocator;
+					};
 
 				//----	Element access
 					//	at
