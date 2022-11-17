@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/16 17:29:59 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/17 12:24:18 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,10 @@ namespace ft
 					};
 
 					// operator=
+						// vector& operator=( const vector& other )
+						// {
+							
+						// };
 					void assign( size_type count, const T& value )
 					{
 						// v = _allocator.allocate(count);
@@ -241,7 +245,7 @@ namespace ft
 					size_type	max_size() const
 					{
 						// return std::distance(begin(), end());
-						return capcity;
+						return capcity-len;
 					};
 
 					// resize
