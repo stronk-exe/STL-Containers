@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/18 17:15:08 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/21 17:24:05 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ namespace ft
 		public:
 			// >> Member functions
 				//----	Constructors
-					vector() : capcity(0), len(0) {};
-					explicit vector( const Allocator& alloc ) : capcity(0), len(0), v(nullptr), _allocator(alloc)
+					vector() : capcity(0), len(0) {
+						v = _allocator.allocate(len);
+					};
+
+					explicit vector( const Allocator& alloc ) : capcity(0), len(0), _allocator(alloc)
 					{
 						v = _allocator.allocate(len);
 						// std::cout << "vector default constractor called!" << std::endl;
@@ -61,7 +64,8 @@ namespace ft
 						// std::cout << "vector fill constractor called!" << std::endl;
 					};
 
-					template< class iterator > vector( iterator first, iterator last, const Allocator& alloc = Allocator() ) : _allocator(alloc)
+					// template< class iterator > vector( iterator first, iterator last, const Allocator& alloc = Allocator() ) : _allocator(alloc)
+				/*	template< class InputIt > vector( InputIt first, InputIt last, const Allocator& alloc = Allocator() ) : _allocator(alloc)
 					{
 						int i=0;
 						for (iterator it=first; it != last; ++it)
@@ -69,8 +73,8 @@ namespace ft
 						capcity = i;
 						len = i;
 						v = _allocator.allocate(i);
-						// std::cout << "vector range constractor called!" << std::endl;
-					};
+						std::cout << "vector range constractor called!" << std::endl;
+					};*/
 
 					vector( const vector& other ) : capcity(other.capcity), len(other.len), v(other.v)
 					{
@@ -176,41 +180,41 @@ namespace ft
 					// begin
 						iterator begin()
 						{
-							return v;
+							return iterator(v);
 						};
 						const_iterator begin() const
 						{
-							return v;
+							return const_iterator(v);
 						};
 
 					// end
 						iterator end()
 						{
-							return v+len;
+							return iterator(v+len);
 						};
 						const_iterator end() const
 						{
-							return v+len;
+							return const_iterator( v+len);
 						};
 
 					// rbegin
 						reverse_iterator rbegin()
 						{
-							return v;
+							return reverse_iterator(v);
 						};
 						const_reverse_iterator rbegin() const
 						{
-							return v;
+							return const_reverse_iterator(v);
 						};
 
 					// rend
 						reverse_iterator rend()
 						{
-							return v+len;
+							return reverse_iterator(v+len);
 						};
 						const_reverse_iterator rend() const
 						{
-							return v+len;
+							return const_reverse_iterator( v+len);
 						};
 
 				//----	Capacity
@@ -262,55 +266,64 @@ namespace ft
 					// insert
 						iterator insert( const_iterator pos, const T& value )
 						{
-							// typedef ft::vector<int>::iterator ci;
-							// ci from (v->begin());
-							// typedef const_iterator ci=v->begin();
-							
 							unsigned int i=0,x=0;
 							value_type *temp;
-							value_type val;
-							val = value;
-							// while (first != last)
-							// while (ci != pos)
+							
+							temp = _allocator.allocate(len+1);
 							iterator it;
-							for (it=this->begin(); it != pos; ++it)
+							if (pos == this->end())
+								pos--;
+							for (it=this->begin(); const_iterator(it) != pos; it++)
 							{
 								temp[x] = v[i];
-								// ci++;
+								x++;
 								i++;
 							}
-							temp[x] = val;
+							temp[x] = value;
 							x++;
-							while (i<len)
+							while (i<=len)
 							{
 								temp[x] = v[i];
+								x++;
 								i++;
 							}
+							this->v=temp;
+							len+=1;
 							return it;
 						};
 						iterator insert( const_iterator pos, size_type count, const T& value )
 						{
 							unsigned int i=0,x=0;
-							T temp = _allocator.alloc(len+1);
-							T val = _allocator.alloc(sizeof(T));
-							val = value;
-							// while (first != last)
-							// while (ci != pos)
-							(void)count;
+							value_type *temp;
+							
+							temp = _allocator.allocate(len+count);
 							iterator it;
-							for (it=v->begin(); it != pos; ++it)
+							if (pos == this->end())
+								pos--;
+							for (it=this->begin(); const_iterator(it) != pos; it++)
 							{
 								temp[x] = v[i];
-								// ci++;
+								x++;
 								i++;
 							}
-							temp[x] = val;
-							x++;
+							while (count>0)
+							{
+								temp[x] = value;
+								x++;
+								count--;
+							}
 							while (i<len)
 							{
 								temp[x] = v[i];
+								// std::cout << temp[x] << " mal ngliz b3d zmtat iran\n";
+								x++;
 								i++;
 							}
+							this->v=temp;
+							len=x;
+							// std::cout << len << " mal ngliz 9bl zmtat iran\n";
+							// if (!count)
+							// 	return pos;
 							return it;
 						};
 						/*constexpr iterator  insert( const_iterator pos, size_type count, const T& value )
@@ -351,25 +364,18 @@ namespace ft
 					// push_back
 						void push_back( const T& value )
 						{
-							// this->insert(val, data.end());
 							len+=1;
 							T *temp = v;
 							v = _allocator.allocate(len); // resize() here!
 							v = temp;
 							v[len-1] = value;
-							// for (size_type i=0; i<len; i++)
-							// 	std::cout << "hlwa's data " << v[i] << std::endl;
 						};
 
 					// pop_back
 						void pop_back()
 						{
-							// for (size_type i=0; i<len; i++)
-							// 	std::cout << "hlwa before popin " << this->v[i] << std::endl;
 							_allocator.destroy(v+(len-1));
 							len-=1;
-							// for (size_type i=0; i<len; i++)
-							// 	std::cout << "hlwa after popin " << v[i] << std::endl;
 						};
 
 					// resize
@@ -396,14 +402,44 @@ namespace ft
 							other.v = temp_v;
 						};
 
-			// >> Non-member functions
-				//	operator==
-				//	operator!=
-				//	operator<
-				//	operator<=
-				//	operator>
-				//	operator>=
 	};
+
+	// >> Non-member functions
+		//	operator==
+			template< class T, class Alloc > bool operator==( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs )
+			{
+				return lhs->len == rhs->len;
+			};
+
+			//	operator!=
+				template< class T, class Alloc > bool operator!=( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs )
+				{
+					return lhs->len != rhs->len;
+				};
+
+			//	operator<
+				template< class T, class Alloc > bool operator<( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs )
+				{
+					return lhs->len < rhs->len;
+				};
+
+			//	operator<=
+				template< class T, class Alloc > bool operator<=( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs )
+				{
+					return lhs->len <= rhs->len;
+				};
+
+			//	operator>
+				template< class T, class Alloc > bool operator>( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs )
+				{
+					return lhs->len > rhs->len;
+				};
+
+			//	operator>=
+				template< class T, class Alloc > bool operator>=( const std::vector<T,Alloc>& lhs, const std::vector<T,Alloc>& rhs )
+				{
+					return lhs->len >= rhs->len;
+				};
 }
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 10:33:44 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/21 11:07:04 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:51:21 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@
 
 namespace ft
 {
+	struct input_iterator_tag { };
+
+	struct output_iterator_tag { };
+
+	struct forward_iterator_tag : public input_iterator_tag { };
+
+	struct bidirectional_iterator_tag : public forward_iterator_tag { };
+
+	struct random_access_iterator_tag : public bidirectional_iterator_tag { };
+
 	template <class T> struct iterator_traits
 	{
 		typedef typename	T::vlaue_type			value_type;
@@ -30,7 +40,7 @@ namespace ft
 	{
 		typedef	T							value_type;
 		typedef	ptrdiff_t					difference_type;
-		typedef	random_access_iterator_tag	iterator_category;
+		typedef	ft::random_access_iterator_tag	iterator_category;
 		typedef	T*							pointer;
 		typedef	T&							reference;
 	};
@@ -39,7 +49,7 @@ namespace ft
 	{
 		typedef	T									value_type;
 		typedef	ptrdiff_t							difference_type;
-		typedef	random_access_iterator_tag			iterator_category;
+		typedef	ft::random_access_iterator_tag			iterator_category;
 		typedef	const	T*							pointer;
 		typedef	const	T&							reference;
 	};

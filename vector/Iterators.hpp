@@ -6,14 +6,14 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:37:29 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/16 16:47:24 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:29:20 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATORS_HPP
 #define ITERATORS_HPP
 
-#include <iterator>
+#include "Iterator_traits.hpp"
 
 namespace ft
 {
@@ -217,33 +217,33 @@ namespace ft
 	{
 		public:
 			typedef Iter													iterator_type;
-			typedef typename std::iterator_traits<Iter>::iterator_category	iterator_category;
-			typedef typename std::iterator_traits<Iter>::value_type			value_type;
-			typedef typename std::iterator_traits<Iter>::difference_type	difference_type;
-			typedef typename std::iterator_traits<Iter>::pointer			pointer;
-			typedef typename std::iterator_traits<Iter>::reference			reference;
+			typedef typename ft::iterator_traits<Iter>::iterator_category	iterator_category;
+			typedef typename ft::iterator_traits<Iter>::value_type			value_type;
+			typedef typename ft::iterator_traits<Iter>::difference_type	difference_type;
+			typedef typename ft::iterator_traits<Iter>::pointer			pointer;
+			typedef typename ft::iterator_traits<Iter>::reference			reference;
 			
 			Reverse_iterator(pointer _p) : p(_p) {};
 			Reverse_iterator&	operator++()
 			{
-				p++;
+				p--;
 				return *this;
 			}
 			Reverse_iterator	operator++(int)
 			{
 				Reverse_iterator it = *this;
-				++(*this);
+				--(*this);
 				return it;
 			}
 			Reverse_iterator&	operator--()
 			{
-				p--;
+				p++;
 				return *this;
 			}
 			Reverse_iterator	operator--(int)
 			{
 				Reverse_iterator it = *this;
-				--(*this);
+				++(*this);
 				return it;
 			}
 			Reverse_iterator	operator[](int index)

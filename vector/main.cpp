@@ -6,35 +6,134 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 15:50:40 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/18 17:15:41 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/21 16:58:55 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // constructing vectors
 #include <iostream>
 #include "vector.hpp"
-
+#include <iterator>
+#include "Iterators.hpp"
 int main ()
 {
 	// constructors used in the same order as described above:
-	ft::vector<int> first;                                // empty vector of ints
+	// ft::vector<int> first;                                // empty vector of ints
 	// ft::vector<int> second (4,100);                       // four ints with value 100
 	// ft::vector<int> third (second.begin(),second.end());  // iterating through second
 	// ft::vector<int> fourth (third);                       // a copy of third
 
 	// std::cout << *(second.begin())+1 << std::endl;
-	std::cout << "size before " << first.size() << std::endl;
-	first.assign(4, 7);
+	// std::cout << "size before " << first.size() << std::endl;
+	// first.assign(4, 7);
 	// typedef ft::vector<int>::const_iterator ci;
 	// ci gg (first.end());
-	auto it = first.begin();
+	// auto it = first.begin();
 	// ft::iterator it = first.begin();
-	first.insert(it, 2);
+	// first.insert(it, 2);
 	// const std::string extra(4, 7);
 	// first.assign(extra.begin(), extra.end());
-	std::cout << "size after " << first.size() << std::endl;
+	// std::cout << "size after " << first.size() << std::endl;
 	// for (ft::vector<int>::iterator it = first.begin() ; it != first.end(); ++it)
     // 	std::cout << *it << std::endl;
+	// ft::vector<double> vec;
+	// vec.assign(5, 8.8);
+	// vec.push_back(7.3);
+	// vec.push_back(7.4);
+	// vec.push_back(7.7);
+
+	// std::cout << "vec: \n";
+	// for(unsigned int i = 0; i < vec.size(); i++)
+	// 	std::cout << vec.at(i) << "\n";
+	// ft::vector<std::string> letters;
+ 
+    // letters.push_back("abc");
+    // std::string s("def");
+    // letters.push_back(std::move(s));
+ 
+    // std::cout << "std::vector `letters` holds: \n";
+    // for(unsigned int i = 0; i < letters.size(); i++)
+	// 	std::cout << letters[i] << "\n";
+// 	ft::vector<int> numbers;
+ 
+//     std::cout<<"[";
+// 	for(unsigned int i = 0; i < numbers.size(); i++)
+// 		std::cout << numbers[i] << " ";
+// 	 std::cout<<"]\n";
+ 
+//     numbers.push_back(5);
+//     numbers.push_back(3);
+//     numbers.push_back(4);
+ 
+//     std::cout<<"[";
+// 	for(unsigned int i = 0; i < numbers.size(); i++)
+// 		std::cout << numbers[i] << " ";
+// 	 std::cout<<"]\n";
+ 
+//     numbers.pop_back();
+ 
+//    std::cout<<"[";
+// 	for(unsigned int i = 0; i < numbers.size(); i++)
+// 		std::cout << numbers[i] << " ";
+// 	 std::cout<<"]\n";
+ 
+    // std::cout << "\nMoved-from string `s` holds: " << std::quoted(s) << '\n';
+	ft::vector<int> c1(3, 100);
+	std::cout<<"[";
+	for(unsigned int i = 0; i < c1.size(); i++)
+		std::cout << c1[i] << " ";
+	std::cout<<"]\n";
+
+	ft::vector<int>::const_iterator it = c1.begin();
+
+    c1.insert(it, 200);
+    std::cout<<"[";
+	for(unsigned int i = 0; i < c1.size(); i++)
+		std::cout << c1[i] << " ";
+	std::cout<<"]\n";
+	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+
+	ft::vector<int> ce1(3, 100);
+	std::cout<<"[";
+	for(unsigned int i = 0; i < ce1.size(); i++)
+		std::cout << ce1[i] << " ";
+	std::cout<<"]\n";
+
+	ft::vector<int>::const_iterator ite = ce1.end();
+
+    ce1.insert(ite, 200);
+    std::cout<<"[";
+	for(unsigned int i = 0; i < ce1.size(); i++)
+		std::cout << ce1[i] << " ";
+	std::cout<<"]\n";
+	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	ft::vector<int> c2(3, 100);
+	std::cout<<"[";
+	for(unsigned int i = 0; i < c2.size(); i++)
+		std::cout << c2[i] << " ";
+	std::cout<<"]\n";
+
+	ft::vector<int>::const_iterator it2 = c2.begin();
+
+    c2.insert(it2, 2, 300);
+    std::cout<<"[";
+	for(unsigned int i = 0; i < c2.size(); i++)
+		std::cout << c2[i] << " ";
+	std::cout<<"]\n";
+	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	ft::vector<int> ce2(3, 100);
+	std::cout<<"[";
+	for(unsigned int i = 0; i < ce2.size(); i++)
+		std::cout << ce2[i] << " ";
+	std::cout<<"]\n";
+
+	ft::vector<int>::const_iterator ite2 = ce2.end();
+
+    ce2.insert(ite2, 2, 300);
+    std::cout<<"[";
+	for(unsigned int i = 0; i < ce2.size(); i++)
+		std::cout << ce2[i] << " ";
+	std::cout<<"]\n";
 	std::cout << "^^^^^^^^^^^^^^" << std::endl;
 	// the iterator constructor can also be used to construct from arrays:
 	// int myints[] = {16,2,77,29};
@@ -216,18 +315,18 @@ int main ()
 	// 	std::cout << ' ' << *rev_from++;
 	// std::cout << '\n';
 	std::cout << "^^^^^^^^^^^^^^" << std::endl;
-	ft::vector<std::string> characters;
-	characters.push_back("stronk");
+	// ft::vector<std::string> characters;
+	// characters.push_back("stronk");
 	// characters.push_back('s');
 	// characters.push_back('s');
  
     
 
-    characters.assign(2, "stronkest");
+    // characters.assign(2, "stronkest");
 	// const std::string gg(2, 'l');
 	// characters.assign(gg.begin(), gg.end());
-    for (ft::vector<std::string>::iterator it = characters.begin() ; it != characters.end(); ++it)
-    	std::cout << *it << std::endl;
+    // for (ft::vector<std::string>::iterator it = characters.begin() ; it != characters.end(); ++it)
+    // 	std::cout << *it << std::endl;
 
     // const std::string extra(6, 'b');
     // characters.assign(extra.begin(), extra.end());
