@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/17 13:38:01 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/18 17:15:08 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ namespace ft
 					explicit vector( const Allocator& alloc ) : capcity(0), len(0), v(nullptr), _allocator(alloc)
 					{
 						v = _allocator.allocate(len);
-						std::cout << "vector default constractor called!" << std::endl;
+						// std::cout << "vector default constractor called!" << std::endl;
 					};
 
 					explicit vector( size_type count, const T& value = T(), const Allocator& alloc = Allocator()) : capcity(count), len(count), _allocator(alloc)
@@ -58,7 +58,7 @@ namespace ft
 						v = _allocator.allocate(len);
 						for (size_type i=0; i<len; i++)
 							v[i] = value;
-						std::cout << "vector fill constractor called!" << std::endl;
+						// std::cout << "vector fill constractor called!" << std::endl;
 					};
 
 					template< class iterator > vector( iterator first, iterator last, const Allocator& alloc = Allocator() ) : _allocator(alloc)
@@ -69,17 +69,18 @@ namespace ft
 						capcity = i;
 						len = i;
 						v = _allocator.allocate(i);
-						std::cout << "vector range constractor called!" << std::endl;
+						// std::cout << "vector range constractor called!" << std::endl;
 					};
 
 					vector( const vector& other ) : capcity(other.capcity), len(other.len), v(other.v)
 					{
-						std::cout << "vector copy constractor called!" << std::endl;
+						// std::cout << "vector copy constractor called!" << std::endl;
 					};
 
 				//----	Destructor
 					~vector()
 					{
+						this->clear();
 						std::cout << "vector Deconstractor called!" << std::endl;
 					};
 
@@ -95,27 +96,15 @@ namespace ft
 				//---	assign
 					void assign( size_type count, const T& value )
 					{
-						// v = _allocator.allocate(count);
-						for (unsigned int i=0; i<count; i++)
-						{
+						unsigned int	i;
+						for (i=0; i<count; i++)
 							v[i] = value;
-							// std::cout << v[i] << std::endl;
-							// i++;
-						}
-						capcity = count;
-						len = count;
 					};
-					template< class InputIt > void assign( InputIt first, InputIt last )
+					template< class iterator > void assign( iterator first, iterator last )
 					{
 						int i=0;
 						for (iterator it=first; it != last; ++it)
-						{
-							v[i] = it;
-							// std::cout << v[i] << std::endl;
-							i++;
-						}
-						capcity = i;
-						len = i;
+							v[i++] = it;
 					};
 
 				//----	get_allocator
@@ -278,13 +267,13 @@ namespace ft
 							// typedef const_iterator ci=v->begin();
 							
 							unsigned int i=0,x=0;
-							value_type temp = _allocator.alloc(len+1);
-							value_type val = _allocator.alloc(sizeof(T));
+							value_type *temp;
+							value_type val;
 							val = value;
 							// while (first != last)
 							// while (ci != pos)
 							iterator it;
-							for (it=v->begin(); it != pos; ++it)
+							for (it=this->begin(); it != pos; ++it)
 							{
 								temp[x] = v[i];
 								// ci++;

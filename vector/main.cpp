@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 15:50:40 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/16 16:56:59 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/18 17:15:41 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,17 @@ int main ()
 
 	// std::cout << *(second.begin())+1 << std::endl;
 	std::cout << "size before " << first.size() << std::endl;
-	// first.assign(4, 7);
+	first.assign(4, 7);
 	// typedef ft::vector<int>::const_iterator ci;
 	// ci gg (first.end());
+	auto it = first.begin();
 	// ft::iterator it = first.begin();
-	// first.insert(gg, 2);
+	first.insert(it, 2);
 	// const std::string extra(4, 7);
 	// first.assign(extra.begin(), extra.end());
 	std::cout << "size after " << first.size() << std::endl;
-	for (ft::vector<int>::iterator it = first.begin() ; it != first.end(); ++it)
-    	std::cout << *it << std::endl;
+	// for (ft::vector<int>::iterator it = first.begin() ; it != first.end(); ++it)
+    // 	std::cout << *it << std::endl;
 	std::cout << "^^^^^^^^^^^^^^" << std::endl;
 	// the iterator constructor can also be used to construct from arrays:
 	// int myints[] = {16,2,77,29};
@@ -214,14 +215,19 @@ int main ()
 	// while (rev_from != rev_until)
 	// 	std::cout << ' ' << *rev_from++;
 	// std::cout << '\n';
-	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
-	// ft::vector<char> characters;
+	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	ft::vector<std::string> characters;
+	characters.push_back("stronk");
+	// characters.push_back('s');
+	// characters.push_back('s');
  
     
 
-    // characters.assign(5, 'a');
-    // for (ft::vector<int>::iterator it = characters.begin() ; it != characters.end(); ++it)
-    // 	std::cout << *it << std::endl;
+    characters.assign(2, "stronkest");
+	// const std::string gg(2, 'l');
+	// characters.assign(gg.begin(), gg.end());
+    for (ft::vector<std::string>::iterator it = characters.begin() ; it != characters.end(); ++it)
+    	std::cout << *it << std::endl;
 
     // const std::string extra(6, 'b');
     // characters.assign(extra.begin(), extra.end());
