@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/21 17:24:05 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:54:44 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ namespace ft
 		public:
 			// >> Member functions
 				//----	Constructors
-					vector() : capcity(0), len(0) {
+					vector() : capcity(0), len(0)
+					{
 						v = _allocator.allocate(len);
 					};
 
@@ -406,37 +407,37 @@ namespace ft
 
 	// >> Non-member functions
 		//	operator==
-			template< class T, class Alloc > bool operator==( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs )
+			template< class T, class Y, class Alloc > bool operator==( const ft::vector<T,Alloc>& lhs, const ft::vector<Y,Alloc>& rhs )
 			{
 				return lhs->len == rhs->len;
 			};
 
 			//	operator!=
-				template< class T, class Alloc > bool operator!=( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs )
+				template< class T, class Y, class Alloc > bool operator!=( const ft::vector<T,Alloc>& lhs, const ft::vector<Y,Alloc>& rhs )
 				{
 					return lhs->len != rhs->len;
 				};
 
 			//	operator<
-				template< class T, class Alloc > bool operator<( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs )
+				template< class T, class Y, class Alloc > bool operator<( const ft::vector<T,Alloc>& lhs, const ft::vector<Y,Alloc>& rhs )
 				{
 					return lhs->len < rhs->len;
 				};
 
 			//	operator<=
-				template< class T, class Alloc > bool operator<=( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs )
+				template< class T, class Y, class Alloc > bool operator<=( const ft::vector<T,Alloc>& lhs, const ft::vector<Y,Alloc>& rhs )
 				{
 					return lhs->len <= rhs->len;
 				};
 
 			//	operator>
-				template< class T, class Alloc > bool operator>( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs )
+				template< class T, class Y, class Alloc > bool operator>( const ft::vector<T,Alloc>& lhs, const ft::vector<Y,Alloc>& rhs )
 				{
 					return lhs->len > rhs->len;
 				};
 
 			//	operator>=
-				template< class T, class Alloc > bool operator>=( const std::vector<T,Alloc>& lhs, const std::vector<T,Alloc>& rhs )
+				template< class T, class Y, class Alloc > bool operator>=( const std::vector<T,Alloc>& lhs, const std::vector<Y,Alloc>& rhs )
 				{
 					return lhs->len >= rhs->len;
 				};
