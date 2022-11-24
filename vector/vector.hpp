@@ -14,9 +14,11 @@
 #define VECTOR_HPP
 
 #include <iostream>
-#include "../exceptions.hpp"
-#include "Iterator_traits.hpp"
-#include "Iterators.hpp"
+#include "../utils/exceptions.hpp"
+#include "../utils/Iterator_traits.hpp"
+#include "../utils/Iterators.hpp"
+#include "../utils/utils.hpp"
+#include <cstddef>
 // #include "reverse_iterator.hpp"
 
 namespace ft
@@ -41,45 +43,65 @@ namespace ft
 			size_type		capcity;
 			size_type		len;
 			T				*v;
-			Allocator		_allocator;
+			allocator_type	_allocator;
 
 		public:
 			// >> Member functions
 				//----	Constructors
-					vector() : capcity(0), len(0)
+					vector() : capcity(0), len(0), v(NULL)
 					{
-						v = _allocator.allocate(len);
+						// v = _allocator.allocate(len);
 					};
 
-					explicit vector( const Allocator& alloc ) : capcity(0), len(0), _allocator(alloc)
+					explicit vector( const Allocator& alloc ) : capcity(0), len(0), _allocator(alloc), v(NULL)
 					{
-						v = _allocator.allocate(len);
+						// v = _allocator.allocate(len);
 						// std::cout << "vector default constractor called!" << std::endl;
 					};
 
-					explicit vector( size_type count, const T& value = T(), const Allocator& alloc = Allocator()) : capcity(count), len(count), _allocator(alloc)
+					explicit vector( size_type count, const T& value = T(), const Allocator& alloc = Allocator()) : capcity(count), len(count), v(NULL), _allocator(alloc)
 					{
 						v = _allocator.allocate(len);
 						for (size_type i=0; i<len; i++)
-							v[i] = value;
+							_allocator.construct(v+i, value);
+							// v[i] = value;
 						// std::cout << "vector fill constractor called!" << std::endl;
 					};
 
 					// template< class iterator > vector( iterator first, iterator last, const Allocator& alloc = Allocator() ) : _allocator(alloc)
-				/*	template< class InputIt > vector( InputIt first, InputIt last, const Allocator& alloc = Allocator() ) : _allocator(alloc)
+				/*	template< class InputIt >
+					vector( InputIt first, InputIt last, const Allocator& alloc = Allocator(), typename ft::enable_if<!is_integeal<InputIt>::value, InputIt>::type = InputIt()) : capcity(0), len(0), _allocator(alloc), v(NULL)
 					{
-						int i=0;
-						for (iterator it=first; it != last; ++it)
+						size_type i=0,count=0;
+						InputIt temp1=first, temp2=last;
+						while (temp1 != temp2)
+						{
+							count+=1;
+							temp1++;
+						}
+						len = count;
+						capcity = len;
+						v = alloc.allocate(capcity);
+						while (first != last)
+						{
+							alloc.construct(v+i, *first);
+							first++;
 							i++;
-						capcity = i;
-						len = i;
-						v = _allocator.allocate(i);
+						}
 						std::cout << "vector range constractor called!" << std::endl;
 					};*/
 
-					vector( const vector& other ) : capcity(other.capcity), len(other.len), v(other.v)
+					vector( const vector& other ) : capcity(other.capcity), len(other.len), v(NULL), _allocator(other._allocator)
 					{
 						// std::cout << "vector copy constractor called!" << std::endl;
+						// *this = other;
+						int i=0;
+						v = _allocator.allocate(len);
+						while (i<len)
+						{
+							_allocator.construct(v+i, other.v[i]);
+							i+=1;
+						}
 					};
 
 				//----	Destructor
@@ -92,25 +114,51 @@ namespace ft
 				//----	operator=
 					vector& operator=( const vector& other )
 					{
-						capcity = other.capcity;
-						len = other.len;
-						v = other.v;
+						if (*this != other)
+						{
+							for (size_type i=0; i<len; i++)
+								_allocator.destroy(v+i);
+							if (capcity)
+								_allocator.deallocate(v, capcity);
+							capcity = other.capcity;
+							len = other.len;
+							v = other.v;
+							_allocator = other._allocator;
+							for (size_type i=0; i<len; i++)
+								_allocator.construct(v+i, other.v[i]);
+						}
 						return *this;
 					};
 
 				//---	assign
-					void assign( size_type count, const T& value )
+				/*	void assign( size_type count, const T& value )
 					{
-						unsigned int	i;
-						for (i=0; i<count; i++)
-							v[i] = value;
+						// unsigned int	i;
+						// for (i=0; i<count; i++)
+						// 	v[i] = value;
+						if (!capcity())
+						{
+							v = _allocator.allocate(count);
+							capcity = count;
+							len = count;
+
+						}
+						else if (count > capcity)
+						{
+							_allocator.deallocate(v, capcity);
+							capcity = count;
+							len = count;
+							v = _allocator.allocate(capcity);
+						}
+						for (size_type i=0; i < count; i++)
+							_allocator.construct(v+i, value);
 					};
 					template< class iterator > void assign( iterator first, iterator last )
 					{
 						int i=0;
 						for (iterator it=first; it != last; ++it)
 							v[i++] = it;
-					};
+					};*/
 
 				//----	get_allocator
 					allocator_type get_allocator() const
@@ -236,16 +284,27 @@ namespace ft
 					// max_size
 						size_type max_size() const
 						{
-							return capcity-len;
+							return _allocator.max_size();
 						};
 
 					// reserve
 						void reserve( size_type new_cap )
 						{
+							size_type	temp_len;
+							pointer		temp_v;
+						
 							if (new_cap > capcity)
 							{
+								temp_v = _allocator.allocate(new_cap);
+								for (size_type i=0; i < len; i++)
+									_allocator.construct(temp_v+i, v[i]);
+								temp_len = len;
+								clear();
+								_allocator.deallocate(v, capcity);
+								len = temp_len;
+								v = temp_v;
 								capcity = new_cap;
-								this->_allocator(capcity);
+
 							}
 						};
 
@@ -259,13 +318,13 @@ namespace ft
 					// clear
 						void clear()
 						{
-							_allocator.destroy(v);
-							capcity = 0;
+							for (size_type i=0; i < capcity; i++)
+								_allocator.destroy(v+i);
 							len = 0;
 						};
 
 					// insert
-						iterator insert( const_iterator pos, const T& value )
+					/*	iterator insert( const_iterator pos, const T& value )
 						{
 							unsigned int i=0,x=0;
 							value_type *temp;
@@ -326,7 +385,7 @@ namespace ft
 							// if (!count)
 							// 	return pos;
 							return it;
-						};
+						};*/
 						/*constexpr iterator  insert( const_iterator pos, size_type count, const T& value )
 						{
 							
@@ -337,7 +396,7 @@ namespace ft
 						};*/
 
 					// erase
-						iterator erase( iterator pos )
+					/*	iterator erase( iterator pos )
 						{
 							unsigned int i=0;
 							// while (first != last)
@@ -360,16 +419,17 @@ namespace ft
 								_allocator.deallocate(*this);
 							}
 							return it;
-						};
+						};*/
 
 					// push_back
 						void push_back( const T& value )
 						{
+							if (!capcity)
+								reserve(1);
+							else if (len+1 > capcity)
+								reserve(capcity * 2);
+							_allocator.construct(v+len, value);
 							len+=1;
-							T *temp = v;
-							v = _allocator.allocate(len); // resize() here!
-							v = temp;
-							v[len-1] = value;
 						};
 
 					// pop_back
@@ -380,7 +440,7 @@ namespace ft
 						};
 
 					// resize
-						void resize( size_type count, T value = T() )
+					/*	void resize( size_type count, T value = T() )
 						{
 							if (count < len)
 								for (size_type i=count; i<len; i++)
@@ -390,7 +450,7 @@ namespace ft
 									push_back(value);
 							len = count;
 							// capcity = n;
-						};
+						};*/
 
 					// swap
 						void swap( vector& other )
@@ -407,39 +467,48 @@ namespace ft
 
 	// >> Non-member functions
 		//	operator==
-			template< class T, class Y, class Alloc > bool operator==( const ft::vector<T,Alloc>& lhs, const ft::vector<Y,Alloc>& rhs )
+			template< class T, class Alloc > bool operator==( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
 			{
-				return lhs->len == rhs->len;
+				// return lhs.size() == rhs.size();
+				if (lhs.size() != rhs.size())
+					return false;
+				return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 			};
 
 			//	operator!=
-				template< class T, class Y, class Alloc > bool operator!=( const ft::vector<T,Alloc>& lhs, const ft::vector<Y,Alloc>& rhs )
+				template< class T, class Alloc > bool operator!=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
 				{
-					return lhs->len != rhs->len;
+					// return lhs.size() != rhs.size();
+					return !(lhs == rhs);
 				};
 
 			//	operator<
-				template< class T, class Y, class Alloc > bool operator<( const ft::vector<T,Alloc>& lhs, const ft::vector<Y,Alloc>& rhs )
+				template< class T, class Alloc > bool operator<( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
 				{
-					return lhs->len < rhs->len;
+					// return lhs.size() < rhs.size();
+					// return lhs < rhs;
+					return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 				};
 
 			//	operator<=
 				template< class T, class Y, class Alloc > bool operator<=( const ft::vector<T,Alloc>& lhs, const ft::vector<Y,Alloc>& rhs )
 				{
-					return lhs->len <= rhs->len;
+					// return lhs.size() <= rhs.size();
+					return !(rhs < lhs);
 				};
 
 			//	operator>
 				template< class T, class Y, class Alloc > bool operator>( const ft::vector<T,Alloc>& lhs, const ft::vector<Y,Alloc>& rhs )
 				{
-					return lhs->len > rhs->len;
+					// return lhs.size() > rhs.size();
+					return rhs < lhs;
 				};
 
 			//	operator>=
-				template< class T, class Y, class Alloc > bool operator>=( const std::vector<T,Alloc>& lhs, const std::vector<Y,Alloc>& rhs )
+				template< class T, class Alloc > bool operator>=( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs )
 				{
-					return lhs->len >= rhs->len;
+					// return lhs.size() >= rhs.size();
+					return !(lhs < rhs);
 				};
 }
 

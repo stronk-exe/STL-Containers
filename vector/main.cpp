@@ -14,7 +14,7 @@
 #include <iostream>
 #include "vector.hpp"
 #include <iterator>
-#include "Iterators.hpp"
+#include "../utils/Iterators.hpp"
 int main ()
 {
 	// constructors used in the same order as described above:
@@ -78,63 +78,63 @@ int main ()
 // 	 std::cout<<"]\n";
  
     // std::cout << "\nMoved-from string `s` holds: " << std::quoted(s) << '\n';
-	ft::vector<int> c1(3, 100);
-	std::cout<<"[";
-	for(unsigned int i = 0; i < c1.size(); i++)
-		std::cout << c1[i] << " ";
-	std::cout<<"]\n";
+	// ft::vector<int> c1(3, 100);
+	// std::cout<<"[";
+	// for(unsigned int i = 0; i < c1.size(); i++)
+	// 	std::cout << c1[i] << " ";
+	// std::cout<<"]\n";
 
-	ft::vector<int>::const_iterator it = c1.begin();
+	// ft::vector<int>::const_iterator it = c1.begin();
 
-    c1.insert(it, 200);
-    std::cout<<"[";
-	for(unsigned int i = 0; i < c1.size(); i++)
-		std::cout << c1[i] << " ";
-	std::cout<<"]\n";
-	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+    // c1.insert(it, 200);
+    // std::cout<<"[";
+	// for(unsigned int i = 0; i < c1.size(); i++)
+	// 	std::cout << c1[i] << " ";
+	// std::cout<<"]\n";
+	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
 
-	ft::vector<int> ce1(3, 100);
-	std::cout<<"[";
-	for(unsigned int i = 0; i < ce1.size(); i++)
-		std::cout << ce1[i] << " ";
-	std::cout<<"]\n";
+	// ft::vector<int> ce1(3, 100);
+	// std::cout<<"[";
+	// for(unsigned int i = 0; i < ce1.size(); i++)
+	// 	std::cout << ce1[i] << " ";
+	// std::cout<<"]\n";
 
-	ft::vector<int>::const_iterator ite = ce1.end();
+	// ft::vector<int>::const_iterator ite = ce1.end();
 
-    ce1.insert(ite, 200);
-    std::cout<<"[";
-	for(unsigned int i = 0; i < ce1.size(); i++)
-		std::cout << ce1[i] << " ";
-	std::cout<<"]\n";
-	std::cout << "^^^^^^^^^^^^^^" << std::endl;
-	ft::vector<int> c2(3, 100);
-	std::cout<<"[";
-	for(unsigned int i = 0; i < c2.size(); i++)
-		std::cout << c2[i] << " ";
-	std::cout<<"]\n";
+    // ce1.insert(ite, 200);
+    // std::cout<<"[";
+	// for(unsigned int i = 0; i < ce1.size(); i++)
+	// 	std::cout << ce1[i] << " ";
+	// std::cout<<"]\n";
+	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	// ft::vector<int> c2(3, 100);
+	// std::cout<<"[";
+	// for(unsigned int i = 0; i < c2.size(); i++)
+	// 	std::cout << c2[i] << " ";
+	// std::cout<<"]\n";
 
-	ft::vector<int>::const_iterator it2 = c2.begin();
+	// ft::vector<int>::const_iterator it2 = c2.begin();
 
-    c2.insert(it2, 2, 300);
-    std::cout<<"[";
-	for(unsigned int i = 0; i < c2.size(); i++)
-		std::cout << c2[i] << " ";
-	std::cout<<"]\n";
-	std::cout << "^^^^^^^^^^^^^^" << std::endl;
-	ft::vector<int> ce2(3, 100);
-	std::cout<<"[";
-	for(unsigned int i = 0; i < ce2.size(); i++)
-		std::cout << ce2[i] << " ";
-	std::cout<<"]\n";
+    // c2.insert(it2, 2, 300);
+    // std::cout<<"[";
+	// for(unsigned int i = 0; i < c2.size(); i++)
+	// 	std::cout << c2[i] << " ";
+	// std::cout<<"]\n";
+	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	// ft::vector<int> ce2(3, 100);
+	// std::cout<<"[";
+	// for(unsigned int i = 0; i < ce2.size(); i++)
+	// 	std::cout << ce2[i] << " ";
+	// std::cout<<"]\n";
 
-	ft::vector<int>::const_iterator ite2 = ce2.end();
+	// ft::vector<int>::const_iterator ite2 = ce2.end();
 
-    ce2.insert(ite2, 2, 300);
-    std::cout<<"[";
-	for(unsigned int i = 0; i < ce2.size(); i++)
-		std::cout << ce2[i] << " ";
-	std::cout<<"]\n";
-	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+    // ce2.insert(ite2, 2, 300);
+    // std::cout<<"[";
+	// for(unsigned int i = 0; i < ce2.size(); i++)
+	// 	std::cout << ce2[i] << " ";
+	// std::cout<<"]\n";
+	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
 	// the iterator constructor can also be used to construct from arrays:
 	// int myints[] = {16,2,77,29};
 	// ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
@@ -278,15 +278,16 @@ int main ()
 	// if (typeid(traits::iterator_category)==typeid(std::random_access_iterator_tag))
 	// 	std::cout << "int* is a random-access iterator\n";
 	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
-	// ft::vector<int> values;
-	// values.push_back(1);
-	// values.push_back(2);
-	// values.push_back(3);
-	// values.push_back(4);
-	// values.push_back(5);
-	// std::cout << "not using iterators" << std::endl;
-	// for (unsigned int i=0; i<values.size(); i++)
-	// 	std::cout << values[i] << std::endl;
+	ft::vector<int> values;
+	values.push_back(1);
+	values.push_back(2);
+	values.push_back(3);
+	values.push_back(4);
+	// std::cout <<"size-- "<<values.size()<<"--\n";
+	values.push_back(5);
+	std::cout << "not using iterators" << std::endl;
+	for (unsigned int i=0; i<values.size(); i++)
+		std::cout << values[i] << std::endl;
 	// // std::cout << "Range-based for loop" << std::endl;
 	// // for (unsigned int value : values)
 	// // 	std::cout << value << std::endl;
@@ -314,7 +315,33 @@ int main ()
 	// while (rev_from != rev_until)
 	// 	std::cout << ' ' << *rev_from++;
 	// std::cout << '\n';
-	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	// ft::vector<int> alice(1, 2);
+    // ft::vector<int> bob(7, 10);
+    // ft::vector<int> eve(1, 3);
+
+    // std::cout << std::boolalpha;
+
+    // // Compare non equal containers
+    // std::cout << "alice == bob returns " << (alice == bob) << '\n';
+    // std::cout << "alice != bob returns " << (alice != bob) << '\n';
+    // std::cout << "alice <  bob returns " << (alice < bob) << '\n';
+    // std::cout << "alice <= bob returns " << (alice <= bob) << '\n';
+    // std::cout << "alice >  bob returns " << (alice > bob) << '\n';
+    // std::cout << "alice >= bob returns " << (alice >= bob) << '\n';
+
+    // std::cout << '\n';
+
+    // // Compare equal containers
+    // std::cout << "alice == eve returns " << (alice == eve) << '\n';
+    // std::cout << "alice != eve returns " << (alice != eve) << '\n';
+    // std::cout << "alice <  eve returns " << (alice < eve) << '\n';
+    // std::cout << "alice <= eve returns " << (alice <= eve) << '\n';
+    // std::cout << "alice >  eve returns " << (alice > eve) << '\n';
+    // std::cout << "alice >= eve returns " << (alice >= eve) << '\n';
+
+
+
 	// ft::vector<std::string> characters;
 	// characters.push_back("stronk");
 	// characters.push_back('s');
