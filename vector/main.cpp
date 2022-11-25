@@ -78,20 +78,26 @@ int main ()
 // 	 std::cout<<"]\n";
  
     // std::cout << "\nMoved-from string `s` holds: " << std::quoted(s) << '\n';
-	// ft::vector<int> c1(3, 100);
-	// std::cout<<"[";
-	// for(unsigned int i = 0; i < c1.size(); i++)
-	// 	std::cout << c1[i] << " ";
-	// std::cout<<"]\n";
+	ft::vector<int> c1(3, 100);
+	std::cout<<"[";
+	for(unsigned int i = 0; i < c1.size(); i++)
+		std::cout << c1[i] << " ";
+	std::cout<<"]\n";
 
-	// ft::vector<int>::const_iterator it = c1.begin();
+	ft::vector<int>::iterator it = c1.begin();
 
-    // c1.insert(it, 200);
-    // std::cout<<"[";
-	// for(unsigned int i = 0; i < c1.size(); i++)
-	// 	std::cout << c1[i] << " ";
-	// std::cout<<"]\n";
-	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
+    c1.insert(it, 200);
+	// c1.erase(ie);
+	ft::vector<int>::iterator ie = c1.begin();
+	ft::vector<int>::iterator ei = c1.end();
+	// ei--;
+	// ei--;
+	c1.erase(ie, ei);
+    std::cout<<"[";
+	for(unsigned int i = 0; i < c1.size(); i++)
+		std::cout << c1[i] << " ";
+	std::cout<<"]\n";
+	std::cout << "^^^^^^^^^^^^^^" << std::endl;
 
 	// ft::vector<int> ce1(3, 100);
 	// std::cout<<"[";
@@ -99,7 +105,7 @@ int main ()
 	// 	std::cout << ce1[i] << " ";
 	// std::cout<<"]\n";
 
-	// ft::vector<int>::const_iterator ite = ce1.end();
+	// ft::vector<int>::iterator ite = ce1.end();
 
     // ce1.insert(ite, 200);
     // std::cout<<"[";
@@ -113,9 +119,9 @@ int main ()
 	// 	std::cout << c2[i] << " ";
 	// std::cout<<"]\n";
 
-	// ft::vector<int>::const_iterator it2 = c2.begin();
+	// ft::vector<int>::iterator it2 = c2.begin();
 
-    // c2.insert(it2, 2, 300);
+    // c2.insert(it2, 2, 700);
     // std::cout<<"[";
 	// for(unsigned int i = 0; i < c2.size(); i++)
 	// 	std::cout << c2[i] << " ";
@@ -127,7 +133,7 @@ int main ()
 	// 	std::cout << ce2[i] << " ";
 	// std::cout<<"]\n";
 
-	// ft::vector<int>::const_iterator ite2 = ce2.end();
+	// ft::vector<int>::iterator ite2 = ce2.end();
 
     // ce2.insert(ite2, 2, 300);
     // std::cout<<"[";
@@ -233,6 +239,32 @@ int main ()
 	// for (size_t i=0;i<myvector.size();i++)
 	// 	std::cout << ' ' << myvector[i];
 	// std::cout << '\n';
+	// ft::vector<int> c;
+	// c.push_back(1);
+	// c.push_back(2);
+	// c.push_back(3);
+    // std::cout << "The vector holds: ";
+    // for (size_t i=0;i<c.size();i++)
+	// 	std::cout << ' ' << c[i];
+    // std::cout << '\n';
+ 
+    // c.resize(5);
+    // std::cout << "After resize up to 5: ";
+    // for (size_t i=0;i<c.size();i++)
+	// 	std::cout << ' ' << c[i];
+    // std::cout << '\n';
+ 
+    // c.resize(2);
+    // std::cout << "After resize down to 2: ";
+    // for (size_t i=0;i<c.size();i++)
+	// 	std::cout << ' ' << c[i];
+    // std::cout << '\n';
+ 
+    // c.resize(6, 4);
+    // std::cout << "After resize up to 6 (initializer = 4): ";
+    // for (size_t i=0;i<c.size();i++)
+	// 	std::cout << ' ' << c[i];
+    // std::cout << '\n';
 	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
 	// std::cout << "^^^ at ^^^" << std::endl;
 	// ft::vector<int> myvector2 (10);
@@ -278,16 +310,16 @@ int main ()
 	// if (typeid(traits::iterator_category)==typeid(std::random_access_iterator_tag))
 	// 	std::cout << "int* is a random-access iterator\n";
 	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
-	ft::vector<int> values;
-	values.push_back(1);
-	values.push_back(2);
-	values.push_back(3);
-	values.push_back(4);
+	// ft::vector<int> values;
+	// values.push_back(1);
+	// values.push_back(2);
+	// values.push_back(3);
+	// values.push_back(4);
 	// std::cout <<"size-- "<<values.size()<<"--\n";
-	values.push_back(5);
-	std::cout << "not using iterators" << std::endl;
-	for (unsigned int i=0; i<values.size(); i++)
-		std::cout << values[i] << std::endl;
+	// values.push_back(5);
+	// std::cout << "not using iterators" << std::endl;
+	// for (unsigned int i=0; i<values.size(); i++)
+	// 	std::cout << values[i] << std::endl;
 	// // std::cout << "Range-based for loop" << std::endl;
 	// // for (unsigned int value : values)
 	// // 	std::cout << value << std::endl;
@@ -342,7 +374,7 @@ int main ()
 
 
 
-	// ft::vector<std::string> characters;
+	// ft::vector<int> characters;
 	// characters.push_back("stronk");
 	// characters.push_back('s');
 	// characters.push_back('s');
@@ -350,9 +382,9 @@ int main ()
     
 
     // characters.assign(2, "stronkest");
-	// const std::string gg(2, 'l');
+	// std::string gg(2, 7);
 	// characters.assign(gg.begin(), gg.end());
-    // for (ft::vector<std::string>::iterator it = characters.begin() ; it != characters.end(); ++it)
+    // for (ft::vector<int>::iterator it = characters.begin() ; it != characters.end(); ++it)
     // 	std::cout << *it << std::endl;
 
     // const std::string extra(6, 'b');

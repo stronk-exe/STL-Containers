@@ -131,33 +131,78 @@ namespace ft
 					};
 
 				//---	assign
-				/*	void assign( size_type count, const T& value )
+					void assign( size_type count, const T& value )
 					{
 						// unsigned int	i;
 						// for (i=0; i<count; i++)
 						// 	v[i] = value;
-						if (!capcity())
-						{
-							v = _allocator.allocate(count);
-							capcity = count;
-							len = count;
+						// if (!capcity())
+						// {
+						// 	v = _allocator.allocate(count);
+						// 	capcity = count;
+						// 	len = count;
 
-						}
-						else if (count > capcity)
+						// }
+						// else if (count > capcity)
+						// {
+						// 	_allocator.deallocate(v, capcity);
+						// 	capcity = count;
+						// 	len = count;
+						// 	v = _allocator.allocate(capcity);
+						// }
+						// for (size_type i=0; i < count; i++)
+						// 	_allocator.construct(v+i, value);
+						clear();
+						// v = _allocator.allocate(count);
+						if (count > capcity)
 						{
-							_allocator.deallocate(v, capcity);
+							// _allocator.deallocate(v, capcity);
 							capcity = count;
-							len = count;
+						// std::cout <<"yo\n";
+							// resize(count);
+							// reserve(c)
 							v = _allocator.allocate(capcity);
 						}
-						for (size_type i=0; i < count; i++)
-							_allocator.construct(v+i, value);
+						len = count;
+						for (size_type i=0; i < len; i++)
+								_allocator.construct(v+i, value);
+						// if (count > len)
+						// {
+						// 	clear();
+						// 	len = count;
+						// 	capcity = count;
+						// 	for (size_type i=0; i < count; i++)
+						// 		_allocator.construct(v+i, value);
+						// }
 					};
-					template< class iterator > void assign( iterator first, iterator last )
+				/*	template< class InputIt > void assign( InputIt first, InputIt last )
 					{
-						int i=0;
-						for (iterator it=first; it != last; ++it)
-							v[i++] = it;
+						// int i=0;
+						// for (iterator it=first; it != last; ++it)
+						// 	v[i++] = it;
+						size_type i=0;
+						InputIt tempf, templ;
+
+						tempf = first;
+						templ = last;
+						while (tempf != templ)
+						{
+							std::cout << "whota"<< i<<"\n";
+							i++;
+						}
+						clear();
+						if (i > capcity)
+						{
+							capcity = i;
+							v = _allocator.allocate(capcity);
+						}
+						len = capcity;
+						i=0;
+						while (first != last)
+						{
+							_allocator.construct(v+i, *first);
+							i++;
+						}
 					};*/
 
 				//----	get_allocator
@@ -172,13 +217,13 @@ namespace ft
 						{
 							if (pos < 0 || pos > len)
 								throw invalidIndex();
-							return *(v+pos);
+							return v[pos];
 						};
 						const_reference at( size_type pos ) const
 						{
 							if (pos < 0 || pos > len)
 								throw invalidIndex();
-							return *(v+pos);
+							return v[pos];
 						};
 
 					// operator[]
@@ -198,32 +243,32 @@ namespace ft
 					// front
 						reference front()
 						{
-							return *v;
+							return v[0];
 						};
 						const_reference front() const
 						{
-							return *v;
+							return v[0];
 						};
 
 					// back
 						reference back()
 						{
-							return *(v+(len-1));
+							return v[len-1];
 						};
 						const_reference back() const
 						{
-							return *(v+(len-1));
+							return v[len-1];
 						};
 
-					// data
-						T* data()
-						{
-							return v;
-						};
-						const T* data() const
-						{
-							return v;
-						};
+					// data NOT IN CPP --98
+						// T* data()
+						// {
+						// 	return v;
+						// };
+						// const T* data() const
+						// {
+						// 	return v;
+						// };
 
 				//----	Iterators
 					// begin
@@ -324,68 +369,114 @@ namespace ft
 						};
 
 					// insert
-					/*	iterator insert( const_iterator pos, const T& value )
+						iterator insert( iterator pos, const T& value )
 						{
-							unsigned int i=0,x=0;
-							value_type *temp;
+							// unsigned int i=0,x=0;
+							// value_type *temp;
 							
-							temp = _allocator.allocate(len+1);
-							iterator it;
-							if (pos == this->end())
-								pos--;
-							for (it=this->begin(); const_iterator(it) != pos; it++)
+							// temp = _allocator.allocate(len+1);
+							// iterator it;
+							// if (pos == this->end())
+							// 	pos--;
+							// for (it=this->begin(); const_iterator(it) != pos; it++)
+							// {
+							// 	temp[x] = v[i];
+							// 	x++;
+							// 	i++;
+							// }
+							// temp[x] = value;
+							// x++;
+							// while (i<=len)
+							// {
+							// 	temp[x] = v[i];
+							// 	x++;
+							// 	i++;
+							// }
+							// this->v=temp;
+							// len+=1;
+							// return it;
+							size_type index;
+							value_type temp;
+
+							index = &(*pos) - v;
+							if (len+1 > capcity)
+								capcity *= 2;
+							// push_back(value);
+							// temp = v[len-1];
+							_allocator.construct(v+len, value);
+							for (size_type i=len; i > index; i--)
 							{
-								temp[x] = v[i];
-								x++;
-								i++;
+								temp = v[i];
+								v[i] = v[i-1];
+								v[i-1] = temp;
 							}
-							temp[x] = value;
-							x++;
-							while (i<=len)
-							{
-								temp[x] = v[i];
-								x++;
-								i++;
-							}
-							this->v=temp;
-							len+=1;
-							return it;
+							// v[i]=temp;
+							len += 1;
+							return iterator(v+index);
 						};
-						iterator insert( const_iterator pos, size_type count, const T& value )
+						iterator insert( iterator pos, size_type count, const T& value )
 						{
-							unsigned int i=0,x=0;
-							value_type *temp;
+							// unsigned int i=0,x=0;
+							// value_type *temp;
 							
-							temp = _allocator.allocate(len+count);
-							iterator it;
-							if (pos == this->end())
-								pos--;
-							for (it=this->begin(); const_iterator(it) != pos; it++)
+							// temp = _allocator.allocate(len+count);
+							// iterator it;
+							// if (pos == this->end())
+							// 	pos--;
+							// for (it=this->begin(); const_iterator(it) != pos; it++)
+							// {
+							// 	temp[x] = v[i];
+							// 	x++;
+							// 	i++;
+							// }
+							// while (count>0)
+							// {
+							// 	temp[x] = value;
+							// 	x++;
+							// 	count--;
+							// }
+							// while (i<len)
+							// {
+							// 	temp[x] = v[i];
+							// 	// std::cout << temp[x] << " mal ngliz b3d zmtat iran\n";
+							// 	x++;
+							// 	i++;
+							// }
+							// this->v=temp;
+							// len=x;
+							// // std::cout << len << " mal ngliz 9bl zmtat iran\n";
+							// // if (!count)
+							// // 	return pos;
+							// return it;
+							size_type index;
+							value_type temp;
+
+							index = &(*pos) - v;
+							if (len+count > capcity)
+								capcity *= 2;
+							// push_back(value);
+							// temp = v[len-1];
+							for (size_type i=0; i < count; i++)
 							{
-								temp[x] = v[i];
-								x++;
-								i++;
+								_allocator.construct(v+len, value);
+								len += 1;
+								// x+=1;
 							}
-							while (count>0)
+							for (size_type x=0; x < count; x++)
 							{
-								temp[x] = value;
-								x++;
-								count--;
+								for (size_type i=len-count+x; i > index; i--)
+								{
+									temp = v[i];
+									v[i] = v[i-1];
+									v[i-1] = temp;
+								}
+								index+=1;
+								// std::cout <<"yo\n";
 							}
-							while (i<len)
-							{
-								temp[x] = v[i];
-								// std::cout << temp[x] << " mal ngliz b3d zmtat iran\n";
-								x++;
-								i++;
-							}
-							this->v=temp;
-							len=x;
-							// std::cout << len << " mal ngliz 9bl zmtat iran\n";
-							// if (!count)
-							// 	return pos;
-							return it;
-						};*/
+							// v[i]=temp;
+							// len += x;
+							return iterator(v+index);
+						};
 						/*constexpr iterator  insert( const_iterator pos, size_type count, const T& value )
 						{
 							
@@ -396,30 +487,61 @@ namespace ft
 						};*/
 
 					// erase
-					/*	iterator erase( iterator pos )
+						iterator erase( iterator pos )
 						{
-							unsigned int i=0;
-							// while (first != last)
-							iterator it;
-							for (it=v->begin(); it != pos; ++it)
-							{
-								// v[i] = val;
-								// std::cout << v[i] << std::endl;
-								i++;
-							}
-							_allocator.deallocate(v[i]);
-							return it;
+							// unsigned int i=0;
+							// // while (first != last)
+							// iterator it;
+							// for (it=v->begin(); it != pos; ++it)
+							// {
+							// 	// v[i] = val;
+							// 	// std::cout << v[i] << std::endl;
+							// 	i++;
+							// }
+							// _allocator.deallocate(v[i]);
+							// return it;
+
+							size_type index;
+							// value_type temp;
+
+							index = &(*pos) - v;
+							_allocator.destroy(v+index);
+							for (size_type i=index; i<len-1; i++)
+								v[i] = v[i+1];
+							len-=1;
+							return iterator(v+index);
 						};
 						iterator erase( iterator first, iterator last )
 						{
 							// unsigned int i=0;
-							iterator it;
-							for (it=first; it!=last; ++it)
+							// iterator it;
+							// for (it=first; it!=last; ++it)
+							// {
+							// 	_allocator.deallocate(*this);
+							// }
+							// return it;
+
+							size_type index, count, i;
+							// value_type temp;
+
+							index = &(*first) - v;
+							count = &(*last) - &(*first);
+							// std::cout << "index " << index << count<<"\n";
+							for (i=index; i<count; i++)
 							{
-								_allocator.deallocate(*this);
+								// std::cout << "zbl in "<< i << v[i] << "\n";
+								_allocator.destroy(v+i);
 							}
-							return it;
-						};*/
+							// for(unsigned int i = 0; i < len; i++)
+								// std::cout << "zbl in " << v[i] << "\n";
+							for (size_type x=index; x<len; x++)
+							{
+								v[x] = v[x+count];
+								i+=1;
+							}
+							len-=count;
+							return iterator(v+index);
+						};
 
 					// push_back
 						void push_back( const T& value )
@@ -440,17 +562,46 @@ namespace ft
 						};
 
 					// resize
-					/*	void resize( size_type count, T value = T() )
+						void resize( size_type count, T value = T() )
 						{
+							// if (count < len)
+							// 	for (size_type i=count; i<len; i++)
+							// 		_allocator.destroy(v+i);
+							// else
+							// 	for (size_type i=len; i < count; i++)
+							// 		push_back(value);
+							// len = count;
+							// capcity = n;
 							if (count < len)
+							{
 								for (size_type i=count; i<len; i++)
 									_allocator.destroy(v+i);
+								len = count;
+							}
+							else if (count <= capcity)
+							{
+								for (size_type i=len; i<count; i++)
+									_allocator.construct(v+i, value);
+								len += count;
+							}
 							else
-								for (size_type i=len; i < count; i++)
-									push_back(value);
-							len = count;
-							// capcity = n;
-						};*/
+							{
+								// if (count > capcity*2)
+									capcity = count;
+								// else
+								// 	capcity *= 2;
+								pointer temp;
+								temp = _allocator.allocate(capcity);
+								for (size_type i=0; i<len; i++)
+									_allocator.construct(temp+i, v[i]);
+								for (size_type i=len; i<count; i++)
+									_allocator.construct(temp+i, value);
+								for (size_type i=0; i<len; i++)
+									_allocator.destroy(v+i);
+								v = temp;
+								len = count;
+							}
+						};
 
 					// swap
 						void swap( vector& other )
