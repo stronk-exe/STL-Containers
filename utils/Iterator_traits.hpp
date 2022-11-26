@@ -15,10 +15,14 @@
 
 // #include "vector.hpp"
 // #include "../map/map.hpp"
+// #include "Iterators.hpp"
+// #include "utils.hpp"
+#include <iostream>
 #include <cstddef>
 
 namespace ft
 {
+
 	struct input_iterator_tag { };
 
 	struct output_iterator_tag { };
@@ -29,13 +33,13 @@ namespace ft
 
 	struct random_access_iterator_tag : public bidirectional_iterator_tag { };
 
-	template <class T> struct iterator_traits
+	template <class Iterator> struct iterator_traits
 	{
-		typedef typename	T::vlaue_type			value_type;
-		typedef typename	T::difference_type		difference_type;
-		typedef typename	T::iterator_category	iterator_category;
-		typedef typename	T::pointer				pointer;
-		typedef typename	T::reference			reference;
+		typedef typename	Iterator::vlaue_type			value_type;
+		typedef typename	Iterator::difference_type		difference_type;
+		typedef typename	Iterator::iterator_category	iterator_category;
+		typedef typename	Iterator::pointer				pointer;
+		typedef typename	Iterator::reference			reference;
 	};
 
 	template <class T> struct iterator_traits<T*>

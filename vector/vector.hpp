@@ -36,8 +36,8 @@ namespace ft
 			typedef Allocator					allocator_type;
 			typedef Iterator<T>					iterator;
 			typedef Iterator<const T >			const_iterator;
-			typedef Reverse_iterator<T>			reverse_iterator;
-			typedef Reverse_iterator<const T>	const_reverse_iterator;
+			// typedef Reverse_iterator<T>			reverse_iterator;
+			// typedef Reverse_iterator<const T>	const_reverse_iterator;
 
 		private:
 			size_type		capcity;
@@ -64,8 +64,6 @@ namespace ft
 						v = _allocator.allocate(len);
 						for (size_type i=0; i<len; i++)
 							_allocator.construct(v+i, value);
-							// v[i] = value;
-						// std::cout << "vector fill constractor called!" << std::endl;
 					};
 
 					// template< class iterator > vector( iterator first, iterator last, const Allocator& alloc = Allocator() ) : _allocator(alloc)
@@ -93,9 +91,8 @@ namespace ft
 
 					vector( const vector& other ) : capcity(other.capcity), len(other.len), v(NULL), _allocator(other._allocator)
 					{
-						// std::cout << "vector copy constractor called!" << std::endl;
-						// *this = other;
 						int i=0;
+
 						v = _allocator.allocate(len);
 						while (i<len)
 						{
@@ -133,47 +130,15 @@ namespace ft
 				//---	assign
 					void assign( size_type count, const T& value )
 					{
-						// unsigned int	i;
-						// for (i=0; i<count; i++)
-						// 	v[i] = value;
-						// if (!capcity())
-						// {
-						// 	v = _allocator.allocate(count);
-						// 	capcity = count;
-						// 	len = count;
-
-						// }
-						// else if (count > capcity)
-						// {
-						// 	_allocator.deallocate(v, capcity);
-						// 	capcity = count;
-						// 	len = count;
-						// 	v = _allocator.allocate(capcity);
-						// }
-						// for (size_type i=0; i < count; i++)
-						// 	_allocator.construct(v+i, value);
 						clear();
-						// v = _allocator.allocate(count);
 						if (count > capcity)
 						{
-							// _allocator.deallocate(v, capcity);
 							capcity = count;
-						// std::cout <<"yo\n";
-							// resize(count);
-							// reserve(c)
 							v = _allocator.allocate(capcity);
 						}
 						len = count;
 						for (size_type i=0; i < len; i++)
-								_allocator.construct(v+i, value);
-						// if (count > len)
-						// {
-						// 	clear();
-						// 	len = count;
-						// 	capcity = count;
-						// 	for (size_type i=0; i < count; i++)
-						// 		_allocator.construct(v+i, value);
-						// }
+							_allocator.construct(v+i, value);
 					};
 				/*	template< class InputIt > void assign( InputIt first, InputIt last )
 					{
@@ -260,16 +225,6 @@ namespace ft
 							return v[len-1];
 						};
 
-					// data NOT IN CPP --98
-						// T* data()
-						// {
-						// 	return v;
-						// };
-						// const T* data() const
-						// {
-						// 	return v;
-						// };
-
 				//----	Iterators
 					// begin
 						iterator begin()
@@ -292,7 +247,7 @@ namespace ft
 						};
 
 					// rbegin
-						reverse_iterator rbegin()
+					/*	reverse_iterator rbegin()
 						{
 							return reverse_iterator(v);
 						};
@@ -309,7 +264,7 @@ namespace ft
 						const_reverse_iterator rend() const
 						{
 							return const_reverse_iterator( v+len);
-						};
+						};*/
 
 				//----	Capacity
 					// empty
@@ -349,7 +304,6 @@ namespace ft
 								len = temp_len;
 								v = temp_v;
 								capcity = new_cap;
-
 							}
 						};
 
@@ -371,38 +325,12 @@ namespace ft
 					// insert
 						iterator insert( iterator pos, const T& value )
 						{
-							// unsigned int i=0,x=0;
-							// value_type *temp;
-							
-							// temp = _allocator.allocate(len+1);
-							// iterator it;
-							// if (pos == this->end())
-							// 	pos--;
-							// for (it=this->begin(); const_iterator(it) != pos; it++)
-							// {
-							// 	temp[x] = v[i];
-							// 	x++;
-							// 	i++;
-							// }
-							// temp[x] = value;
-							// x++;
-							// while (i<=len)
-							// {
-							// 	temp[x] = v[i];
-							// 	x++;
-							// 	i++;
-							// }
-							// this->v=temp;
-							// len+=1;
-							// return it;
 							size_type index;
 							value_type temp;
 
 							index = &(*pos) - v;
 							if (len+1 > capcity)
 								capcity *= 2;
-							// push_back(value);
-							// temp = v[len-1];
 							_allocator.construct(v+len, value);
 							for (size_type i=len; i > index; i--)
 							{
@@ -410,57 +338,21 @@ namespace ft
 								v[i] = v[i-1];
 								v[i-1] = temp;
 							}
-							// v[i]=temp;
 							len += 1;
 							return iterator(v+index);
 						};
 						iterator insert( iterator pos, size_type count, const T& value )
 						{
-							// unsigned int i=0,x=0;
-							// value_type *temp;
-							
-							// temp = _allocator.allocate(len+count);
-							// iterator it;
-							// if (pos == this->end())
-							// 	pos--;
-							// for (it=this->begin(); const_iterator(it) != pos; it++)
-							// {
-							// 	temp[x] = v[i];
-							// 	x++;
-							// 	i++;
-							// }
-							// while (count>0)
-							// {
-							// 	temp[x] = value;
-							// 	x++;
-							// 	count--;
-							// }
-							// while (i<len)
-							// {
-							// 	temp[x] = v[i];
-							// 	// std::cout << temp[x] << " mal ngliz b3d zmtat iran\n";
-							// 	x++;
-							// 	i++;
-							// }
-							// this->v=temp;
-							// len=x;
-							// // std::cout << len << " mal ngliz 9bl zmtat iran\n";
-							// // if (!count)
-							// // 	return pos;
-							// return it;
 							size_type index;
 							value_type temp;
 
 							index = &(*pos) - v;
 							if (len+count > capcity)
 								capcity *= 2;
-							// push_back(value);
-							// temp = v[len-1];
 							for (size_type i=0; i < count; i++)
 							{
 								_allocator.construct(v+len, value);
 								len += 1;
-								// x+=1;
 							}
 							for (size_type x=0; x < count; x++)
 							{
@@ -471,10 +363,7 @@ namespace ft
 									v[i-1] = temp;
 								}
 								index+=1;
-								// std::cout <<"yo\n";
 							}
-							// v[i]=temp;
-							// len += x;
 							return iterator(v+index);
 						};
 						/*constexpr iterator  insert( const_iterator pos, size_type count, const T& value )
@@ -489,20 +378,7 @@ namespace ft
 					// erase
 						iterator erase( iterator pos )
 						{
-							// unsigned int i=0;
-							// // while (first != last)
-							// iterator it;
-							// for (it=v->begin(); it != pos; ++it)
-							// {
-							// 	// v[i] = val;
-							// 	// std::cout << v[i] << std::endl;
-							// 	i++;
-							// }
-							// _allocator.deallocate(v[i]);
-							// return it;
-
 							size_type index;
-							// value_type temp;
 
 							index = &(*pos) - v;
 							_allocator.destroy(v+index);
@@ -513,27 +389,12 @@ namespace ft
 						};
 						iterator erase( iterator first, iterator last )
 						{
-							// unsigned int i=0;
-							// iterator it;
-							// for (it=first; it!=last; ++it)
-							// {
-							// 	_allocator.deallocate(*this);
-							// }
-							// return it;
-
 							size_type index, count, i;
-							// value_type temp;
 
 							index = &(*first) - v;
 							count = &(*last) - &(*first);
-							// std::cout << "index " << index << count<<"\n";
 							for (i=index; i<count; i++)
-							{
-								// std::cout << "zbl in "<< i << v[i] << "\n";
 								_allocator.destroy(v+i);
-							}
-							// for(unsigned int i = 0; i < len; i++)
-								// std::cout << "zbl in " << v[i] << "\n";
 							for (size_type x=index; x<len; x++)
 							{
 								v[x] = v[x+count];
@@ -564,14 +425,6 @@ namespace ft
 					// resize
 						void resize( size_type count, T value = T() )
 						{
-							// if (count < len)
-							// 	for (size_type i=count; i<len; i++)
-							// 		_allocator.destroy(v+i);
-							// else
-							// 	for (size_type i=len; i < count; i++)
-							// 		push_back(value);
-							// len = count;
-							// capcity = n;
 							if (count < len)
 							{
 								for (size_type i=count; i<len; i++)
@@ -620,7 +473,6 @@ namespace ft
 		//	operator==
 			template< class T, class Alloc > bool operator==( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
 			{
-				// return lhs.size() == rhs.size();
 				if (lhs.size() != rhs.size())
 					return false;
 				return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
@@ -629,36 +481,30 @@ namespace ft
 			//	operator!=
 				template< class T, class Alloc > bool operator!=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
 				{
-					// return lhs.size() != rhs.size();
 					return !(lhs == rhs);
 				};
 
 			//	operator<
 				template< class T, class Alloc > bool operator<( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
 				{
-					// return lhs.size() < rhs.size();
-					// return lhs < rhs;
 					return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 				};
 
 			//	operator<=
 				template< class T, class Y, class Alloc > bool operator<=( const ft::vector<T,Alloc>& lhs, const ft::vector<Y,Alloc>& rhs )
 				{
-					// return lhs.size() <= rhs.size();
 					return !(rhs < lhs);
 				};
 
 			//	operator>
 				template< class T, class Y, class Alloc > bool operator>( const ft::vector<T,Alloc>& lhs, const ft::vector<Y,Alloc>& rhs )
 				{
-					// return lhs.size() > rhs.size();
 					return rhs < lhs;
 				};
 
 			//	operator>=
 				template< class T, class Alloc > bool operator>=( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs )
 				{
-					// return lhs.size() >= rhs.size();
 					return !(lhs < rhs);
 				};
 }

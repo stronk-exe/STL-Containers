@@ -13,8 +13,9 @@
 // constructing vectors
 #include <iostream>
 #include "vector.hpp"
-#include <iterator>
+// #include <iterator>
 #include "../utils/Iterators.hpp"
+#include "../utils/Iterator_traits.hpp"
 int main ()
 {
 	// constructors used in the same order as described above:
@@ -78,26 +79,26 @@ int main ()
 // 	 std::cout<<"]\n";
  
     // std::cout << "\nMoved-from string `s` holds: " << std::quoted(s) << '\n';
-	ft::vector<int> c1(3, 100);
-	std::cout<<"[";
-	for(unsigned int i = 0; i < c1.size(); i++)
-		std::cout << c1[i] << " ";
-	std::cout<<"]\n";
+	// ft::vector<int> c1(3, 100);
+	// std::cout<<"[";
+	// for(unsigned int i = 0; i < c1.size(); i++)
+	// 	std::cout << c1[i] << " ";
+	// std::cout<<"]\n";
 
-	ft::vector<int>::iterator it = c1.begin();
+	// ft::vector<int>::iterator it = c1.begin();
 
-    c1.insert(it, 200);
-	// c1.erase(ie);
-	ft::vector<int>::iterator ie = c1.begin();
-	ft::vector<int>::iterator ei = c1.end();
-	// ei--;
-	// ei--;
-	c1.erase(ie, ei);
-    std::cout<<"[";
-	for(unsigned int i = 0; i < c1.size(); i++)
-		std::cout << c1[i] << " ";
-	std::cout<<"]\n";
-	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+    // c1.insert(it, 200);
+	// // c1.erase(ie);
+	// ft::vector<int>::iterator ie = c1.begin();
+	// ft::vector<int>::iterator ei = c1.end();
+	// // ei--;
+	// // ei--;
+	// c1.erase(ie, ei);
+    // std::cout<<"[";
+	// for(unsigned int i = 0; i < c1.size(); i++)
+	// 	std::cout << c1[i] << " ";
+	// std::cout<<"]\n";
+	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
 
 	// ft::vector<int> ce1(3, 100);
 	// std::cout<<"[";
@@ -347,30 +348,30 @@ int main ()
 	// while (rev_from != rev_until)
 	// 	std::cout << ' ' << *rev_from++;
 	// std::cout << '\n';
-	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
-	// ft::vector<int> alice(1, 2);
-    // ft::vector<int> bob(7, 10);
-    // ft::vector<int> eve(1, 3);
+	std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	ft::vector<int> alice(1, 2);
+    ft::vector<int> bob(7, 10);
+    ft::vector<int> eve(1, 3);
 
     // std::cout << std::boolalpha;
 
-    // // Compare non equal containers
-    // std::cout << "alice == bob returns " << (alice == bob) << '\n';
-    // std::cout << "alice != bob returns " << (alice != bob) << '\n';
-    // std::cout << "alice <  bob returns " << (alice < bob) << '\n';
-    // std::cout << "alice <= bob returns " << (alice <= bob) << '\n';
-    // std::cout << "alice >  bob returns " << (alice > bob) << '\n';
-    // std::cout << "alice >= bob returns " << (alice >= bob) << '\n';
+    // Compare non equal containers
+    std::cout << "alice == bob returns " << (alice == bob) << '\n';
+    std::cout << "alice != bob returns " << (alice != bob) << '\n';
+    std::cout << "alice <  bob returns " << (alice < bob) << '\n';
+    std::cout << "alice <= bob returns " << (alice <= bob) << '\n';
+    std::cout << "alice >  bob returns " << (alice > bob) << '\n';
+    std::cout << "alice >= bob returns " << (alice >= bob) << '\n';
 
-    // std::cout << '\n';
+    std::cout << '\n';
 
-    // // Compare equal containers
-    // std::cout << "alice == eve returns " << (alice == eve) << '\n';
-    // std::cout << "alice != eve returns " << (alice != eve) << '\n';
-    // std::cout << "alice <  eve returns " << (alice < eve) << '\n';
-    // std::cout << "alice <= eve returns " << (alice <= eve) << '\n';
-    // std::cout << "alice >  eve returns " << (alice > eve) << '\n';
-    // std::cout << "alice >= eve returns " << (alice >= eve) << '\n';
+    // Compare equal containers
+    std::cout << "alice == eve returns " << (alice == eve) << '\n';
+    std::cout << "alice != eve returns " << (alice != eve) << '\n';
+    std::cout << "alice <  eve returns " << (alice < eve) << '\n';
+    std::cout << "alice <= eve returns " << (alice <= eve) << '\n';
+    std::cout << "alice >  eve returns " << (alice > eve) << '\n';
+    std::cout << "alice >= eve returns " << (alice >= eve) << '\n';
 
 
 
