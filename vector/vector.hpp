@@ -27,17 +27,22 @@ namespace ft
 	{
 		public:
 			typedef T							value_type;
-			typedef T*							pointer;
-			typedef T&							reference;
-			typedef const T*					const_pointer;
-			typedef const T&					const_reference;
-			typedef size_t						size_type;
-			typedef ptrdiff_t					difference_type;
 			typedef Allocator					allocator_type;
-			typedef Iterator<T>					iterator;
-			typedef Iterator<const T >			const_iterator;
-			// typedef Reverse_iterator<T>			reverse_iterator;
-			// typedef Reverse_iterator<const T>	const_reverse_iterator;
+			typedef	typename	allocator_type::pointer	pointer;
+			typedef	typename	allocator_type::const_pointer	const_pointer;
+			typedef	typename	allocator_type::reference	reference;
+			typedef	typename	allocator_type::const_reference	const_reference;
+			typedef	typename	allocator_type::difference_type	difference_type;
+			// typedef T*							pointer;
+			// typedef T&							reference;
+			// typedef const T*					const_pointer;
+			// typedef const T&					const_reference;
+			typedef size_t						size_type;
+			// typedef ptrdiff_t					difference_type;
+			typedef ft::Iterator<T>					iterator;
+			typedef ft::Iterator<const T >			const_iterator;
+			typedef ft::Reverse_iterator<T>			reverse_iterator;
+			typedef ft::Reverse_iterator<const T>	const_reverse_iterator;
 
 		private:
 			size_type		capcity;
@@ -66,12 +71,12 @@ namespace ft
 							_allocator.construct(v+i, value);
 					};
 
-					// template< class iterator > vector( iterator first, iterator last, const Allocator& alloc = Allocator() ) : _allocator(alloc)
-				/*	template< class InputIt >
-					vector( InputIt first, InputIt last, const Allocator& alloc = Allocator(), typename ft::enable_if<!is_integeal<InputIt>::value, InputIt>::type = InputIt()) : capcity(0), len(0), _allocator(alloc), v(NULL)
+					template< class InputIt >
+					vector( InputIt first, InputIt last, const Allocator& alloc = Allocator(), typename ft::enable_if<!is_integral<InputIt>::value, InputIt>::type = InputIt()) : v(NULL), _allocator(alloc)
 					{
 						size_type i=0,count=0;
 						InputIt temp1=first, temp2=last;
+					
 						while (temp1 != temp2)
 						{
 							count+=1;
@@ -79,15 +84,14 @@ namespace ft
 						}
 						len = count;
 						capcity = len;
-						v = alloc.allocate(capcity);
+						v = _allocator.allocate(capcity);
 						while (first != last)
 						{
-							alloc.construct(v+i, *first);
+							_allocator.construct(v+i, *first);
 							first++;
 							i++;
 						}
-						std::cout << "vector range constractor called!" << std::endl;
-					};*/
+					};
 
 					vector( const vector& other ) : capcity(other.capcity), len(other.len), v(NULL), _allocator(other._allocator)
 					{
@@ -140,7 +144,7 @@ namespace ft
 						for (size_type i=0; i < len; i++)
 							_allocator.construct(v+i, value);
 					};
-				/*	template< class InputIt > void assign( InputIt first, InputIt last )
+					template< class InputIt > void assign( InputIt first, InputIt last, typename ft::enable_if<!is_integral<InputIt>::value, InputIt>::type = InputIt())
 					{
 						// int i=0;
 						// for (iterator it=first; it != last; ++it)
@@ -150,11 +154,12 @@ namespace ft
 
 						tempf = first;
 						templ = last;
-						while (tempf != templ)
-						{
-							std::cout << "whota"<< i<<"\n";
-							i++;
-						}
+						// std::cout << "holla\n";
+						// while (tempf != templ)
+						// {
+						// 	i++;
+						// }
+						i = templ-tempf;
 						clear();
 						if (i > capcity)
 						{
@@ -163,12 +168,16 @@ namespace ft
 						}
 						len = capcity;
 						i=0;
+						// pointer tmp= _allocator.allocate(capcity);
 						while (first != last)
 						{
+							// std::cout << "whota"<< i<<"\n";
 							_allocator.construct(v+i, *first);
+							first++;
 							i++;
 						}
-					};*/
+						// v = tmp;
+					};
 
 				//----	get_allocator
 					allocator_type get_allocator() const
@@ -247,7 +256,7 @@ namespace ft
 						};
 
 					// rbegin
-					/*	reverse_iterator rbegin()
+						reverse_iterator rbegin()
 						{
 							return reverse_iterator(v);
 						};
@@ -264,7 +273,7 @@ namespace ft
 						const_reverse_iterator rend() const
 						{
 							return const_reverse_iterator( v+len);
-						};*/
+						};
 
 				//----	Capacity
 					// empty
@@ -329,8 +338,15 @@ namespace ft
 							value_type temp;
 
 							index = &(*pos) - v;
-							if (len+1 > capcity)
+							if (!capcity)
+							{
+								// capcity+=1;
+								// len+=1;
+								reserve(1);
+							}
+							else if (len+1 > capcity)
 								capcity *= 2;
+							// std::cout << v+len << "holla\n";
 							_allocator.construct(v+len, value);
 							for (size_type i=len; i > index; i--)
 							{
@@ -341,7 +357,7 @@ namespace ft
 							len += 1;
 							return iterator(v+index);
 						};
-						iterator insert( iterator pos, size_type count, const T& value )
+						void insert( iterator pos, size_type count, const T& value )
 						{
 							size_type index;
 							value_type temp;
@@ -364,16 +380,38 @@ namespace ft
 								}
 								index+=1;
 							}
-							return iterator(v+index);
+							// return iterator(v+index);
 						};
 						/*constexpr iterator  insert( const_iterator pos, size_type count, const T& value )
 						{
 							
 						};
-						template< class InputIt > iterator insert( const_iterator pos, InputIt first, InputIt last )
+					*/	template< class InputIt > iterator insert( const_iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = InputIt())
 						{
-							
-						};*/
+							size_type index, count;
+							value_type temp;
+							InputIt tempf = first, templ = last;
+
+							count = templ-tempf;
+							index = &(*pos) - v;
+							if (len+count > capcity)
+								capcity *= 2;
+							for (size_type i=0; i < count; i++)
+							{
+								_allocator.construct(v+len, *first++);
+								len += 1;
+							}
+							for (size_type x=0; x < count; x++)
+							{
+								for (size_type i=len-count+x; i > index; i--)
+								{
+									temp = v[i];
+									v[i] = v[i-1];
+									v[i-1] = temp;
+								}
+								index+=1;
+							}
+						};
 
 					// erase
 						iterator erase( iterator pos )
