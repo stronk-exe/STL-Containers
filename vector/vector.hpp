@@ -95,7 +95,7 @@ namespace ft
 
 					vector( const vector& other ) : capcity(other.capcity), len(other.len), v(NULL), _allocator(other._allocator)
 					{
-						int i=0;
+						size_type i=0;
 
 						v = _allocator.allocate(len);
 						while (i<len)
