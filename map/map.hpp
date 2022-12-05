@@ -14,9 +14,10 @@
 #define MAP_HPP
 
 #include <iostream>
-#include "../exceptions.hpp"
-#include "../vector/Iterator_traits.hpp"
-#include "../vector/Iterators.hpp"
+#include "../utils/exceptions.hpp"
+#include "../utils/utils.hpp"
+#include "../utils/Iterator_traits.hpp"
+#include "../utils/Iterators.hpp"
 
 namespace ft
 {
@@ -312,6 +313,45 @@ namespace ft
 				//	operator>
 				//	operator>=
 	};
+
+	// >> Non-member functions
+		//	operator==
+			template< class Key, class T, class Compare, class Alloc > bool operator==( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
+			{
+				if (lhs.size() != rhs.size())
+					return false;
+				return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+			};
+
+			//	operator!=
+				template< class Key, class T, class Compare, class Alloc > bool operator!=( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
+				{
+					return !(lhs == rhs);
+				};
+
+			//	operator<
+				template< class Key, class T, class Compare, class Alloc > bool operator<( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
+				{
+					return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+				};
+
+			//	operator<=
+				template< class Key, class T, class Compare, class Alloc > bool operator<=( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
+				{
+					return !(rhs < lhs);
+				};
+
+			//	operator>
+				template< class Key, class T, class Compare, class Alloc > bool operator>( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
+				{
+					return rhs < lhs;
+				};
+
+			//	operator>=
+				template< class Key, class T, class Compare, class Alloc > bool operator>=( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
+				{
+					return !(lhs < rhs);
+				};
 };
 
 #endif

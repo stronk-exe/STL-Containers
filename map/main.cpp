@@ -24,9 +24,9 @@ int main()
 	// ft::map<std::string, int> iter(map1.find("anything"), map1.end());
 	// std::cout << "\niter = " << iter;
 	// std::cout << "map1 = " << map1;
-	std::cout << "^^^^^^^^^^^^^^" << std::endl;
-	ft::map<std::string, int> map2(map1);
-	std::cout << "^^^^^^^^^^^^^^" << std::endl;
-	ft::map<std::string, int> map3;
-	map3 = map2;
+	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	// ft::map<std::string, int> map2(map1);
+	// std::cout << "^^^^^^^^^^^^^^" << std::endl;
+	// ft::map<std::string, int> map3;
+	// map3 = map2;
 }
