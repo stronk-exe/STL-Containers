@@ -1,5 +1,17 @@
-#include "../vector/vector.hpp"
-#include "Iterators.hpp"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.hpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/08 13:20:42 by ael-asri          #+#    #+#             */
+/*   Updated: 2022/12/08 17:08:58 by ael-asri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+// #include "../vector/vector.hpp"
+#include "vector_Iterators.hpp"
 #include "Iterator_traits.hpp"
 
 namespace ft

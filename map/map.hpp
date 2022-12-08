@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/11/17 12:52:41 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:26:04 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include <iostream>
 #include "../utils/exceptions.hpp"
 #include "../utils/utils.hpp"
-#include "../utils/Iterator_traits.hpp"
-#include "../utils/Iterators.hpp"
+// #include "../utils/Iterator_traits.hpp"
+#include "../utils/map_Iterators.hpp"
 
 namespace ft
 {
@@ -37,8 +37,8 @@ namespace ft
 			typedef	const T*					const_pointer;
 			typedef Iterator<T>					iterator;
 			typedef Iterator<const T >			const_iterator;
-			typedef Reverse_iterator<T>			reverse_iterator;
-			typedef Reverse_iterator<const T>	const_reverse_iterator;
+			// typedef mReverse_iterator<T>			reverse_iterator;
+			// typedef mReverse_iterator<const T>	const_reverse_iterator;
 
 		private:
 			size_type		capcity;
@@ -56,7 +56,8 @@ namespace ft
 					explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : _allocator(alloc), capcity(0), len(0)
 					{
 						m = alloc.allocate(len);
-						(void)comp;
+						// (void)comp;
+						m = comp;
 						std::cout << "map default constractor called" << std::endl;
 					};
 					template< class InputIt > map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) : _allocator(alloc)
@@ -128,12 +129,12 @@ namespace ft
 						{
 							if (key<0 || key>len)
 								throw invalidIndex();
-							return m(key);
+							return m[key];
 						};
 
 				//----	Iterators
 					//	begin
-						iterator begin()
+			/*			iterator begin()
 						{
 							return m;
 						};
@@ -170,7 +171,7 @@ namespace ft
 						const_reverse_iterator rend() const
 						{
 							return m+len;
-						};
+						};*/
 
 				//----	Capacity
 					//	empty
@@ -190,15 +191,19 @@ namespace ft
 					//	max_size
 						size_type max_size() const
 						{
-							return capcity-len;
+							// return capcity-len;
+							return _allocator.max_size();
 						};
 
 				//----	Modifiers
 					//	clear
 						void clear()
 						{
-							_allocator.deallocate(m);
-							capcity = 0;
+							// _allocator.deallocate(m);
+							// capcity = 0;
+							// len = 0;
+							for (size_type i=0; i < capcity; i++)
+								_allocator.destroy(m+i);
 							len = 0;
 						};
 
@@ -207,10 +212,24 @@ namespace ft
 						// {
 							
 						// };
-						// iterator insert( iterator pos, const value_type& value )
-						// {
-							
-						// };
+					/*	iterator insert( iterator pos, const value_type& value )
+						{
+							t_node	temp = node;
+							while (1)
+							{
+								if (value > m)
+								{
+									// go rigth
+									m.r = m.r.r;
+								}
+								else
+								{
+									// go left
+									m.l = m.l.l;
+								}
+								break;
+							}
+						};*/
 						// template< class InputIt >void insert( InputIt first, InputIt last )
 						// {
 							
@@ -316,7 +335,7 @@ namespace ft
 
 	// >> Non-member functions
 		//	operator==
-			template< class Key, class T, class Compare, class Alloc > bool operator==( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
+	/*		template< class Key, class T, class Compare, class Alloc > bool operator==( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
 			{
 				if (lhs.size() != rhs.size())
 					return false;
@@ -351,7 +370,7 @@ namespace ft
 				template< class Key, class T, class Compare, class Alloc > bool operator>=( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
 				{
 					return !(lhs < rhs);
-				};
+				};*/
 };
 
 #endif
