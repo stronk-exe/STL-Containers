@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/08 19:26:04 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/09 13:00:14 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "../utils/utils.hpp"
 // #include "../utils/Iterator_traits.hpp"
 #include "../utils/map_Iterators.hpp"
+#include "../utils/map_utils.hpp"
 
 namespace ft
 {
@@ -37,14 +38,17 @@ namespace ft
 			typedef	const T*					const_pointer;
 			typedef Iterator<T>					iterator;
 			typedef Iterator<const T >			const_iterator;
-			// typedef mReverse_iterator<T>			reverse_iterator;
-			// typedef mReverse_iterator<const T>	const_reverse_iterator;
+			typedef Reverse_iterator<T>			reverse_iterator;
+			typedef Reverse_iterator<const T>	const_reverse_iterator;
 
 		private:
 			size_type		capcity;
 			size_type		len;
 			T				*m;
 			Allocator		_allocator;
+			Compare			cmp;
+			T				*r;
+			T				*l;
 
 		public:
 			// >> Member functions
@@ -53,28 +57,47 @@ namespace ft
 					{
 						std::cout << "map default constractor called" << std::endl;
 					};
-					explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : _allocator(alloc), capcity(0), len(0)
+					explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : _allocator(alloc), capcity(0), len(0), cmp(comp)
 					{
 						m = alloc.allocate(len);
 						// (void)comp;
-						m = comp;
+						// m = comp;
+						// cmp = comp;
 						std::cout << "map default constractor called" << std::endl;
 					};
-					template< class InputIt > map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) : _allocator(alloc)
+					template< class InputIt > map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) : _allocator(alloc), cmp(comp)
 					{
-						int i=0;
-						// while (first != last)
-						for (iterator it=first; it != last; ++it)
+						// int i=0;
+						// // while (first != last)
+						// for (iterator it=first; it != last; ++it)
+						// {
+						// 	// v[i] = val;
+						// 	// std::cout << v[i] << std::endl;
+						// 	i++;
+						// }
+						// capcity = i;
+						// len = i;
+						// m = _allocator.allocate(i);
+						// // (void)comp;
+						// // cmp = comp;
+						// std::cout << "map range constractor called!" << std::endl;
+						size_type i=0,count=0;
+						InputIt temp1=first, temp2=last;
+					
+						while (temp1 != temp2)
 						{
-							// v[i] = val;
-							// std::cout << v[i] << std::endl;
+							count+=1;
+							temp1++;
+						}
+						len = count;
+						capcity = len;
+						m = _allocator.allocate(capcity);
+						while (first != last)
+						{
+							_allocator.construct(m+i, *first);
+							first++;
 							i++;
 						}
-						capcity = i;
-						len = i;
-						m = _allocator.allocate(i);
-						(void)comp;
-						std::cout << "map range constractor called!" << std::endl;
 					};
 					map( const map& other ) : capcity(other.capcity), len(other.len), m(other.m)
 					{
@@ -127,51 +150,107 @@ namespace ft
 					//	operator[]
 						T& operator[]( const Key& key )
 						{
-							if (key<0 || key>len)
-								throw invalidIndex();
-							return m[key];
+							// if (key<0 || key>len)
+							// 	throw invalidIndex();
+							// return m[key];
+							if (key_exists(key))
+							{
+								for (iterator it=begin(); it != end(); it++)
+									if (it.key == key)
+										return it.val;
+							}
+							insert(key);
+							return m[len].val;
 						};
 
 				//----	Iterators
 					//	begin
-			/*			iterator begin()
+						iterator begin()
 						{
-							return m;
+							// return m;
+							size_type h=5;
+							for (size_type i=0; i<h; i++)
+							{
+								m = m.l;
+							}
+							return iterator(m);
 						};
 						const_iterator begin() const
 						{
-							return m;
+							// return m;
+							size_type h=5;
+							for (size_type i=0; i<h; i++)
+							{
+								m = m.l;
+							}
+							return const_iterator(m);
 						};
 
 					//	end
 						iterator end()
 						{
-							return m+len;
+							// return m+len;
+							size_type h=5;
+							for (size_type i=0; i<h; i++)
+							{
+								m = m.r;
+							}
+							return iterator(m);
 						};
 						const_iterator end() const
 						{
-							return m+len;
+							// return m+len;
+							size_type h=5;
+							for (size_type i=0; i<h; i++)
+							{
+								m = m.r;
+							}
+							return const_iterator(m);
 						};
 
 					//	rbegin
 						reverse_iterator rbegin()
 						{
-							return m;
+							// return m;
+							size_type h=5;
+							for (size_type i=0; i<h; i++)
+							{
+								m = m.r;
+							}
+							return reverse_iterator(m);
 						};
 						const_reverse_iterator rbegin() const
 						{
-							return m;
+							// return m;
+							size_type h=5;
+							for (size_type i=0; i<h; i++)
+							{
+								m = m.r;
+							}
+							return const_reverse_iterator(m);
 						};
 
 					//	rend
 						reverse_iterator rend()
 						{
-							return m+len;
+							// return m+len;
+							size_type h=5;
+							for (size_type i=0; i<h; i++)
+							{
+								m = m.l;
+							}
+							return reverse_iterator(m);
 						};
 						const_reverse_iterator rend() const
 						{
-							return m+len;
-						};*/
+							// return m+len;
+							size_type h=5;
+							for (size_type i=0; i<h; i++)
+							{
+								m = m.l;
+							}
+							return const_reverse_iterator(m);
+						};
 
 				//----	Capacity
 					//	empty
@@ -212,24 +291,28 @@ namespace ft
 						// {
 							
 						// };
-					/*	iterator insert( iterator pos, const value_type& value )
+						iterator insert( iterator pos, const value_type& value )
 						{
-							t_node	temp = node;
-							while (1)
+							// t_node	temp = node;
+							size_type	i=0;
+							// while (it)
+							for (iterator it = m.begin(); it != m.end(); it++)
 							{
-								if (value > m)
+								if (it.val > m)
 								{
 									// go rigth
-									m.r = m.r.r;
+									it = it.r;
 								}
 								else
 								{
 									// go left
-									m.l = m.l.l;
+									it = it.l;
 								}
-								break;
+								// break;
+								i++;
 							}
-						};*/
+							_allocator(m+i, value);
+						};
 						// template< class InputIt >void insert( InputIt first, InputIt last )
 						// {
 							
@@ -313,15 +396,15 @@ namespace ft
 
 				//----	Observers
 					//	key_comp
-						// key_compare key_comp() const
-						// {
-							
-						// };
+						key_compare key_comp() const
+						{
+							return cmp;
+						};
 
 					//	value_comp
 						// ft::map::value_compare value_comp() const
 						// {
-								
+							
 						// };
 
 			// >> Non-member functions
@@ -335,7 +418,7 @@ namespace ft
 
 	// >> Non-member functions
 		//	operator==
-	/*		template< class Key, class T, class Compare, class Alloc > bool operator==( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
+			template< class Key, class T, class Compare, class Alloc > bool operator==( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
 			{
 				if (lhs.size() != rhs.size())
 					return false;
@@ -370,7 +453,7 @@ namespace ft
 				template< class Key, class T, class Compare, class Alloc > bool operator>=( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
 				{
 					return !(lhs < rhs);
-				};*/
+				};
 };
 
 #endif
