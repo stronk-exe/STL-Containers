@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 13:20:42 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/08 17:08:58 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/10 16:03:16 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,10 @@ namespace ft
             }
             return true;
         }
+    
+    //----  pair
+    template<class T1, class T2> struct pair
+    {
+        
+    };
 }

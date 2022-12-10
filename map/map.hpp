@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/09 13:00:14 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/10 15:32:49 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ namespace ft
 			Compare			cmp;
 			T				*r;
 			T				*l;
+			T				first;
+			T				second;
 
 		public:
 			// >> Member functions
