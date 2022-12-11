@@ -10,6 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MAP_UTILS_HPP
+#define MAP_UTILS_HPP
+
+template <typename T> class node
+{
+	T		value;
+	node	*parent;
+	node	*right;
+	node	*left;
+	int		color;
+
+	// node() : parent(0), left(0), right(0) {};
+	// node( T &n ) : value(p), parent(0), left(0), right(0) {};
+};
+
+template <typename T> RB_Tree()
+{
+
+};
+/*
 // #include "../map/map.hpp"
 #include "map_Iterators.hpp"
 
@@ -17,7 +37,6 @@ int	check_violation()
 {
 	return 1;
 }
-/*
 void	ft_balance(t_node node)
 {
 	if (node.color == "red")
@@ -45,7 +64,6 @@ void	ft_balance(t_node node)
 		// }
 	}
 }
-*/
 int	key_exists(map m, Key key)
 {
 	for (ft::map<>::iterator it = m.begin(); it != m.end(); it++)
@@ -55,3 +73,6 @@ int	key_exists(map m, Key key)
 	}
 	return 0;
 }
+*/
+
+#endif

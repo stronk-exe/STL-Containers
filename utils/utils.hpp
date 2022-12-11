@@ -78,6 +78,52 @@ namespace ft
     //----  pair
     template<class T1, class T2> struct pair
     {
-        
+        public:
+            typedef T1 first_type;
+            typedef T2 second_type;
+
+            T1 first;
+            T2 second;
+
+            pair() : first(T1), second(T2) {};
+            template<class X, class Y> pair( const pair<X, Y> &pr ) : first(pr.first), second(pr.second) {};
+            pair( first_type& a, second_type& b ) : first(a), second(b) {};
+            ~pair() {};
+
+            pair& operator=( pair const& pr )
+            {
+                first = pr.first;
+                second = pr.second;
+                return *this;
+            };
     };
+    //----  pair Non-Member functions
+    template<class T1, class T2> bool operator==( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs )
+    {
+        return (lhs.first == rhs.first && lhs.second == rhs.second);
+    }
+    template<class T1, class T2> bool operator!=( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs )
+    {
+        return !(lhs == rhs);
+    }
+    template<class T1, class T2> bool operator<( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs )
+    {
+        return (lhs.first < rhs.first || ((!lhs.first < rhs.first) && lhs.second < rhs.second));
+    }
+    template<class T1, class T2> bool operator<=( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs )
+    {
+        return !(rhs < lhs);
+    }
+    template<class T1, class T2> bool operator>( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs )
+    {
+        return rhs < lhs;
+    }
+    template<class T1, class T2> bool operator>=( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs )
+    {
+        return !(lhs < rhs);
+    }
+    template<class T1, class T2> ft::pair<T1, T2> make_pair( T1 x, T2 y )
+    {
+        return ft::pair<T1, T2>(x, y);
+    }
 }

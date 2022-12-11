@@ -155,14 +155,21 @@ namespace ft
 							// if (key<0 || key>len)
 							// 	throw invalidIndex();
 							// return m[key];
-							if (key_exists(key))
-							{
-								for (iterator it=begin(); it != end(); it++)
-									if (it.key == key)
-										return it.val;
-							}
-							insert(key);
-							return m[len].val;
+							// if (key_exists(key))
+							// {
+							// 	for (iterator it=begin(); it != end(); it++)
+							// 		if (it.key == key)
+							// 			return it.val;
+							// }
+							// insert(key);
+							// return m[len].val;
+							iterator it;
+							
+							it = finde(key);
+							if (it != end())
+								insert(ft::make_pair(key, mapped_type()));
+							it = finde(k);
+							return it.second;
 						};
 
 				//----	Iterators
