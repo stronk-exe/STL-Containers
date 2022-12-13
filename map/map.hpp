@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/10 15:32:49 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:33:16 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ namespace ft
 			typedef	const T&					const_reference;
 			typedef	T*							pointer;
 			typedef	const T*					const_pointer;
-			typedef Iterator<T>					iterator;
-			typedef Iterator<const T >			const_iterator;
-			typedef Reverse_iterator<T>			reverse_iterator;
-			typedef Reverse_iterator<const T>	const_reverse_iterator;
+			typedef RDtree_Iterator<T>					iterator;
+			typedef RDtree_Iterator<const T >			const_iterator;
+			typedef RDtree_reverse_iterator<T>			reverse_iterator;
+			typedef RDtree_reverse_iterator<const T>	const_reverse_iterator;
 
 		private:
 			size_type		capcity;
@@ -177,88 +177,96 @@ namespace ft
 						iterator begin()
 						{
 							// return m;
-							size_type h=5;
-							for (size_type i=0; i<h; i++)
-							{
-								m = m.l;
-							}
-							return iterator(m);
+							// size_type h=5;
+							// for (size_type i=0; i<h; i++)
+							// {
+							// 	m = m.l;
+							// }
+							// return iterator(m);
+							return iterator(min_element(root));
 						};
 						const_iterator begin() const
 						{
 							// return m;
-							size_type h=5;
-							for (size_type i=0; i<h; i++)
-							{
-								m = m.l;
-							}
-							return const_iterator(m);
+							// size_type h=5;
+							// for (size_type i=0; i<h; i++)
+							// {
+							// 	m = m.l;
+							// }
+							// return const_iterator(m);
+							return const_iterator(min_element(root));
 						};
 
 					//	end
 						iterator end()
 						{
 							// return m+len;
-							size_type h=5;
-							for (size_type i=0; i<h; i++)
-							{
-								m = m.r;
-							}
-							return iterator(m);
+							// size_type h=5;
+							// for (size_type i=0; i<h; i++)
+							// {
+							// 	m = m.r;
+							// }
+							// return iterator(m);
+							return iterator(nullptr);
 						};
 						const_iterator end() const
 						{
 							// return m+len;
-							size_type h=5;
-							for (size_type i=0; i<h; i++)
-							{
-								m = m.r;
-							}
-							return const_iterator(m);
+							// size_type h=5;
+							// for (size_type i=0; i<h; i++)
+							// {
+							// 	m = m.r;
+							// }
+							// return const_iterator(m);
+							return const_iterator(nullptr);
 						};
 
 					//	rbegin
 						reverse_iterator rbegin()
 						{
 							// return m;
-							size_type h=5;
-							for (size_type i=0; i<h; i++)
-							{
-								m = m.r;
-							}
-							return reverse_iterator(m);
+							// size_type h=5;
+							// for (size_type i=0; i<h; i++)
+							// {
+							// 	m = m.r;
+							// }
+							// return reverse_iterator(m);
+							return reverse_iterator(nullptr);
 						};
 						const_reverse_iterator rbegin() const
 						{
 							// return m;
-							size_type h=5;
-							for (size_type i=0; i<h; i++)
-							{
-								m = m.r;
-							}
-							return const_reverse_iterator(m);
+							// size_type h=5;
+							// for (size_type i=0; i<h; i++)
+							// {
+							// 	m = m.r;
+							// }
+							// return const_reverse_iterator(m);
+							return const_reverse_iterator(nullptr);
 						};
 
 					//	rend
 						reverse_iterator rend()
 						{
 							// return m+len;
-							size_type h=5;
-							for (size_type i=0; i<h; i++)
-							{
-								m = m.l;
-							}
-							return reverse_iterator(m);
+							// size_type h=5;
+							// for (size_type i=0; i<h; i++)
+							// {
+							// 	m = m.l;
+							// }
+							// return reverse_iterator(m);
+							return reverse_iterator(min_element(root));
 						};
 						const_reverse_iterator rend() const
 						{
 							// return m+len;
-							size_type h=5;
-							for (size_type i=0; i<h; i++)
-							{
-								m = m.l;
-							}
-							return const_reverse_iterator(m);
+							// size_type h=5;
+							// for (size_type i=0; i<h; i++)
+							// {
+							// 	m = m.l;
+							// }
+							// return const_reverse_iterator(m);
+							return const_reverse_iterator(min_element(root));
 						};
 
 				//----	Capacity

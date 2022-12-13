@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 13:20:30 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/12 19:14:21 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:46:33 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,36 +168,7 @@ template<typename T> node *insert_node( node *root<T>, T value )
 	return root;
 };
 
-template<typename T> node *delete_node( node *root, T value )
-{
-	if (!root)
-		return root;
-	if (key > root->data)
-		root->right = delete_node(root->right, value);
-	else if (key < root->data)
-		root->left = delete_node(root->left, value);
-	else
-	{
-		if (!root->right && !root->left)
-			return NULL;
-		else if (!root->right)
-		{
-			struct node *temp = root->left;
-			free(root);
-			return temp;
-		}
-		else if (!root->left)
-		{
-			struct node *temp = root->right;
-			free(root);
-			return temp;
-		}
-		struct node *temp = minval_node(root->right);
-		root->data = temp->data;
-		root->right = delete_node(root->right, temp->data);
-	}
-	return root;
-};
+
 
 void	inorder( node* root )
 {
@@ -282,6 +253,7 @@ template<typename T> class RBtree
 	public:
 		RBtree() { root = NULL; };
 		void	insert( const T &n );
+		node<T>	*search( T n );
 		void	inorder();
 		// void	levelOrder();
 };
@@ -311,7 +283,6 @@ template<typename T> void inorderHelper( node<T> *root )
 	std::cout << root->data << std::endl;
 	inorderHelper(root->right);
 }
-
 
 template<typename T> void	RBtree<T>::rotateLeft( node<T> *&root, node<T> *&n )
 {
@@ -426,10 +397,52 @@ template<typename T> void	RBtree<T>::insert( const T &value )
 	fixViolation(root, n);
 };
 
+template<typename T> node<T> *RBtree<T>::search( T n )
+{
+	node<T> *temp = root;
+
+	while (temp != NULL)
+	{
+		if (n < temp->data)
+		{
+			if (!temp->left)
+				break;
+			else
+				temp = temp->right;
+		}
+		else if (n == temp->data)
+			break;
+		else
+		{
+			if (!temp->right)
+				break;
+			else
+				temp = temp->right;
+		}
+	}
+	return temp;
+};
+
 template<typename T> void	RBtree<T>::inorder( void )
 {
 	inorderHelper(root);
 }
+
+template<typename T> node<T> *min_element( node<T> *root )
+{
+	if (!root || !root->left)
+		return root;
+	return min_element(root->left);
+};
+
+template<typename T> node<T> *successor( node<T> *n )
+{
+	node<T> *temp = n;
+
+	while (temp->left != NULL)
+		temp = temp->left;
+	return temp;
+};
 
 // template<typename T> void	RBtree<T>::levelOrder( void )
 // {
