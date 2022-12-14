@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
+
 #include "map.hpp"
 int main()
 {
@@ -32,9 +32,9 @@ int main()
 	// ft::map<std::string, int> map3;
 	// map3 = map2;
 }
-*/
-#include "../utils/map_utils.hpp"
+
 /*
+#include "../utils/map_utils.hpp"
 int main()
 {
     bst<int> b;
@@ -88,7 +88,6 @@ int main()
  
     return 0;
 }
-*/
 
 int main()
 {
@@ -110,3 +109,4 @@ int main()
  
     return 0;
 }
+*/

@@ -38,36 +38,50 @@ namespace ft
 			typedef	const T*					const_pointer;
 			typedef RDtree_Iterator<T>					iterator;
 			typedef RDtree_Iterator<const T >			const_iterator;
-			typedef RDtree_reverse_iterator<T>			reverse_iterator;
-			typedef RDtree_reverse_iterator<const T>	const_reverse_iterator;
+			// typedef RDtree_reverse_iterator<T>			reverse_iterator;
+			// typedef RDtree_reverse_iterator<const T>	const_reverse_iterator;
+
+		class value_compare
+		{
+			public:
+				bool operator()( const value_type &a, const value_type &b ) const
+				{
+					return (key_compare()(a.first, b.first));
+				}
+				value_compare &operator=( const value_compare& )
+				{
+					return *this;
+				}
+		};
 
 		private:
-			size_type		capcity;
+			// size_type		capcity;
+			// T				*m;
+			// Allocator		_allocator;
+			// Compare			cmp;
+			// T				*r;
+			// T				*l;
+			// T				first;
+			// T				second;
+
+			typedef key_compare	compr;
+			typedef	allocator_type	_allocator;
+			typedef	value		val_comp;
+			typedef	RBtree<T, val_comp, Allocator>	rbt;
 			size_type		len;
-			T				*m;
-			Allocator		_allocator;
-			Compare			cmp;
-			T				*r;
-			T				*l;
-			T				first;
-			T				second;
 
 		public:
 			// >> Member functions
 				//----	Constructors
-					map() :  capcity(0), len(0)
+					// map() :  capcity(0), len(0)
+					// {
+					// 	std::cout << "map default constractor called" << std::endl;
+					// };
+					explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : compr(comp), _allocator(alloc), val_comp(comp), rbt(val_comp, alloc)
 					{
-						std::cout << "map default constractor called" << std::endl;
+
 					};
-					explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : _allocator(alloc), capcity(0), len(0), cmp(comp)
-					{
-						m = alloc.allocate(len);
-						// (void)comp;
-						// m = comp;
-						// cmp = comp;
-						std::cout << "map default constractor called" << std::endl;
-					};
-					template< class InputIt > map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) : _allocator(alloc), cmp(comp)
+					template< class InputIt > map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) : compr(comp), _allocator(alloc), val_comp(comp), rbt(val_comp, alloc)
 					{
 						// int i=0;
 						// // while (first != last)
@@ -83,27 +97,32 @@ namespace ft
 						// // (void)comp;
 						// // cmp = comp;
 						// std::cout << "map range constractor called!" << std::endl;
-						size_type i=0,count=0;
-						InputIt temp1=first, temp2=last;
+						// size_type i=0,count=0;
+						// InputIt temp1=first, temp2=last;
 					
-						while (temp1 != temp2)
-						{
-							count+=1;
-							temp1++;
-						}
-						len = count;
-						capcity = len;
-						m = _allocator.allocate(capcity);
+						// while (temp1 != temp2)
+						// {
+						// 	count+=1;
+						// 	temp1++;
+						// }
+						// len = count;
+						// capcity = len;
+						// m = _allocator.allocate(capcity);
+						// while (first != last)
+						// {
+						// 	_allocator.construct(m+i, *first);
+						// 	first++;
+						// 	i++;
+						// }
 						while (first != last)
 						{
-							_allocator.construct(m+i, *first);
-							first++;
-							i++;
+							rbt.insert(*first);
+							*first++;
 						}
 					};
-					map( const map& other ) : capcity(other.capcity), len(other.len), m(other.m)
+					map( const map& other ) : compr(other.compr), _allocator(other._allocator), val_comp(other.val_comp), rbt(other.rbt)
 					{
-						std::cout << "map copy constractor called!" << std::endl;
+
 					};
 
 				//----	Destructor
@@ -121,9 +140,13 @@ namespace ft
 				//----	operator=
 					map& operator=( const map& other )
 					{
-						capcity = other.capcity;
-						len = other.len;
-						m = other.m;
+						if (*this != ohter)
+						{
+							compr = other.compr;
+							_allocator = ohter._allocator;
+							val_comp = other.val_comp;
+							rbt = other.rbt;
+						}
 						std::cout << "map assignement operator called" << std::endl;
 						return *this;
 					};
@@ -136,7 +159,7 @@ namespace ft
 
 				//----	Element access
 					//	at
-						T& at( const Key& key )
+				/*		T& at( const Key& key )
 						{
 							if (key<0 || key>len)
 								throw invalidIndex();
@@ -147,7 +170,7 @@ namespace ft
 							if (key<0 || key>len)
 								throw invalidIndex();
 							return *(m+key);
-						};
+						};*/
 
 					//	operator[]
 						T& operator[]( const Key& key )
@@ -172,7 +195,7 @@ namespace ft
 							return it.second;
 						};
 
-				//----	Iterators
+			/*	//----	Iterators
 					//	begin
 						iterator begin()
 						{
@@ -267,15 +290,16 @@ namespace ft
 							// }
 							// return const_reverse_iterator(m);
 							return const_reverse_iterator(min_element(root));
-						};
+						};*/
 
 				//----	Capacity
 					//	empty
 						bool empty() const
 						{
-							if (!len)
+							if (!len || !rbt->root)
 								return true;
 							return false;
+							// return !rbt.size();
 						};
 
 					//	size
@@ -288,7 +312,7 @@ namespace ft
 						size_type max_size() const
 						{
 							// return capcity-len;
-							return _allocator.max_size();
+							return rbt.max_size();
 						};
 
 				//----	Modifiers
@@ -304,31 +328,38 @@ namespace ft
 						};
 
 					//	insert
-						// std::pair<iterator, bool> insert( const value_type& value )
-						// {
-							
-						// };
+					/*	ft::pair<iterator, bool> insert( const value_type& value )
+						{
+							bool temp = rbt.insert(value);
+							if (temp)
+								len++;
+							iterator it = find(temp.first, rbt.root());
+						};*/
 						iterator insert( iterator pos, const value_type& value )
 						{
 							// t_node	temp = node;
-							size_type	i=0;
+							// size_type	i=0;
 							// while (it)
-							for (iterator it = m.begin(); it != m.end(); it++)
-							{
-								if (it.val > m)
-								{
-									// go rigth
-									it = it.r;
-								}
-								else
-								{
-									// go left
-									it = it.l;
-								}
-								// break;
-								i++;
-							}
-							_allocator(m+i, value);
+							// for (iterator it = m.begin(); it != m.end(); it++)
+							// {
+							// 	if (it.val > m)
+							// 	{
+							// 		// go rigth
+							// 		it = it.r;
+							// 	}
+							// 	else
+							// 	{
+							// 		// go left
+							// 		it = it.l;
+							// 	}
+							// 	// break;
+							// 	i++;
+							// }
+							// _allocator(m+i, value);
+							(void)pos;
+							rbt.insert(value);
+							len++;
+							return find(value.first);
 						};
 						// template< class InputIt >void insert( InputIt first, InputIt last )
 						// {
@@ -352,30 +383,34 @@ namespace ft
 					//	swap
 						void swap( map& other )
 						{
-							int	temp_len = len;
-							T	temp_m = m;
-							len = other.len;
-							m = other.m;
-							other.len = temp_len;
-							other.m = temp_m;
+							// int	temp_len = len;
+							// T	temp_m = m;
+							// len = other.len;
+							// m = other.m;
+							// other.len = temp_len;
+							// other.m = temp_m;
 						};
 
 				//----	Lookup
 					//	count
 						size_type count( const Key& key ) const
 						{
-							int	count;
-							for (size_type i=0; i<len; i++)
-								if (m[i] == key)
-									count+=1;
-							return count;
+							// int	count;
+							// for (size_type i=0; i<len; i++)
+							// 	if (m[i] == key)
+							// 		count+=1;
+							// return count;
+							if (find(key) != end)
+								return 1;
+							return 0;
 						};
 
 					//	find
-						// iterator find( const Key& key )
-						// {
-							
-						// };
+						iterator find( const Key& key )
+						{
+							T temp(key, mapped_type());
+							return iterator(rbt.search(temp), rbt.root());
+						};
 						// const_iterator find( const Key& key ) const
 						// {
 							
@@ -415,14 +450,14 @@ namespace ft
 					//	key_comp
 						key_compare key_comp() const
 						{
-							return cmp;
+							return compr;
 						};
 
 					//	value_comp
-						// ft::map::value_compare value_comp() const
-						// {
-							
-						// };
+						ft::map::value_compare value_comp() const
+						{
+							return val_comp;
+						};
 
 			// >> Non-member functions
 				//	operator==

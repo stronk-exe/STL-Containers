@@ -234,28 +234,62 @@ template<typename T> struct node
 	bool	color;
 	node	*parent, *right, *left;
 
-	node( T value )
+	node( const T &value ) : data(value)
 	{
-		data = value;
-		parent = right = left = NULL;
-		color = RED;
+		// data = value;
+		// parent = right = left = NULL;
+		// color = RED;
 	};
 };
 
-template<typename T> class RBtree
+template<typename T, typename Compare, typename Alloc=std::allocator<T> > class RBtree
 {
-	private:
-		node<T>	*root;
-	protected:
-		void	rotateRight( node<T> *&, node<T> *& );
-		void	rotateLeft( node<T> *&, node<T> *& );
-		void	fixViolation( node<T> *&, node<T> *& );
 	public:
-		RBtree() { root = NULL; };
+		// typedef node<T>	root;
+		// typedef	typename Allocator::template rebind<node<T> >::other				allocator;
+		// typedef	typename allocator::size_type	size_type;
+
+		// allocator	_allocator;
+	
+	private:
+		allocator_type	_allocator;
+		Compare			comp;
+		node<T>			*rt;
+		node<T>			*nl;
+		size_type		len;
+
+	// protected:
+	// 	void	rotateRight( node<T> *&, node<T> *& );
+	// 	void	rotateLeft( node<T> *&, node<T> *& );
+	// 	void	fixViolation( node<T> *&, node<T> *& );
+	public:
+		RBtree() : , rt(NULL)
+		{
+			
+		};
+		RBtree( const RBtree &other ) : 
+		{
+
+		}
 		void	insert( const T &n );
 		node<T>	*search( T n );
 		void	inorder();
+		node<T>* const *root() const
+		{
+			return &rt;
+		};
+		node<T>* const nil() const
+		{
+			return nl;
+		};
 		// void	levelOrder();
+
+		node<T> new_node( node<T> n )
+		{
+			node<T> temp = _allocator.allocate(1);
+			_allocator.construct(temp, node(n));
+			return temp;
+		}
 };
 
 template<typename T> node<T> *insert_bst( node<T> *root, node<T> *n )
