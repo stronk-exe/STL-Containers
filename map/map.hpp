@@ -22,33 +22,41 @@
 
 namespace ft
 {
-	template<class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<std::pair<const Key, T> > > class map
+	template<class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > > class map
 	{
 		public:
-			typedef	Key							key_type;
-			typedef	T							mapped_type;
-			typedef	std::pair<const Key, T>		value_type;
-			typedef	size_t						size_type;
-			typedef	ptrdiff_t					difference_type;
-			typedef	Compare						key_compare;
-			typedef	Allocator					allocator_type;
-			typedef	T&							reference;
-			typedef	const T&					const_reference;
-			typedef	T*							pointer;
-			typedef	const T*					const_pointer;
-			typedef RDtree_Iterator<T>					iterator;
-			typedef RDtree_Iterator<const T >			const_iterator;
+			typedef	Key											key_type;
+			typedef	T											mapped_type;
+			typedef	ft::pair<const Key, T>						value_type;
+			typedef	size_t										size_type;
+			typedef	ptrdiff_t									difference_type;
+			typedef	Compare										key_compare;
+			typedef	Allocator									allocator_type;
+			typedef typename allocator_type::pointer			pointer;
+			typedef typename allocator_type::const_pointer		const_pointer;
+			typedef typename allocator_type::reference			reference;
+			typedef typename allocator_type::const_reference	const_reference;
+			typedef ptrdiff_t									difference_type;
+			typedef	size_t										size_type;
+			// typedef	T&							reference;
+			// typedef	const T&					const_reference;
+			// typedef	T*							pointer;
+			// typedef	const T*					const_pointer;
+			typedef typename ft::RDtree_Iterator<value_type, val_comp>::iterator				iterator;
+			typedef typename ft::RDtree_Iterator<value_type, val_comp>::const_iterator			const_iterator;
+			typedef typename ft::RDtree_Iterator<value_type, val_comp>::reverse_iterator		reverse_iterator;
+			typedef typename ft::RDtree_Iterator<value_type, val_comp>::const_reverse_iterator	const_reverse_iterator;
 			// typedef RDtree_reverse_iterator<T>			reverse_iterator;
 			// typedef RDtree_reverse_iterator<const T>	const_reverse_iterator;
 
-		class value_compare
+		class value_comp
 		{
 			public:
 				bool operator()( const value_type &a, const value_type &b ) const
 				{
-					return (key_compare()(a.first, b.first));
+					return (key_comp()(a.first, b.first));
 				}
-				value_compare &operator=( const value_compare& )
+				value_comp &operator=( const value_comp& )
 				{
 					return *this;
 				}
@@ -64,11 +72,11 @@ namespace ft
 			// T				first;
 			// T				second;
 
-			typedef key_compare	compr;
-			typedef	allocator_type	_allocator;
-			typedef	value		val_comp;
-			typedef	RBtree<T, val_comp, Allocator>	rbt;
-			size_type		len;
+			allocator_type		_allocator;
+			key_compare			key_comp;
+			value_compare		val_comp;
+			RBtree<T, val_comp>	rbt;
+			// size_type		len;
 
 		public:
 			// >> Member functions
@@ -77,11 +85,11 @@ namespace ft
 					// {
 					// 	std::cout << "map default constractor called" << std::endl;
 					// };
-					explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : compr(comp), _allocator(alloc), val_comp(comp), rbt(val_comp, alloc)
+					explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : _allocator(alloc), key_comp(comp) , val_comp(value_comp()), rbt(_allocator)
 					{
 
 					};
-					template< class InputIt > map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) : compr(comp), _allocator(alloc), val_comp(comp), rbt(val_comp, alloc)
+					template< class InputIt > map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) : _allocator(alloc), key_comp(comp), , val_comp(value_comp()), rbt(_allocator)
 					{
 						// int i=0;
 						// // while (first != last)
@@ -114,13 +122,14 @@ namespace ft
 						// 	first++;
 						// 	i++;
 						// }
-						while (first != last)
-						{
-							rbt.insert(*first);
-							*first++;
-						}
+						// while (first != last)
+						// {
+						// 	rbt.insert(*first);
+						// 	*first++;
+						// }
+						insert(first, last);
 					};
-					map( const map& other ) : compr(other.compr), _allocator(other._allocator), val_comp(other.val_comp), rbt(other.rbt)
+					map( const map& other ) : _allocator(other._allocator), key_comp(other.key_comp), , val_comp(other.val_comp), rbt(other.rbt)
 					{
 
 					};
@@ -142,8 +151,8 @@ namespace ft
 					{
 						if (*this != ohter)
 						{
-							compr = other.compr;
 							_allocator = ohter._allocator;
+							key_comp = other.key_comp;
 							val_comp = other.val_comp;
 							rbt = other.rbt;
 						}
@@ -195,7 +204,7 @@ namespace ft
 							return it.second;
 						};
 
-			/*	//----	Iterators
+				//----	Iterators
 					//	begin
 						iterator begin()
 						{
@@ -206,7 +215,8 @@ namespace ft
 							// 	m = m.l;
 							// }
 							// return iterator(m);
-							return iterator(min_element(root));
+							// return iterator(min_element(root));
+							return rbt.begin();
 						};
 						const_iterator begin() const
 						{
@@ -217,7 +227,8 @@ namespace ft
 							// 	m = m.l;
 							// }
 							// return const_iterator(m);
-							return const_iterator(min_element(root));
+							// return const_iterator(min_element(root));
+							return rbt.begin();
 						};
 
 					//	end
@@ -230,7 +241,8 @@ namespace ft
 							// 	m = m.r;
 							// }
 							// return iterator(m);
-							return iterator(nullptr);
+							// return iterator(nullptr);
+							return rbt.end();
 						};
 						const_iterator end() const
 						{
@@ -241,7 +253,8 @@ namespace ft
 							// 	m = m.r;
 							// }
 							// return const_iterator(m);
-							return const_iterator(nullptr);
+							// return const_iterator(nullptr);
+							return rbt.end();
 						};
 
 					//	rbegin
@@ -254,7 +267,8 @@ namespace ft
 							// 	m = m.r;
 							// }
 							// return reverse_iterator(m);
-							return reverse_iterator(nullptr);
+							// return reverse_iterator(nullptr);
+							return rbt.rbegin();
 						};
 						const_reverse_iterator rbegin() const
 						{
@@ -265,7 +279,8 @@ namespace ft
 							// 	m = m.r;
 							// }
 							// return const_reverse_iterator(m);
-							return const_reverse_iterator(nullptr);
+							// return const_reverse_iterator(nullptr);
+							return rbt.rbegin();
 						};
 
 					//	rend
@@ -278,7 +293,8 @@ namespace ft
 							// 	m = m.l;
 							// }
 							// return reverse_iterator(m);
-							return reverse_iterator(min_element(root));
+							// return reverse_iterator(min_element(root));
+							return rbt.rend();
 						};
 						const_reverse_iterator rend() const
 						{
@@ -289,23 +305,26 @@ namespace ft
 							// 	m = m.l;
 							// }
 							// return const_reverse_iterator(m);
-							return const_reverse_iterator(min_element(root));
-						};*/
+							// return const_reverse_iterator(min_element(root));
+							return rbt.rend();
+						};
 
 				//----	Capacity
 					//	empty
 						bool empty() const
 						{
-							if (!len || !rbt->root)
-								return true;
-							return false;
+							// if (!len || !rbt->root)
+							// 	return true;
+							// return false;
 							// return !rbt.size();
+							return rbt.empty();
 						};
 
 					//	size
 						size_type size() const
 						{
-							return len;
+							// return len;
+							return rbt.size();
 						};
 
 					//	max_size
@@ -322,19 +341,21 @@ namespace ft
 							// _allocator.deallocate(m);
 							// capcity = 0;
 							// len = 0;
-							for (size_type i=0; i < capcity; i++)
-								_allocator.destroy(m+i);
-							len = 0;
+							// for (size_type i=0; i < capcity; i++)
+							// 	_allocator.destroy(m+i);
+							// len = 0;
+							return rbt.clear();
 						};
 
 					//	insert
-					/*	ft::pair<iterator, bool> insert( const value_type& value )
+						ft::pair<iterator, bool> insert( const value_type& value )
 						{
-							bool temp = rbt.insert(value);
-							if (temp)
-								len++;
-							iterator it = find(temp.first, rbt.root());
-						};*/
+							// bool temp = rbt.insert(value);
+							// if (temp)
+							// 	len++;
+							// iterator it = find(temp.first, rbt.root());
+							return rbt.insert(value);
+						};
 						iterator insert( iterator pos, const value_type& value )
 						{
 							// t_node	temp = node;
@@ -356,29 +377,30 @@ namespace ft
 							// 	i++;
 							// }
 							// _allocator(m+i, value);
-							(void)pos;
-							rbt.insert(value);
-							len++;
-							return find(value.first);
+							// (void)pos;
+							// rbt.insert(value);
+							// len++;
+							// return find(value.first);
+							return rbt.insert(pos, value);
 						};
-						// template< class InputIt >void insert( InputIt first, InputIt last )
-						// {
-							
-						// };
+						template< class InputIt >void insert( InputIt first, InputIt last )
+						{
+							return rbt.insert(first, last);
+						};
 
 					//	erase
-						// iterator erase( iterator pos )
-						// {
-							
-						// };
-						// iterator erase( iterator first, iterator last )
-						// {
-							
-						// };
-						// size_type erase( const Key& key )
-						// {
-							
-						// };
+						iterator erase( iterator pos )
+						{
+							return rbt.erase(pos);
+						};
+						iterator erase( iterator first, iterator last )
+						{
+							return rbt.erase(first, last);
+						};
+						size_type erase( const Key& key )
+						{
+							return rbt.erase(ft::make_pair(key, mapped_type()));
+						};
 
 					//	swap
 						void swap( map& other )
@@ -389,6 +411,10 @@ namespace ft
 							// m = other.m;
 							// other.len = temp_len;
 							// other.m = temp_m;
+							std::swap(_allocator, other._allocator);
+							std::swap(key_comp, other.key_comp);
+							std::swap(val_comp, other.val_comp);
+							rbt.swap(other.rbt);
 						};
 
 				//----	Lookup
@@ -400,7 +426,8 @@ namespace ft
 							// 	if (m[i] == key)
 							// 		count+=1;
 							// return count;
-							if (find(key) != end)
+							iterator it = find(key);
+							if (it != end)
 								return 1;
 							return 0;
 						};
@@ -408,13 +435,14 @@ namespace ft
 					//	find
 						iterator find( const Key& key )
 						{
-							T temp(key, mapped_type());
-							return iterator(rbt.search(temp), rbt.root());
+							// T temp(key, mapped_type());
+							// return iterator(rbt.search(temp), rbt.root());
+							return rbt.find(ft::make_pair(key, mapped_type()));
 						};
-						// const_iterator find( const Key& key ) const
-						// {
-							
-						// };
+						const_iterator find( const Key& key ) const
+						{
+							return rbt.find(ft::make_pair(key, mapped_type()));
+						};
 
 					//	equal_range
 						// std::pair<iterator,iterator> equal_range( const Key& key )
@@ -450,7 +478,7 @@ namespace ft
 					//	key_comp
 						key_compare key_comp() const
 						{
-							return compr;
+							return key_comp;
 						};
 
 					//	value_comp
