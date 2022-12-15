@@ -6,12 +6,13 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/13 12:33:46 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/15 21:04:15 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "map.hpp"
+
 int main()
 {
 	std::cout << "hello map" << std::endl;
