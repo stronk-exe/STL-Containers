@@ -6,14 +6,17 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/15 21:37:32 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:18:13 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RBTREE_HPP
 #define RBTREE_HPP
 
+#include "RBnode.hpp"
+#include "RBiterators.hpp"
 #include "../utils/vector_Iterators.hpp"
+#include "../utils/utils.hpp"
 
 namespace ft
 {
@@ -34,15 +37,15 @@ namespace ft
                 typedef	size_t						size_type;
                 typedef	ptrdiff_t					difference_type;
                 typedef	Compare						compare_type;
-                typedef	Allocator					allocator_type;
+                typedef	Alloc   					allocator_type;
                 typedef	node<T>&							    reference;
                 typedef	const node<T>&					        const_reference;
                 typedef	node<T>*							    pointer;
                 typedef	const node<T>*					        const_pointer;
-                typedef ft::RDtree_Iterator<nvalue_type>        iterator;
-                typedef ft::RDtree_Iterator<const nvalue_type>  const_iterator;
-                typedef ft::reverse_iterator<iterator>			reverse_iterator;
-                typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
+                typedef ft::RBiterator<nvalue_type>        iterator;
+                typedef ft::RBiterator<const nvalue_type>  const_iterator;
+                typedef ft::Reverse_iterator<iterator>			reverse_iterator;
+                typedef ft::Reverse_iterator<const_iterator>    const_reverse_iterator;
         
         private:
             allocator_type	_allocator;
@@ -64,27 +67,26 @@ namespace ft
                     // rt = NULL;
                     nl = NULL;
                     len = 0;
-                    n = _allocator.allocate(1);
+                    pointer n = _allocator.allocate(1);
 
                     n->parent = n;
                     n->right = n;
                     n->left = n;
                     n->color = BLACK;
                     rt = n;
-
                 };
                 RBtree( const RBtree &other )
                 {
                     _allocator = other.alloc;
                     comp = compare_type();
                     // rt = NULL;
-                    // nl = NULL;
+                    nl = NULL;
                     // len = 0;
-                    nl = _allocator.allocate(1);
-                    nl->parent = n;
-                    nl->right = n;
-                    nl->left = n;
-                    nl->color = BLACK;
+                    pointer n = _allocator.allocate(1);
+                    n->parent = n;
+                    n->right = n;
+                    n->left = n;
+                    n->color = BLACK;
                     rt = nl;
                     len++;
                     new_rbt(other.rt, other.nl);
@@ -94,13 +96,13 @@ namespace ft
                     if (this != &other)
                     {
                         clear();
-                        _allocator.destroy(n);
-                        _allocator.deallocate(n, 1);
+                        _allocator.destroy(other);
+                        _allocator.deallocate(other, 1);
                         _allocator = other._allocator;
                         nl = _allocator.allocate(1);
-                        nl->parent = n;
-                        nl->right = n;
-                        nl->left = n;
+                        nl->parent = other->parent;
+                        nl->right = other->right;
+                        nl->left = other->left;
                         nl->color = BLACK;
                         rt = nl;
                         new_rbt(other.rt, other.nl);
@@ -158,7 +160,7 @@ namespace ft
                 }
             //----  Memeber functions
 
-                ft::pair<iterator, bool> insert( const value_type& value )
+            /*    ft::pair<iterator, bool> insert( const value_type& value )
                 {
                     pointer temp_n = new_node(value), temp_rt = rt, temp_nl = nl;
 
@@ -184,27 +186,27 @@ namespace ft
                         temp_nl->left = n;
                     fixViolation(temp_rt, n);
                     return ft::make_pair(iterator(rt, n, nl), true);
-                }
+                }*/
         /*    iterator insert( iterator pos, const value_type& value )
             {
 
             }*/
-                ft::pair<iterator, bool> insert_node( pointer root, pointer n )
+                ft::pair<iterator, bool> insert_node( /*pointer root, */pointer n )
                 {
-                    if (!root)
+                    if (!rt)
                         return n;
-                    if (n->data > root->data)
+                    if (n->data > rt->data)
                     {
-                        root->right = insert_node(root->right, n);
-                        root->right->parent = root;
+                        rt->right = insert_node(rt->right, n);
+                        rt->right->parent = rt;
                     }
-                    else if (n->data < root->data)
+                    else if (n->data < rt->data)
                     {
-                        root->left = insert_node(root->left, n);
-                        root->left->parent = root;
+                        rt->left = insert_node(rt->left, n);
+                        rt->left->parent = rt;
                     }
-                    fixViolation(temp_rt, n);
-                    return root;
+                    fixViolation(rt, n);
+                    return rt;
                 };
             
                 void erase( iterator pos )
@@ -236,12 +238,12 @@ namespace ft
                 {
                     value_type temp_data = n->data;
 
-                    while (temp->left != NULL)
+                    while (n->left != NULL)
                     {
                         n = n->left;
                         temp_data = n->left->data;
                     }
-                    return temp;
+                    return temp_data;
                 };
                 // pointer insert_node()
                 // {
@@ -300,7 +302,7 @@ namespace ft
             bool empty() const
             {
                 if (!len)
-                    return true
+                    return true;
                 return false;
             }
 
@@ -320,26 +322,87 @@ namespace ft
                 rt = nl;
                 len = 0;
             }
+
             void    swap( RBtree &rbt )
             {
                 std::swap(_allocator, rbt._allocator);
                 std::swap(comp, rbt.comp);
                 std::swap(rt, rbt.rt);
                 std::swap(nl, rbt.nl);
-                std::swap(lwn, rbt.len);
+                std::swap(len, rbt.len);
             }
+
+            iterator lower_bound( const value_type &value )
+		    {
+		    	// return rbt.lower_bound();
+                iterator it = find(value);
+                if (it == begin())
+                    return begin();
+                // else if (++it == end())
+                //     return --it;
+                return --it;
+		    };
+		    const_iterator lower_bound( const value_type &value ) const
+		    {
+		    	// return rbt.lower_bound();
+                const_iterator it = find(value);
+                if (it == begin())
+                    return begin();
+                // else if (++it == end())
+                //     return --it;
+                return --it;
+		    };
+
+            iterator upper_bound( const value_type &value )
+		    {
+		    	// return rbt.lower_bound();
+                iterator it = find(value);
+                if (it == end())
+                    return end();
+                // else if (--it == end())
+                //     return ++it;
+                return ++it;
+		    };
+		    const_iterator upper_bound( const value_type &value ) const
+		    {
+		    	// return rbt.lower_bound();
+                const_iterator it = find(value);
+                if (it == end())
+                    return end();
+                // else if (--it == end())
+                //     return ++it;
+                return ++it;
+		    };
+
+            ft::pair<iterator,iterator> equal_range( const value_type &value )
+		    {
+		    	// return rbt.equal_range();
+                iterator it = lower_bound(value);
+                // while (it != upper_bound(value))
+                // {
+                //     ft::make_pair(value);
+                //     i++;
+                // }
+                return make_pair(it, upper_bound(value));
+		    };
+		    ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const
+		    {
+		    	// return rbt.equal_range();
+                const_iterator it = lower_bound(value);
+                return make_pair(it, upper_bound(value));
+		    };
 
             //----  Utils
             void new_rbt( pointer n, pointer _nl )
             {
-                if (!node || !_nl)
+                if (!n || !_nl)
                     return;
                 new_rbt(n->left, _nl);
                 new_node(n->data);
                 new_rbt(n->right, _nl);
             }
 
-            destroy_node( pointer n )
+            void destroy_node( pointer n )
             {
                 if (!n || n == nl)
                     return;
@@ -354,9 +417,9 @@ namespace ft
 
                 while (n != nl)
                 {
-                    if comp(value, n->data);
+                    if (comp(value, n->data))
                         n = n->left;
-                    if !comp(value, n->data);
+                    if (!comp(value, n->data))
                         n = n->right;
                     else
                         return n;

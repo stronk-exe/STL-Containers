@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/13 12:33:16 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:11:36 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -445,34 +445,34 @@ namespace ft
 						};
 
 					//	equal_range
-						// std::pair<iterator,iterator> equal_range( const Key& key )
-						// {
-							
-						// };
-						// std::pair<const_iterator,const_iterator> equal_range( const Key& key ) const
-						// {
-							
-						// };
+						ft::pair<iterator,iterator> equal_range( const Key& key )
+						{
+							return rbt.equal_range();
+						};
+						ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const
+						{
+							return rbt.equal_range();
+						};
 
 					//	lower_bound
-						// iterator lower_bound( const Key& key )
-						// {
-							
-						// };
-						// const_iterator lower_bound( const Key& key ) const
-						// {
-							
-						// };
+						iterator lower_bound( const Key& key )
+						{
+							return rbt.lower_bound();
+						};
+						const_iterator lower_bound( const Key& key ) const
+						{
+							return rbt.lower_bound();
+						};
 
 					//	upper_bound
-						// iterator upper_bound( const Key& key )
-						// {
-							
-						// };
-						// const_iterator upper_bound( const Key& key ) const
-						// {
-							
-						// };
+						iterator upper_bound( const Key& key )
+						{
+							return rbt.upper_bound();
+						};
+						const_iterator upper_bound( const Key& key ) const
+						{
+							return rbt.upper_bound();
+						};
 
 				//----	Observers
 					//	key_comp

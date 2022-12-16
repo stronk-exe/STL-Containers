@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:47 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/15 21:00:49 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/16 11:25:51 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #define RBITERATORS_HPP
 
 #include "RBnode.hpp"
+#include <iostream>
+#include "../utils/Iterator_traits.hpp"
 
 namespace ft
 {
@@ -25,12 +27,12 @@ namespace ft
             typedef const T*                            const_pointer;
             typedef T&                                  reference;
             typedef const T&                            const_reference;
-            typedef typename ptrdiff_t                  difference_type;
-            typedef typename bidirectional_iterator_tag iterator_category;
+            typedef typename std::ptrdiff_t                  difference_type;
+            typedef typename ft::bidirectional_iterator_tag iterator_category;
         
         private:
             pointer _node;
-            pointer rbit_rt;
+            pointer rbtit_rt;
             pointer rbtit_nl;
         
         public:
@@ -44,8 +46,8 @@ namespace ft
                 if (this != rbtit)
                 {
                     _node = rbtit._node;
-                    rt = rbtit.rt;
-                    nl = rbtit.nl;
+                    rbtit_rt = rbtit.rt;
+                    rbtit_nl = rbtit.nl;
                 }
                 return *this;
             }
@@ -76,7 +78,7 @@ namespace ft
                 return &(_node->data);
             };
 
-            RBtree_Iterator& operator++()
+            RBiterator& operator++()
             {
                 // If the current node has a non-null right child,
                 // 	Take a step down to the right
@@ -101,7 +103,7 @@ namespace ft
                 if (_node != rbtit_nl)
                 {
                     if (_node->right != rbtit_nl)
-                        reutn min_element(_node->right);
+                        return min_element(_node->right);
                     while (_node->parent != rbtit_nl && _node == _node->parent->right)
                         _node = _node->parent;
                     _node = _node->parent;
@@ -109,15 +111,15 @@ namespace ft
                 return *this;
             };
 
-            RBtree_Iterator& operator++( int )
+            RBiterator& operator++( int )
             {
-                RBtree_Iterator rbtit(*this);
+                RBiterator rbtit(*this);
 
                 ++(*this);
                 return rbtit;
             };
 
-            RBtree_Iterator& operator--()
+            RBiterator& operator--()
             {
                 // if (!node)
                 //     return *this;
@@ -136,7 +138,7 @@ namespace ft
                 if (_node != rbtit_nl)
                 {
                     if (_node->left != rbtit_nl)
-                        reutn max_element(_node->left);
+                        return max_element(_node->left);
                     while (_node->parent != rbtit_nl && _node == _node->parent->left)
                         _node = _node->parent;
                     _node = _node->parent;
@@ -146,9 +148,9 @@ namespace ft
                 return *this;
             };
 
-            RBtree_Iterator& operator--( int )
+            RBiterator& operator--( int )
             {
-                RBtree_Iterator rbtit(*this);
+                RBiterator rbtit(*this);
 
                 --(*this);
                 return rbtit;

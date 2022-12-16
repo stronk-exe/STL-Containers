@@ -6,11 +6,12 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/15 21:04:15 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/16 12:46:44 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
+/*
 #include "map.hpp"
 
 int main()
@@ -34,7 +35,6 @@ int main()
 	// map3 = map2;
 }
 
-/*
 #include "../utils/map_utils.hpp"
 int main()
 {
@@ -90,24 +90,31 @@ int main()
     return 0;
 }
 
+*/
+
+#include "RBtree.hpp"
+#include "RBnode.hpp"
+
 int main()
 {
-    RBtree<int> tree;
+    ft::RBtree<char, int> tree(void);
+    ft::node<int> n(7);
+
+    // n->data = 7;
+    // std::cout << n.data << std::endl;
+    tree.insert_node(&n);
+    // tree.insert(6);
+    // tree.insert(5);
+    // tree.insert(4);
+    // tree.insert(3);
+    // tree.insert(2);
+    // tree.insert(1);
  
-    tree.insert(7);
-    tree.insert(6);
-    tree.insert(5);
-    tree.insert(4);
-    tree.insert(3);
-    tree.insert(2);
-    tree.insert(1);
- 
-    std::cout << "Inorder Traversal of Created Tree\n";
-    tree.inorder();
+    // std::cout << "Inorder Traversal of Created Tree\n";
+    // tree.inorder();
  
     // std::cout << "\n\nLevel Order Traversal of Created Tree\n";
     // tree.levelOrder();
  
     return 0;
 }
-*/
