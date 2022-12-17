@@ -92,17 +92,17 @@ int main()
 
 */
 
-#include "RBtree.hpp"
-#include "RBnode.hpp"
-
+// #include "RBtree.hpp"
+// #include "RBnode.hpp"
+#include "map.hpp"
 int main()
 {
-    ft::RBtree<char, int> tree(void);
-    ft::node<int> n(7);
+    // ft::RBtree<char, int> tree(void);
+    // ft::node<int> n(7);
 
     // n->data = 7;
     // std::cout << n.data << std::endl;
-    tree.insert_node(&n);
+    // tree.insert_node(n);
     // tree.insert(6);
     // tree.insert(5);
     // tree.insert(4);
@@ -115,6 +115,19 @@ int main()
  
     // std::cout << "\n\nLevel Order Traversal of Created Tree\n";
     // tree.levelOrder();
+
+
+    ft::map<int, char> intcharmap;
+	ft::map<char, int> charintmap;
+
+	ft::map<bool, bool> boolboolmap;
+
+	ft::map<char, int, classcomp> fourth;  // class as Compare
+
+	bool(*fn_pt)(int, int) = fncomp;
+	ft::map<char, int, bool(*)(int, int)>
+		fifth(fn_pt);  // function pointer as Compare
+	// return true;
  
     return 0;
 }

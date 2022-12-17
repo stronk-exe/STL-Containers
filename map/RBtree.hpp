@@ -65,29 +65,43 @@ namespace ft
                     _allocator = alloc;
                     comp = compare_type();
                     // rt = NULL;
-                    nl = NULL;
+                    // nl = NULL;
                     len = 0;
-                    pointer n = _allocator.allocate(1);
+                    
+                    nl = _allocator.allocate(1);
+                    nl->parent = nl;
+                    nl->right = nl;
+                    nl->left = nl;
+                    nl->color = BLACK;
+                    rt = nl;
 
-                    n->parent = n;
-                    n->right = n;
-                    n->left = n;
-                    n->color = BLACK;
-                    rt = n;
+
+                    // pointer n = _allocator.allocate(1);
+                    // n->parent = n;
+                    // n->right = n;
+                    // n->left = n;
+                    // n->color = BLACK;
+                    // rt = n;
                 };
                 RBtree( const RBtree &other )
                 {
                     _allocator = other.alloc;
                     comp = compare_type();
                     // rt = NULL;
-                    nl = NULL;
+                    // nl = NULL;
                     // len = 0;
-                    pointer n = _allocator.allocate(1);
-                    n->parent = n;
-                    n->right = n;
-                    n->left = n;
-                    n->color = BLACK;
+                    // pointer n = _allocator.allocate(1);
+                    // n->parent = n;
+                    // n->right = n;
+                    // n->left = n;
+                    // n->color = BLACK;
+                    nl = _allocator.allocate(1);
+                    nl->parent = nl;
+                    nl->right = nl;
+                    nl->left = nl;
+                    nl->color = BLACK;
                     rt = nl;
+                    // rt = nl;
                     len++;
                     new_rbt(other.rt, other.nl);
                 }
@@ -160,37 +174,48 @@ namespace ft
                 }
             //----  Memeber functions
 
-            /*    ft::pair<iterator, bool> insert( const value_type& value )
+                ft::pair<iterator, bool> insert( const value_type& value )
                 {
-                    pointer temp_n = new_node(value), temp_rt = rt, temp_nl = nl;
+                    // pointer temp_n = new_node(value), temp_rt = rt, temp_nl = nl;
 
-                    while (temp_rt != nl)
+                    // while (temp_rt != nl)
+                    // {
+                    //     if (value > temp_rt->data)
+                    //     {
+                    //         temp_nl = temp_rt;
+                    //         temp_rt = temp_rt->left;
+                    //     }
+                    //     else
+                    //     {
+                    //         temp_nl = temp_rt;
+                    //         temp_rt = temp_rt->right;
+                    //     }
+                    // }
+                    // n->parent = temp_nl;
+                    // if (nl == temp_nl)
+                    //     rt = n;
+                    // else if (n->data > temp_nl->data)
+                    //     temp_nl->right = n;
+                    // else
+                    //     temp_nl->left = n;
+                    // fixViolation(temp_rt, n);
+                    // return ft::make_pair(iterator(rt, n, nl), true);
+                    return insert_node(value);
+                }
+                iterator insert( iterator pos, const value_type& value )
+                {
+                    void(pos);
+                    // return insert_node(value).first;
+                    return insert_node(value);
+                }
+                template<class InputIt> void insert( InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value>::type *= NULL )
+                {
+                    while (first != last)
                     {
-                        if (value > temp_rt->data)
-                        {
-                            temp_nl = temp_rt;
-                            temp_rt = temp_rt->left;
-                        }
-                        else
-                        {
-                            temp_nl = temp_rt;
-                            temp_rt = temp_rt->right;
-                        }
+                        insert_node(*first);
+                        *first++;
                     }
-                    n->parent = temp_nl;
-                    if (nl == temp_nl)
-                        rt = n;
-                    else if (n->data > temp_nl->data)
-                        temp_nl->right = n;
-                    else
-                        temp_nl->left = n;
-                    fixViolation(temp_rt, n);
-                    return ft::make_pair(iterator(rt, n, nl), true);
-                }*/
-        /*    iterator insert( iterator pos, const value_type& value )
-            {
-
-            }*/
+                }
                 ft::pair<iterator, bool> insert_node( /*pointer root, */pointer n )
                 {
                     if (!rt)
@@ -215,7 +240,26 @@ namespace ft
                         return;
                     delete_node(pos._node);
                 }
-                void    delete_node( pointer root, value_type n )
+                size_type erase( const value_type &value )
+                {
+                    pointer n = search(value);
+                    
+                    if (n)
+                    {
+                        erase(n);
+                        return 1;
+                    }
+                    return 0;
+                }
+                void erase( iterator first, iterator last )
+                {
+                    while (first != last)
+                    {
+                        delete_node(*first);
+                        *first++;
+                    }
+                }
+                pointer    delete_node( pointer root, value_type n )
                 {
                     if (!root)
                         return root;
@@ -385,7 +429,7 @@ namespace ft
                 // }
                 return make_pair(it, upper_bound(value));
 		    };
-		    ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const
+		    ft::pair<const_iterator,const_iterator> equal_range( const value_type& value ) const
 		    {
 		    	// return rbt.equal_range();
                 const_iterator it = lower_bound(value);
