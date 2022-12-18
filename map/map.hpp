@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/16 16:11:36 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/17 20:36:23 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 
 #include <iostream>
 #include "../utils/exceptions.hpp"
-#include "../utils/utils.hpp"
+// #include "../utils/utils.hpp"
 // #include "../utils/Iterator_traits.hpp"
-#include "../utils/map_Iterators.hpp"
-#include "../utils/map_utils.hpp"
+// #include "../utils/map_Iterators.hpp"
+// #include "../utils/map_utils.hpp"
+#include "RBiterators.hpp"
+#include "RBtree.hpp"
+#include <cstddef>
 
 namespace ft
 {
@@ -36,26 +39,24 @@ namespace ft
 			typedef typename allocator_type::const_pointer		const_pointer;
 			typedef typename allocator_type::reference			reference;
 			typedef typename allocator_type::const_reference	const_reference;
-			typedef ptrdiff_t									difference_type;
-			typedef	size_t										size_type;
 			// typedef	T&							reference;
 			// typedef	const T&					const_reference;
 			// typedef	T*							pointer;
 			// typedef	const T*					const_pointer;
-			typedef typename ft::RDtree_Iterator<value_type, val_comp>::iterator				iterator;
-			typedef typename ft::RDtree_Iterator<value_type, val_comp>::const_iterator			const_iterator;
-			typedef typename ft::RDtree_Iterator<value_type, val_comp>::reverse_iterator		reverse_iterator;
-			typedef typename ft::RDtree_Iterator<value_type, val_comp>::const_reverse_iterator	const_reverse_iterator;
+			typedef ft::RBiterator<value_type>				iterator;
+			typedef ft::RBiterator<value_type>			const_iterator;
+			typedef ft::Reverse_iterator<iterator>		reverse_iterator;
+			typedef ft::Reverse_iterator<const_iterator>	const_reverse_iterator;
 			// typedef RDtree_reverse_iterator<T>			reverse_iterator;
 			// typedef RDtree_reverse_iterator<const T>	const_reverse_iterator;
 
 		class value_comp
 		{
 			public:
-				bool operator()( const value_type &a, const value_type &b ) const
-				{
-					return (key_comp()(a.first, b.first));
-				}
+				// bool operator()( const value_type &a, const value_type &b ) const
+				// {
+				// 	return (key_comp()(a.first, b.first));
+				// }
 				value_comp &operator=( const value_comp& )
 				{
 					return *this;
@@ -72,24 +73,24 @@ namespace ft
 			// T				first;
 			// T				second;
 
-			allocator_type		_allocator;
-			key_compare			key_comp;
-			value_compare		val_comp;
-			RBtree<T, val_comp>	rbt;
+			allocator_type	_allocator;
+			key_compare		_key_comp;
+			value_comp		val_comp;
+			RBtree<T, key_compare>		rbt;
 			// size_type		len;
 
 		public:
 			// >> Member functions
 				//----	Constructors
-					// map() :  capcity(0), len(0)
-					// {
-					// 	std::cout << "map default constractor called" << std::endl;
-					// };
-					explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : _allocator(alloc), key_comp(comp) , val_comp(value_comp()), rbt(_allocator)
+					map() : _allocator(), _key_comp() , val_comp(), rbt()
+					{
+						std::cout << "map default constractor called" << std::endl;
+					};
+					explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : _allocator(alloc), _key_comp(comp) , val_comp(value_comp()), rbt(_allocator)
 					{
 
 					};
-					template< class InputIt > map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) : _allocator(alloc), key_comp(comp), , val_comp(value_comp()), rbt(_allocator)
+					template< class InputIt > map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) : _allocator(alloc), _key_comp(comp), val_comp(value_comp()), rbt(_allocator)
 					{
 						// int i=0;
 						// // while (first != last)
@@ -129,7 +130,7 @@ namespace ft
 						// }
 						insert(first, last);
 					};
-					map( const map& other ) : _allocator(other._allocator), key_comp(other.key_comp), , val_comp(other.val_comp), rbt(other.rbt)
+					map( const map& other ) : _allocator(other._allocator), _key_comp(other._key_comp), val_comp(other.val_comp), rbt(other.rbt)
 					{
 
 					};
@@ -149,10 +150,10 @@ namespace ft
 				//----	operator=
 					map& operator=( const map& other )
 					{
-						if (*this != ohter)
+						if (*this != other)
 						{
-							_allocator = ohter._allocator;
-							key_comp = other.key_comp;
+							_allocator = other._allocator;
+							_key_comp = other._key_comp;
 							val_comp = other.val_comp;
 							rbt = other.rbt;
 						}
@@ -200,7 +201,7 @@ namespace ft
 							it = finde(key);
 							if (it != end())
 								insert(ft::make_pair(key, mapped_type()));
-							it = finde(k);
+							it = finde(key);
 							return it.second;
 						};
 
@@ -412,7 +413,7 @@ namespace ft
 							// other.len = temp_len;
 							// other.m = temp_m;
 							std::swap(_allocator, other._allocator);
-							std::swap(key_comp, other.key_comp);
+							std::swap(_key_comp, other._key_comp);
 							std::swap(val_comp, other.val_comp);
 							rbt.swap(other.rbt);
 						};
@@ -427,7 +428,7 @@ namespace ft
 							// 		count+=1;
 							// return count;
 							iterator it = find(key);
-							if (it != end)
+							if (it != end())
 								return 1;
 							return 0;
 						};
@@ -447,31 +448,31 @@ namespace ft
 					//	equal_range
 						ft::pair<iterator,iterator> equal_range( const Key& key )
 						{
-							return rbt.equal_range();
+							return rbt.equal_range(key);
 						};
 						ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const
 						{
-							return rbt.equal_range();
+							return rbt.equal_range(key);
 						};
 
 					//	lower_bound
 						iterator lower_bound( const Key& key )
 						{
-							return rbt.lower_bound();
+							return rbt.lower_bound(key);
 						};
 						const_iterator lower_bound( const Key& key ) const
 						{
-							return rbt.lower_bound();
+							return rbt.lower_bound(key);
 						};
 
 					//	upper_bound
 						iterator upper_bound( const Key& key )
 						{
-							return rbt.upper_bound();
+							return rbt.upper_bound(key);
 						};
 						const_iterator upper_bound( const Key& key ) const
 						{
-							return rbt.upper_bound();
+							return rbt.upper_bound(key);
 						};
 
 				//----	Observers
@@ -482,7 +483,7 @@ namespace ft
 						};
 
 					//	value_comp
-						ft::map::value_compare value_comp() const
+						map::value_comp value_comp() const
 						{
 							return val_comp;
 						};

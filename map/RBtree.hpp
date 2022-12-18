@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/16 16:18:13 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/17 20:40:26 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ namespace ft
                     len = 0;
                     
                     nl = _allocator.allocate(1);
-                    nl->parent = nl;
-                    nl->right = nl;
-                    nl->left = nl;
+                    nl->parent = nl->right = nl->left = nl;
                     nl->color = BLACK;
                     rt = nl;
 
@@ -96,9 +94,7 @@ namespace ft
                     // n->left = n;
                     // n->color = BLACK;
                     nl = _allocator.allocate(1);
-                    nl->parent = nl;
-                    nl->right = nl;
-                    nl->left = nl;
+                    nl->parent = nl->right = nl->left = nl;
                     nl->color = BLACK;
                     rt = nl;
                     // rt = nl;
@@ -204,11 +200,11 @@ namespace ft
                 }
                 iterator insert( iterator pos, const value_type& value )
                 {
-                    void(pos);
+                    (void)pos;
                     // return insert_node(value).first;
                     return insert_node(value);
                 }
-                template<class InputIt> void insert( InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value>::type *= NULL )
+                template<class InputIt> void insert( InputIt first, InputIt last/*, typename ft::enable_if<!ft::is_integral<InputIt>::value>::type *= NULL*/ )
                 {
                     while (first != last)
                     {

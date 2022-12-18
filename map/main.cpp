@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/16 12:46:44 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/17 20:36:12 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,17 +117,22 @@ int main()
     // tree.levelOrder();
 
 
-    ft::map<int, char> intcharmap;
-	ft::map<char, int> charintmap;
+    // ft::map<int, char> intcharmap;
+	// ft::map<char, int> charintmap;
 
-	ft::map<bool, bool> boolboolmap;
+	// ft::map<bool, bool> boolboolmap;
 
-	ft::map<char, int, classcomp> fourth;  // class as Compare
+	// ft::map<char, int, classcomp> fourth;  // class as Compare
 
-	bool(*fn_pt)(int, int) = fncomp;
-	ft::map<char, int, bool(*)(int, int)>
-		fifth(fn_pt);  // function pointer as Compare
+	// bool(*fn_pt)(int, int) = fncomp;
+	// ft::map<char, int, bool(*)(int, int)>
+		// fifth(fn_pt);  // function pointer as Compare
 	// return true;
  
+    ft::map<std::string, int> map1;
+    // map1["something"] = 69;
+    // map1["anything"] = 199;
+    // map1["that thing"] = 50;
+    // std::cout << "map1 = " << map1;
     return 0;
 }
