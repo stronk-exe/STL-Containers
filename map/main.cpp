@@ -130,7 +130,7 @@ int main()
 	// return true;
  
     ft::map<std::string, int> map1;
-    // map1["something"] = 69;
+    map1["something"] = 69;
     // map1["anything"] = 199;
     // map1["that thing"] = 50;
     // std::cout << "map1 = " << map1;

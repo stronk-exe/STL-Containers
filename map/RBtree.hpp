@@ -15,12 +15,12 @@
 
 #include "RBnode.hpp"
 #include "RBiterators.hpp"
-#include "../utils/vector_Iterators.hpp"
+// #include "../utils/vector_Iterators.hpp"
 #include "../utils/utils.hpp"
 
 namespace ft
 {
-    template<typename T, typename Compare, typename Alloc=std::allocator<T> > class RBtree
+    template<typename T, typename Compare, typename Alloc=std::allocator<node<T> > > class RBtree
     {
         // public:
             // typedef node<T>	root;
@@ -42,10 +42,10 @@ namespace ft
                 typedef	const node<T>&					        const_reference;
                 typedef	node<T>*							    pointer;
                 typedef	const node<T>*					        const_pointer;
-                typedef ft::RBiterator<nvalue_type>        iterator;
-                typedef ft::RBiterator<const nvalue_type>  const_iterator;
-                typedef ft::Reverse_iterator<iterator>			reverse_iterator;
-                typedef ft::Reverse_iterator<const_iterator>    const_reverse_iterator;
+                typedef typename ft::RBiterator<nvalue_type>        iterator;
+                typedef typename ft::RBiterator<nvalue_type>  const_iterator;
+                typedef typename ft::Reverse_iterator<iterator>			reverse_iterator;
+                typedef typename ft::Reverse_iterator<const_iterator>    const_reverse_iterator;
         
         private:
             allocator_type	_allocator;
@@ -60,13 +60,13 @@ namespace ft
         // 	void	fixViolation( node<T> *&, node<T> *& );
         public:
             //----  Constructors
-                explicit RBtree( allocator_type alloc=allocator_type() )
+                explicit RBtree( allocator_type alloc=allocator_type() ) : _allocator(alloc), comp(compare_type()), rt(NULL), nl(NULL), len(0)
                 {
-                    _allocator = alloc;
-                    comp = compare_type();
+                    // _allocator = alloc;
+                    // comp = compare_type();
                     // rt = NULL;
                     // nl = NULL;
-                    len = 0;
+                    // len = 0;
                     
                     nl = _allocator.allocate(1);
                     nl->parent = nl->right = nl->left = nl;
@@ -81,10 +81,10 @@ namespace ft
                     // n->color = BLACK;
                     // rt = n;
                 };
-                RBtree( const RBtree &other )
+                RBtree( const RBtree &other ) : _allocator(other._allocator), comp(compare_type()), rt(NULL), nl(NULL), len(0)
                 {
-                    _allocator = other.alloc;
-                    comp = compare_type();
+                    // _allocator = other.alloc;
+                    // comp = compare_type();
                     // rt = NULL;
                     // nl = NULL;
                     // len = 0;
@@ -119,17 +119,17 @@ namespace ft
                     }
                     return *this;
                 }
-                ~RBtree()
+            /*    ~RBtree()
                 {
                     clear();
                     // destroy_node();
-                    if (nl)
+                    if (nl != NULL)
                     {
                         _allocator.destroy(nl);
                         _allocator.deallocate(nl, 1);
                         nl = NULL;
                     }
-                }
+                }*/
 
             //----  Iterators
 
@@ -212,7 +212,7 @@ namespace ft
                         *first++;
                     }
                 }
-                ft::pair<iterator, bool> insert_node( /*pointer root, */pointer n )
+                ft::pair<iterator, bool> insert_node( const value_type n )
                 {
                     if (!rt)
                         return n;
@@ -285,6 +285,8 @@ namespace ft
                     }
                     return temp_data;
                 };
+
+                
                 // pointer insert_node()
                 // {
 
@@ -322,7 +324,7 @@ namespace ft
                     // return ft::make_pair(iterator(rt, n, nl), true);
                 }*/
 
-            iterator find( const value_type& value )
+            iterator find( const value_type &value )
             {
                 pointer n = search(value);
 
@@ -330,7 +332,7 @@ namespace ft
                     return iterator(rt, n, nl);
                 return end();
             }
-            const_iterator find( const value_type& value ) const
+            const_iterator find( const value_type &value ) const
             {
                 pointer n = search(value);
 

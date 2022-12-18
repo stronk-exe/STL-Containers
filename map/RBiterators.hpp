@@ -22,7 +22,7 @@ namespace ft
     template<typename T> class RBiterator
     {
         public:
-            typedef T*                                  _n_pointer;
+            // typedef T*                                  _n_pointer;
             typedef T*                                  pointer;
             typedef const T*                            const_pointer;
             typedef T&                                  reference;
@@ -30,15 +30,15 @@ namespace ft
             typedef typename std::ptrdiff_t                  difference_type;
             typedef typename ft::bidirectional_iterator_tag iterator_category;
         
-        private:
             pointer _node;
+        // private:
             pointer rbtit_rt;
             pointer rbtit_nl;
         
         public:
             RBiterator() : _node(NULL), rbtit_rt(NULL), rbtit_nl(NULL) {};
-            RBiterator( pointer rt, pointer nl ) : _node(_node), rbtit_rt(rt), rbtit_nl(nl) {};
-            RBiterator( const RBiterator &rbit ) : _node(_node), rbtit_rt(rbit.rbit_rt), rbtit_nl(rbit.rbtit_nl) {};
+            RBiterator( pointer n, pointer rt, pointer nl ) : _node(n), rbtit_rt(rt), rbtit_nl(nl) {};
+            RBiterator( const RBiterator &rbtit ) : _node(rbtit._node), rbtit_rt(rbtit.rbtit_rt), rbtit_nl(rbtit.rbtit_nl) {};
             ~RBiterator() {};
 
             RBiterator& operator=( const RBiterator& rbtit )
@@ -156,13 +156,13 @@ namespace ft
                 return rbtit;
             };
 
-            _n_pointer min_element( _n_pointer n )
+            pointer min_element( pointer n )
             {
                 if (n->left != rbtit_nl)
                     return n;
                 return min_element(n->left);
             };
-            _n_pointer max_element( _n_pointer n )
+            pointer max_element( pointer n )
             {
                 if (n->right != rbtit_nl)
                     return n;

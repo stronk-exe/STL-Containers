@@ -19,7 +19,7 @@
 // #include "../utils/Iterator_traits.hpp"
 // #include "../utils/map_Iterators.hpp"
 // #include "../utils/map_utils.hpp"
-#include "RBiterators.hpp"
+// #include "RBiterators.hpp"
 #include "RBtree.hpp"
 #include <cstddef>
 
@@ -30,7 +30,7 @@ namespace ft
 		public:
 			typedef	Key											key_type;
 			typedef	T											mapped_type;
-			typedef	ft::pair<const Key, T>						value_type;
+			typedef	ft::pair<key_type, mapped_type>							value_type;
 			typedef	size_t										size_type;
 			typedef	ptrdiff_t									difference_type;
 			typedef	Compare										key_compare;
@@ -43,25 +43,25 @@ namespace ft
 			// typedef	const T&					const_reference;
 			// typedef	T*							pointer;
 			// typedef	const T*					const_pointer;
-			typedef ft::RBiterator<value_type>				iterator;
-			typedef ft::RBiterator<value_type>			const_iterator;
-			typedef ft::Reverse_iterator<iterator>		reverse_iterator;
-			typedef ft::Reverse_iterator<const_iterator>	const_reverse_iterator;
+			class value_comp
+			{
+				public:
+					bool operator()( const value_type &a, const value_type &b ) const
+					{
+						return (key_compare()(a.first, b.first));
+					}
+					value_comp &operator=( const value_comp& )
+					{
+						return *this;
+					}
+			};
+			typedef typename ft::RBtree<value_type, value_comp>::iterator				iterator;
+			typedef typename ft::RBtree<value_type, value_comp>::const_iterator			const_iterator;
+			typedef typename ft::RBtree<value_type, value_comp>::reverse_iterator		reverse_iterator;
+			typedef typename ft::RBtree<value_type, value_comp>::const_reverse_iterator	const_reverse_iterator;
 			// typedef RDtree_reverse_iterator<T>			reverse_iterator;
 			// typedef RDtree_reverse_iterator<const T>	const_reverse_iterator;
 
-		class value_comp
-		{
-			public:
-				// bool operator()( const value_type &a, const value_type &b ) const
-				// {
-				// 	return (key_comp()(a.first, b.first));
-				// }
-				value_comp &operator=( const value_comp& )
-				{
-					return *this;
-				}
-		};
 
 		private:
 			// size_type		capcity;
@@ -76,17 +76,18 @@ namespace ft
 			allocator_type	_allocator;
 			key_compare		_key_comp;
 			value_comp		val_comp;
-			RBtree<T, key_compare>		rbt;
+			RBtree<value_type, value_comp>		rbt;
 			// size_type		len;
 
 		public:
 			// >> Member functions
 				//----	Constructors
-					map() : _allocator(), _key_comp() , val_comp(), rbt()
-					{
-						std::cout << "map default constractor called" << std::endl;
-					};
-					explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : _allocator(alloc), _key_comp(comp) , val_comp(value_comp()), rbt(_allocator)
+					// map() : _allocator(), _key_comp() , val_comp(), rbt()
+					// {
+					// 	std::cout << "map default constractor called" << std::endl;
+					// };
+					// explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : _allocator(alloc), _key_comp(comp) , val_comp(value_comp()), rbt(_allocator)
+					explicit map( const key_compare& comp=key_compare(), const allocator_type& alloc = allocator_type() ) : _allocator(alloc), _key_comp(comp) , val_comp(value_comp()), rbt(_allocator)
 					{
 
 					};
@@ -196,13 +197,21 @@ namespace ft
 							// }
 							// insert(key);
 							// return m[len].val;
-							iterator it;
+							// iterator it;
 							
-							it = finde(key);
-							if (it != end())
-								insert(ft::make_pair(key, mapped_type()));
-							it = finde(key);
-							return it.second;
+							// it = find(key);
+							// if (it != end())
+							// 	insert(ft::make_pair(key, mapped_type()));
+							// it = find(key);
+							// return it.second;
+							iterator it = rbt.find(ft::make_pair(key, mapped_type()));
+
+							if (it == end())
+							{
+								ft::pair<iterator, bool> n = insert(ft::make_pair(key, mapped_type()));
+								return n.first._node->data.second;
+							}
+							return it._node->data.second;
 						};
 
 				//----	Iterators
