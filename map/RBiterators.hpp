@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:47 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/16 11:25:51 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:27:32 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ namespace ft
                 if (_node != rbtit_nl)
                 {
                     if (_node->right != rbtit_nl)
-                        return min_element(_node->right);
+                        return RBiterator(min_element(_node->right));
                     while (_node->parent != rbtit_nl && _node == _node->parent->right)
                         _node = _node->parent;
                     _node = _node->parent;
@@ -138,7 +138,7 @@ namespace ft
                 if (_node != rbtit_nl)
                 {
                     if (_node->left != rbtit_nl)
-                        return max_element(_node->left);
+                        return RBiterator(max_element(_node->left));
                     while (_node->parent != rbtit_nl && _node == _node->parent->left)
                         _node = _node->parent;
                     _node = _node->parent;

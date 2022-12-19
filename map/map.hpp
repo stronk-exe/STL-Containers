@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/17 20:36:23 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:22:43 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,8 +208,12 @@ namespace ft
 
 							if (it == end())
 							{
-								ft::pair<iterator, bool> n = insert(ft::make_pair(key, mapped_type()));
-								return n.first._node->data.second;
+								// ft::pair<iterator, bool> n = insert(ft::make_pair(key, mapped_type()));
+								// return n.first._node->data.second;
+								insert(ft::make_pair(key, mapped_type()));
+								iterator gg = find(key);
+								return gg._node->data.second;
+								
 							}
 							return it._node->data.second;
 						};

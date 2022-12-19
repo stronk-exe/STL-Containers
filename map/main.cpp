@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/17 20:36:12 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/19 20:53:46 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,27 @@ int main()
 */
 
 // #include "RBtree.hpp"
-// #include "RBnode.hpp"
+#include "RBnode.hpp"
 #include "map.hpp"
 int main()
 {
-    // ft::RBtree<char, int> tree(void);
-    // ft::node<int> n(7);
+    // ft::RBtree<int, char> tree;
+    // ft::node<int> *n=NULL;
+    // n = tree.new_node(7);
+    // n9 = tree.new_node(9);
+    // n3 = tree.new_node(3);
 
-    // n->data = 7;
-    // std::cout << n.data << std::endl;
-    // tree.insert_node(n);
+    // n.data = 7;
+    // tree.insert_node(n, 17);
+    // std::cout << "sewiiizz" << n->data << std::endl;
+    // ft::RBtree<int, char>::iterator it = tree.begin();
+    // while (it != end())
+    // {
+    //     std::cout << it->data << std::endl;
+    //     it++;
+    // }
+    // std::cout << n9->data << std::endl;
+    // std::cout << n3->data << std::endl;
     // tree.insert(6);
     // tree.insert(5);
     // tree.insert(4);
@@ -129,10 +140,36 @@ int main()
 		// fifth(fn_pt);  // function pointer as Compare
 	// return true;
  
-    ft::map<std::string, int> map1;
-    map1["something"] = 69;
-    // map1["anything"] = 199;
-    // map1["that thing"] = 50;
-    // std::cout << "map1 = " << map1;
+    // ft::map<std::string, int> map;
+    // ft::node<int> *n=NULL;
+    // ft::pair<int, bool> gg;
+    // int *v;
+    // *v=7;
+    // n = map1.insert(v);
+    // map["stronk"] = 69;
+    // map["stronkest"] = 199;
+    // map["redGiant"] = 50;
+    // std::cout << "stronk = " << map["stronk"] << std::endl;
+    // std::cout << "stronkest = " << map["stronkest"] << std::endl;
+    // std::cout << "redGiant = " << map["redGiant"] << std::endl;
+
+
+
+
+
+    ft::map<char, int> mp;
+    ft::pair <ft::map<char, int>::iterator, bool> ptr;
+       
+    // using insert() to insert single pair
+    // inserting 'a' with 20
+    ptr = mp.insert( ft::pair<char, int>('a', 20) );
+       
+    // checking if the key was already present or newly inserted
+    if(ptr.second)
+        std::cout << "The key was newly inserted" ;
+    else
+        std::cout << "The key was already present" ;
+       
+    std::cout << std::endl ;
     return 0;
 }

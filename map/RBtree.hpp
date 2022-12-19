@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/17 20:40:26 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/19 21:47:23 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ namespace ft
                     rt = nl;
                     // rt = nl;
                     len++;
-                    new_rbt(other.rt, other.nl);
+                    rbt(other.rbt);
+                //    new_rbt(other.rt, other.nl);
                 }
                 RBtree &operator=( const RBtree &other )
                 {
@@ -115,7 +116,8 @@ namespace ft
                         nl->left = other->left;
                         nl->color = BLACK;
                         rt = nl;
-                        new_rbt(other.rt, other.nl);
+                        rbt(other.rbt);
+                     //   new_rbt(other.rt, other.nl);
                     }
                     return *this;
                 }
@@ -196,29 +198,33 @@ namespace ft
                     //     temp_nl->left = n;
                     // fixViolation(temp_rt, n);
                     // return ft::make_pair(iterator(rt, n, nl), true);
-                    return insert_node(value);
+                    pointer n = insert_node(rt, value);
+                    return ft::make_pair(n, n);
+                    // return insert_node(rt, value);
                 }
                 iterator insert( iterator pos, const value_type& value )
                 {
                     (void)pos;
                     // return insert_node(value).first;
-                    return insert_node(value);
+                    return iterator(insert_node(rt, value));
                 }
                 template<class InputIt> void insert( InputIt first, InputIt last/*, typename ft::enable_if<!ft::is_integral<InputIt>::value>::type *= NULL*/ )
                 {
                     while (first != last)
                     {
-                        insert_node(*first);
+                        insert_node(rt, *first);
                         *first++;
                     }
                 }
-                ft::pair<iterator, bool> insert_node( const value_type n )
+            /*    pointer insert_node( node &*n, const value_type value )
                 {
+                    node<value_type> *n;
+                    n->data = value;
                     if (!rt)
-                        return n;
+                        return n->right;
                     if (n->data > rt->data)
                     {
-                        rt->right = insert_node(rt->right, n);
+                        rt->right = insert_node(rt->right, n->data);
                         rt->right->parent = rt;
                     }
                     else if (n->data < rt->data)
@@ -228,7 +234,52 @@ namespace ft
                     }
                     fixViolation(rt, n);
                     return rt;
-                };
+                };*/
+
+                pointer insert_node(pointer root, value_type value)
+                {
+                    // if the root is null, create a new node and return it
+                    if (!root) {
+                        // node<T> n;
+                        // n.rt = NULL;
+                        // std::cout << "sewiii" << std::endl;
+                        pointer n = new_node(value);
+                        // std::cout << "sew " << n->data << std::endl;
+                        return n;
+                        // exit(1);
+                    }
+                
+                    // if the given key is less than the root node, recur for the left subtree
+                    if (value < root->data)
+                    {
+                        root->left = insert_node(root->left, value);
+                    }
+                    // if the given key is more than the root node, recur for the right subtree
+                    else
+                    {
+                        root->right = insert_node(root->right, value);
+                    }
+                    // return ft::make_pair(iterator(root), true);
+                    return root;
+                }
+                // pointer new_node( value_type value )
+                // {
+                //     pointer n = _allocator.allocate(1);
+                
+                //     n->data = value;
+                //     n->left = NULL;
+                //     n->right = NULL;
+                //     return n;
+                // }
+                pointer new_node( value_type value )
+                {
+                    pointer n = _allocator.allocate(1);
+                    n->parent = n->right = n->left = n;
+                    n->color = BLACK;
+                    n->data = value;
+                    // rt = nl;
+                    return n;
+                }
             
                 void erase( iterator pos )
                 {
@@ -435,14 +486,14 @@ namespace ft
 		    };
 
             //----  Utils
-            void new_rbt( pointer n, pointer _nl )
+        /*    void new_rbt( pointer n, pointer _nl )
             {
                 if (!n || !_nl)
                     return;
                 new_rbt(n->left, _nl);
                 new_node(n->data);
                 new_rbt(n->right, _nl);
-            }
+            }*/
 
             void destroy_node( pointer n )
             {
