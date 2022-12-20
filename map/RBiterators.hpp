@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:47 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/19 15:27:32 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/20 12:29:42 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ namespace ft
 
             RBiterator& operator=( const RBiterator& rbtit )
             {
-                if (this != rbtit)
+                if (*this != rbtit)
                 {
                     _node = rbtit._node;
-                    rbtit_rt = rbtit.rt;
-                    rbtit_nl = rbtit.nl;
+                    rbtit_rt = rbtit.rbtit_rt;
+                    rbtit_nl = rbtit.rbtit_nl;
                 }
                 return *this;
             }

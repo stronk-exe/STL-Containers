@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/19 21:47:23 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/20 20:02:34 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,28 @@ namespace ft
 
         public:
                 // typedef	Key							key_type;
-                typedef	T							value_type;
+                typedef	T							                    value_type;
                 // typedef	std::pair<const Key, T>		value_type;
-                typedef node<T>                     nvalue_type;
-                typedef const node<T>               const_nvalue_type;
-                typedef	size_t						size_type;
-                typedef	ptrdiff_t					difference_type;
-                typedef	Compare						compare_type;
-                typedef	Alloc   					allocator_type;
-                typedef	node<T>&							    reference;
-                typedef	const node<T>&					        const_reference;
-                typedef	node<T>*							    pointer;
-                typedef	const node<T>*					        const_pointer;
-                typedef typename ft::RBiterator<nvalue_type>        iterator;
-                typedef typename ft::RBiterator<nvalue_type>  const_iterator;
+                typedef node<T>                                         nvalue_type;
+                typedef const node<T>                                   const_nvalue_type;
+                typedef	size_t						                    size_type;
+                typedef	ptrdiff_t					                    difference_type;
+                typedef	Compare						                    compare_type;
+                typedef	Alloc   					                    allocator_type;
+                typedef	node<T>&							            reference;
+                typedef	const node<T>&					                const_reference;
+                typedef	node<T>*							            pointer;
+                typedef	const node<T>*					                const_pointer;
+                typedef typename ft::RBiterator<nvalue_type>            iterator;
+                typedef typename ft::RBiterator<nvalue_type>            const_iterator;
                 typedef typename ft::Reverse_iterator<iterator>			reverse_iterator;
-                typedef typename ft::Reverse_iterator<const_iterator>    const_reverse_iterator;
+                typedef typename ft::Reverse_iterator<const_iterator>   const_reverse_iterator;
         
         private:
             allocator_type	_allocator;
             compare_type    comp;
-            pointer			rt;
-            pointer			nl;
+            pointer			_root;
+            pointer			_nil;
             size_type		len;
 
         // protected:
@@ -60,7 +60,7 @@ namespace ft
         // 	void	fixViolation( node<T> *&, node<T> *& );
         public:
             //----  Constructors
-                explicit RBtree( allocator_type alloc=allocator_type() ) : _allocator(alloc), comp(compare_type()), rt(NULL), nl(NULL), len(0)
+                explicit RBtree( allocator_type alloc=allocator_type() ) : _allocator(alloc), comp(compare_type()), _root(NULL), _nil(NULL), len(0)
                 {
                     // _allocator = alloc;
                     // comp = compare_type();
@@ -68,20 +68,22 @@ namespace ft
                     // nl = NULL;
                     // len = 0;
                     
-                    nl = _allocator.allocate(1);
-                    nl->parent = nl->right = nl->left = nl;
-                    nl->color = BLACK;
-                    rt = nl;
+                    // nl = _allocator.allocate(1);
+                    // nl->parent = nl->right = nl->left = nl;
+                    // nl->color = BLACK;
+                    // rt = nl;
+                    _root = new_null_node();
+                    
 
 
                     // pointer n = _allocator.allocate(1);
                     // n->parent = n;
                     // n->right = n;
                     // n->left = n;
-                    // n->color = BLACK;
-                    // rt = n;
+                    // n->color = RED;
+                    // _root = n;
                 };
-                RBtree( const RBtree &other ) : _allocator(other._allocator), comp(compare_type()), rt(NULL), nl(NULL), len(0)
+                RBtree( const RBtree &other ) : _allocator(other._allocator), comp(compare_type()), _root(NULL), _nil(NULL), len(0)
                 {
                     // _allocator = other.alloc;
                     // comp = compare_type();
@@ -93,64 +95,68 @@ namespace ft
                     // n->right = n;
                     // n->left = n;
                     // n->color = BLACK;
-                    nl = _allocator.allocate(1);
-                    nl->parent = nl->right = nl->left = nl;
-                    nl->color = BLACK;
-                    rt = nl;
+                    // nl = _allocator.allocate(1);
+                    // nl->parent = nl->right = nl->left = nl;
+                    // nl->color = BLACK;
                     // rt = nl;
-                    len++;
+                    // rt = nl;
+                    _root = new_null_node();
+                    // len++;
                     rbt(other.rbt);
                 //    new_rbt(other.rt, other.nl);
                 }
                 RBtree &operator=( const RBtree &other )
                 {
-                    if (this != &other)
+                    if (*this != other)
                     {
                         clear();
-                        _allocator.destroy(other);
-                        _allocator.deallocate(other, 1);
+                        _allocator.destroy(*this);
+                        _allocator.deallocate(*this, 1);
                         _allocator = other._allocator;
-                        nl = _allocator.allocate(1);
-                        nl->parent = other->parent;
-                        nl->right = other->right;
-                        nl->left = other->left;
-                        nl->color = BLACK;
-                        rt = nl;
+                        // nl = _allocator.allocate(1);
+                        // nl->parent = other->parent;
+                        // nl->right = other->right;
+                        // nl->left = other->left;
+                        // nl->color = BLACK;
+                        _root = new_node(_root->data);
+                        // _root = nl;
                         rbt(other.rbt);
                      //   new_rbt(other.rt, other.nl);
                     }
                     return *this;
                 }
-            /*    ~RBtree()
+                ~RBtree()
                 {
                     clear();
                     // destroy_node();
-                    if (nl != NULL)
+                    if (_nil != NULL)
                     {
-                        _allocator.destroy(nl);
-                        _allocator.deallocate(nl, 1);
-                        nl = NULL;
+                        _allocator.destroy(_nil);
+                        _allocator.deallocate(_nil, 1);
+                        _nil = NULL;
                     }
-                }*/
+                }
+
+                
 
             //----  Iterators
 
                 iterator begin()
                 {
-                    return iterator(rt, min_element(rt), nl);
+                    return iterator(_root, min_element(_root), _nil);
                 }
                 const_iterator begin() const
                 {
-                    return const_iterator(rt, min_element(rt), nl);
+                    return const_iterator(_root, min_element(_root), _nil);
                 }
 
                 iterator end()
                 {
-                    return iterator(rt, nl, nl);
+                    return iterator(_root, _nil, _nil);
                 }
                 const_iterator end() const
                 {
-                    return const_iterator(rt, nl, nl);
+                    return const_iterator(_root, _nil, _nil);
                 }
 
                 reverse_iterator rbegin()
@@ -198,21 +204,22 @@ namespace ft
                     //     temp_nl->left = n;
                     // fixViolation(temp_rt, n);
                     // return ft::make_pair(iterator(rt, n, nl), true);
-                    pointer n = insert_node(rt, value);
-                    return ft::make_pair(n, n);
+                    pointer n = insert_node(value);
+                    // std::cout << n->data << std::endl;
+                    return ft::make_pair(iterator(_root, n, _nil), true);
                     // return insert_node(rt, value);
                 }
                 iterator insert( iterator pos, const value_type& value )
                 {
                     (void)pos;
                     // return insert_node(value).first;
-                    return iterator(insert_node(rt, value));
+                    return iterator(insert_node(value));
                 }
                 template<class InputIt> void insert( InputIt first, InputIt last/*, typename ft::enable_if<!ft::is_integral<InputIt>::value>::type *= NULL*/ )
                 {
                     while (first != last)
                     {
-                        insert_node(rt, *first);
+                        insert_node(*first);
                         *first++;
                     }
                 }
@@ -236,7 +243,7 @@ namespace ft
                     return rt;
                 };*/
 
-                pointer insert_node(pointer root, value_type value)
+            /*    pointer insert_node(pointer root, value_type value)
                 {
                     // if the root is null, create a new node and return it
                     if (!root) {
@@ -244,7 +251,7 @@ namespace ft
                         // n.rt = NULL;
                         // std::cout << "sewiii" << std::endl;
                         pointer n = new_node(value);
-                        // std::cout << "sew " << n->data << std::endl;
+                        n->color = BLACK;
                         return n;
                         // exit(1);
                     }
@@ -252,15 +259,54 @@ namespace ft
                     // if the given key is less than the root node, recur for the left subtree
                     if (value < root->data)
                     {
+                        std::cout << "sew< " << std::endl;
                         root->left = insert_node(root->left, value);
                     }
                     // if the given key is more than the root node, recur for the right subtree
                     else
                     {
+                        std::cout << "sew> " << std::endl;
                         root->right = insert_node(root->right, value);
                     }
                     // return ft::make_pair(iterator(root), true);
                     return root;
+                }*/
+
+                pointer insert_node(/*pointer root,*/ value_type value)
+                {
+                    pointer n = new_node(value);
+                    // std::cout << n->data << std::endl;
+                    if (!_root)
+                    // if (!len)
+                    {
+                        _root = n;
+                        len++;
+                        return n;
+                    }
+                    // root = NULL;
+                    pointer prev = NULL;
+                    pointer temp = _root;
+                    // std::cout << "yy\n";
+                    while (temp)
+                    {
+                        if (temp->data > value) {
+                            prev = temp;
+                            temp = temp->left;
+                        }
+                        else if (temp->data < value) {
+                            prev = temp;
+                            temp = temp->right;
+                        }
+                        // std::cout << "sewiii<" << std::endl;
+                    }
+                    if (prev->data > value)
+                        prev->left = n;
+                    else
+                        prev->right = n;
+                    // if (!prev->parent->right || !prev->parent->left)
+                    //     len++;
+                    fixViolation(_root, n);
+                    return _root;
                 }
                 // pointer new_node( value_type value )
                 // {
@@ -274,9 +320,28 @@ namespace ft
                 pointer new_node( value_type value )
                 {
                     pointer n = _allocator.allocate(1);
-                    n->parent = n->right = n->left = n;
-                    n->color = BLACK;
+                    // if (!_root)
+                        n->parent = n;
+                    // else
+                    //     n->parent = _root;
+                    n->left = _nil;
+                    n->right = _nil;
+                    n->color = RED;
                     n->data = value;
+                    // rt = nl;
+                    return n;
+                }
+
+                pointer new_null_node()
+                {
+                    pointer n = _allocator.allocate(1);
+                    // if (!_root)
+                        n->parent = n;
+                    // else
+                    //     n->parent = _root;
+                    n->left = _nil;
+                    n->right = _nil;
+                    n->color = RED;
                     // rt = nl;
                     return n;
                 }
@@ -346,7 +411,7 @@ namespace ft
                 {
                     pointer temp_rt = rt, temp_nl = nl;
 
-                    while (temp_rt != nl)
+                    while (temp__root != nl)
                     {
                         if (n->data == temp_rt->data)
                             temp_nl = temp_rt;
@@ -380,7 +445,7 @@ namespace ft
                 pointer n = search(value);
 
                 if (n)
-                    return iterator(rt, n, nl);
+                    return iterator(_root, n, _nil);
                 return end();
             }
             const_iterator find( const value_type &value ) const
@@ -388,7 +453,7 @@ namespace ft
                 pointer n = search(value);
 
                 if (n)
-                    return const_iterator(rt, n, nl);
+                    return const_iterator(_root, n, _nil);
                 return end();
             }
 
@@ -411,8 +476,8 @@ namespace ft
 
             void clear()
             {
-                destroy_nodes(rt);
-                rt = nl;
+            //    destroy_nodes(_root);
+                _root = _nil;
                 len = 0;
             }
 
@@ -420,8 +485,8 @@ namespace ft
             {
                 std::swap(_allocator, rbt._allocator);
                 std::swap(comp, rbt.comp);
-                std::swap(rt, rbt.rt);
-                std::swap(nl, rbt.nl);
+                std::swap(_root, rbt._root);
+                std::swap(_nil, rbt._nil);
                 std::swap(len, rbt.len);
             }
 
@@ -495,20 +560,20 @@ namespace ft
                 new_rbt(n->right, _nl);
             }*/
 
-            void destroy_node( pointer n )
+        /*    void destroy_node( pointer n )
             {
-                if (!n || n == nl)
+                if (!n || n == _nil)
                     return;
                 destroy_node(n->left);
                 destroy_node(n->right);
                 destroy_node(n);
-            }
+            }*/
 
             pointer search( const value_type &value ) const
             {
-                pointer n = rt;
+                pointer n = _root;
 
-                while (n != nl)
+                while (n != _nil)
                 {
                     if (comp(value, n->data))
                         n = n->left;
@@ -522,7 +587,7 @@ namespace ft
 
             pointer min_element( pointer n )
             {
-                if (n->left != nl)
+                if (n->left != _nil)
                     return n;
                 return min_element(n->left);
             };
