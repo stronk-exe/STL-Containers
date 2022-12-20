@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/20 20:02:34 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/20 22:13:03 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,9 @@ namespace ft
                     //     temp_nl->left = n;
                     // fixViolation(temp_rt, n);
                     // return ft::make_pair(iterator(rt, n, nl), true);
-                    pointer n = insert_node(value);
+                    pointer n = new_node(value);
+                    _root = insert_node(_root, n);
+                    // fixViolation(_root, n);
                     // std::cout << n->data << std::endl;
                     return ft::make_pair(iterator(_root, n, _nil), true);
                     // return insert_node(rt, value);
@@ -243,71 +245,69 @@ namespace ft
                     return rt;
                 };*/
 
-            /*    pointer insert_node(pointer root, value_type value)
+                pointer insert_node( pointer root, pointer n )
                 {
                     // if the root is null, create a new node and return it
-                    if (!root) {
-                        // node<T> n;
-                        // n.rt = NULL;
-                        // std::cout << "sewiii" << std::endl;
-                        pointer n = new_node(value);
-                        n->color = BLACK;
+                    if (!root)
                         return n;
-                        // exit(1);
-                    }
                 
                     // if the given key is less than the root node, recur for the left subtree
-                    if (value < root->data)
+                    if (n->data < root->data)
                     {
-                        std::cout << "sew< " << std::endl;
-                        root->left = insert_node(root->left, value);
+                        // std::cout << "sew< " << std::endl;
+                        root->left = insert_node(root->left, n);
+                        root->left->parent = root;
                     }
                     // if the given key is more than the root node, recur for the right subtree
                     else
                     {
-                        std::cout << "sew> " << std::endl;
-                        root->right = insert_node(root->right, value);
+                        // std::cout << "sew> " << std::endl;
+                        root->right = insert_node(root->right, n);
+                        root->right->parent = root;
                     }
                     // return ft::make_pair(iterator(root), true);
                     return root;
-                }*/
-
-                pointer insert_node(/*pointer root,*/ value_type value)
-                {
-                    pointer n = new_node(value);
-                    // std::cout << n->data << std::endl;
-                    if (!_root)
-                    // if (!len)
-                    {
-                        _root = n;
-                        len++;
-                        return n;
-                    }
-                    // root = NULL;
-                    pointer prev = NULL;
-                    pointer temp = _root;
-                    // std::cout << "yy\n";
-                    while (temp)
-                    {
-                        if (temp->data > value) {
-                            prev = temp;
-                            temp = temp->left;
-                        }
-                        else if (temp->data < value) {
-                            prev = temp;
-                            temp = temp->right;
-                        }
-                        // std::cout << "sewiii<" << std::endl;
-                    }
-                    if (prev->data > value)
-                        prev->left = n;
-                    else
-                        prev->right = n;
-                    // if (!prev->parent->right || !prev->parent->left)
-                    //     len++;
-                    fixViolation(_root, n);
-                    return _root;
                 }
+
+                // pointer insert_node(/*pointer root,*/ value_type value)
+                // {
+                //     pointer n = new_node(value);
+                //     // std::cout << n->data << std::endl;
+                //     if (!_root)
+                //     // if (!len)
+                //     {
+                //         _root = n;
+                //         len++;
+                //         return n;
+                //     }
+                //     // root = NULL;
+                //     pointer prev = NULL;
+                //     pointer temp = _root;
+                //     // std::cout << "yy\n";
+                //     while (temp)
+                //     {
+                //         if (temp->data > value) {
+                //             prev = temp;
+                //             temp = temp->left;
+                //         }
+                //         else if (temp->data < value) {
+                //             prev = temp;
+                //             temp = temp->right;
+                //         }
+                //         // std::cout << "sewiii<" << std::endl;
+                //     }
+                //     if (prev->data > value)
+                //         prev->left = n;
+                //     else
+                //         prev->right = n;
+                //     // if (!prev->parent->right || !prev->parent->left)
+                //     //     len++;
+                //     fixViolation(_root, n);
+                //     return _root;
+                // }
+
+
+                
                 // pointer new_node( value_type value )
                 // {
                 //     pointer n = _allocator.allocate(1);
@@ -321,7 +321,7 @@ namespace ft
                 {
                     pointer n = _allocator.allocate(1);
                     // if (!_root)
-                        n->parent = n;
+                    n->parent = n;
                     // else
                     //     n->parent = _root;
                     n->left = _nil;
