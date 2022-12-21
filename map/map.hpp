@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/19 16:22:43 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/21 15:13:25 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ namespace ft
 			// T				first;
 			// T				second;
 
-			allocator_type	_allocator;
-			key_compare		_key_comp;
-			value_comp		val_comp;
-			RBtree<value_type, value_comp>		rbt;
+			allocator_type					_allocator;
+			key_compare						_key_comp;
+			value_comp						val_comp;
+			RBtree<value_type, value_comp>	rbt;
 			// size_type		len;
 
 		public:

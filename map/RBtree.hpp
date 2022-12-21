@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/20 22:13:03 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/21 16:19:46 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ namespace ft
                 typedef node<T>                                         nvalue_type;
                 typedef const node<T>                                   const_nvalue_type;
                 typedef	size_t						                    size_type;
+                typedef	T											mapped_type;
                 typedef	ptrdiff_t					                    difference_type;
                 typedef	Compare						                    compare_type;
                 typedef	Alloc   					                    allocator_type;
@@ -72,7 +73,7 @@ namespace ft
                     // nl->parent = nl->right = nl->left = nl;
                     // nl->color = BLACK;
                     // rt = nl;
-                    _root = new_null_node();
+                    new_empty_node();
                     
 
 
@@ -100,7 +101,7 @@ namespace ft
                     // nl->color = BLACK;
                     // rt = nl;
                     // rt = nl;
-                    _root = new_null_node();
+                    new_empty_node();
                     // len++;
                     rbt(other.rbt);
                 //    new_rbt(other.rt, other.nl);
@@ -204,11 +205,12 @@ namespace ft
                     //     temp_nl->left = n;
                     // fixViolation(temp_rt, n);
                     // return ft::make_pair(iterator(rt, n, nl), true);
-                    pointer n = new_node(value);
-                    _root = insert_node(_root, n);
+                    // pointer n = new_node(value);
+                    _root = insert_node(value);
                     // fixViolation(_root, n);
                     // std::cout << n->data << std::endl;
-                    return ft::make_pair(iterator(_root, n, _nil), true);
+                    iterator it = find(value);
+                    return ft::make_pair(it, true);
                     // return insert_node(rt, value);
                 }
                 iterator insert( iterator pos, const value_type& value )
@@ -245,7 +247,7 @@ namespace ft
                     return rt;
                 };*/
 
-                pointer insert_node( pointer root, pointer n )
+            /*    pointer insert_node( pointer root, pointer n )
                 {
                     // if the root is null, create a new node and return it
                     if (!root)
@@ -267,44 +269,66 @@ namespace ft
                     }
                     // return ft::make_pair(iterator(root), true);
                     return root;
-                }
+                }*/
 
-                // pointer insert_node(/*pointer root,*/ value_type value)
-                // {
-                //     pointer n = new_node(value);
-                //     // std::cout << n->data << std::endl;
-                //     if (!_root)
-                //     // if (!len)
-                //     {
-                //         _root = n;
-                //         len++;
-                //         return n;
-                //     }
-                //     // root = NULL;
-                //     pointer prev = NULL;
-                //     pointer temp = _root;
-                //     // std::cout << "yy\n";
-                //     while (temp)
-                //     {
-                //         if (temp->data > value) {
-                //             prev = temp;
-                //             temp = temp->left;
-                //         }
-                //         else if (temp->data < value) {
-                //             prev = temp;
-                //             temp = temp->right;
-                //         }
-                //         // std::cout << "sewiii<" << std::endl;
-                //     }
-                //     if (prev->data > value)
-                //         prev->left = n;
-                //     else
-                //         prev->right = n;
-                //     // if (!prev->parent->right || !prev->parent->left)
-                //     //     len++;
-                //     fixViolation(_root, n);
-                //     return _root;
-                // }
+                pointer insert_node(/*pointer root,*/ value_type value)
+                {
+                    pointer n = new_node(value);
+                    
+                    pointer _temp_root=_root, _temp_nil=_nil;
+                    while (_temp_root != _nil)
+                    {
+                        _temp_nil = _temp_root;
+                        if (value < _temp_root->data)
+                            _temp_root = _temp_root->left;
+                        else
+                            _temp_root = _temp_root->right;
+                    }
+                    n->parent = _temp_nil;
+                    if (_temp_nil == _nil)
+                        _root = n;
+                    else if (value < _temp_nil->data)
+                        _temp_nil->left = n;
+                    else
+                        _temp_nil->right = n;
+                    return n;
+
+
+
+                    
+              /*      // std::cout << n->data << std::endl;
+                    if (!_root)
+                    // if (!len)
+                    {
+                        _root = n;
+                        len++;
+                        return n;
+                    }
+                    // root = NULL;
+                    pointer prev = NULL;
+                    pointer temp = _root;
+                    // std::cout << "yy\n";
+                    while (temp)
+                    {
+                        if (temp->data > value) {
+                            prev = temp;
+                            temp = temp->left;
+                        }
+                        else if (temp->data < value) {
+                            prev = temp;
+                            temp = temp->right;
+                        }
+                        // std::cout << "sewiii<" << std::endl;
+                    }
+                    if (prev->data > value)
+                        prev->left = n;
+                    else
+                        prev->right = n;
+                    // if (!prev->parent->right || !prev->parent->left)
+                    //     len++;
+                    fixViolation(_root, n);
+                    return _root;*/
+                }
 
 
                 
@@ -321,29 +345,31 @@ namespace ft
                 {
                     pointer n = _allocator.allocate(1);
                     // if (!_root)
-                    n->parent = n;
+                    n->parent = _nil;
                     // else
                     //     n->parent = _root;
                     n->left = _nil;
                     n->right = _nil;
                     n->color = RED;
                     n->data = value;
+                    len++;
                     // rt = nl;
                     return n;
                 }
 
-                pointer new_null_node()
+                void new_empty_node()
                 {
-                    pointer n = _allocator.allocate(1);
+                    _nil = _allocator.allocate(1);
                     // if (!_root)
-                        n->parent = n;
+                    _nil->parent = _nil;
                     // else
                     //     n->parent = _root;
-                    n->left = _nil;
-                    n->right = _nil;
-                    n->color = RED;
+                    _nil->left = _nil;
+                    _nil->right = _nil;
+                    _nil->color = BLACK;
+                    _root = _nil;
                     // rt = nl;
-                    return n;
+                    // return n;
                 }
             
                 void erase( iterator pos )
@@ -371,7 +397,7 @@ namespace ft
                         *first++;
                     }
                 }
-                pointer    delete_node( pointer root, value_type n )
+            /*    pointer    delete_node( pointer root, value_type n )
                 {
                     if (!root)
                         return root;
@@ -389,6 +415,39 @@ namespace ft
                         root->right = delete_node(root->right, n);
                     }
                     return root;
+                }*/
+                void delete_node(/*pointer root,*/ value_type value)
+                {
+                    iterator it = find(value);
+                    if (it == end())
+                        return;
+                    bool original_color = it->color;
+                    pointer n = it->_node;
+                    pointer x = NULL, y = NULL;
+                    if (!n->left)
+                    {
+                        x = n->left;
+                        transplate(n, n->left);
+                    }
+                    else if (!n->left)
+                    {
+                        x = n->right;
+                        transplate(n, n->right);
+                    }
+                    else
+                    {
+                        y = min_element(n->right);
+                        original_color = y->color;
+                        x = y->right;
+                        if (y->parent == n)
+                            x->parent = y;
+                        else
+                        {
+                            transplate(y, y->right);
+                            y->right = n->right;
+                            y->right->parent = y;
+                        }
+                    }
                 }
                 value_type successor( pointer n )
                 {

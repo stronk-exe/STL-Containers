@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:47 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/20 12:29:42 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/21 15:10:38 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ namespace ft
     {
         public:
             // typedef T*                                  _n_pointer;
-            typedef T*                                  pointer;
-            typedef const T*                            const_pointer;
-            typedef T&                                  reference;
-            typedef const T&                            const_reference;
-            typedef typename std::ptrdiff_t                  difference_type;
+            typedef T*                                      pointer;
+            typedef const T*                                const_pointer;
+            typedef T&                                      reference;
+            typedef const T&                                const_reference;
+            typedef typename std::ptrdiff_t                 difference_type;
             typedef typename ft::bidirectional_iterator_tag iterator_category;
         
             pointer _node;
@@ -37,7 +37,7 @@ namespace ft
         
         public:
             RBiterator() : _node(NULL), rbtit_rt(NULL), rbtit_nl(NULL) {};
-            RBiterator( pointer n, pointer rt, pointer nl ) : _node(n), rbtit_rt(rt), rbtit_nl(nl) {};
+            RBiterator( pointer n, pointer root, pointer nil ) : _node(n), rbtit_rt(root), rbtit_nl(nil) {};
             RBiterator( const RBiterator &rbtit ) : _node(rbtit._node), rbtit_rt(rbtit.rbtit_rt), rbtit_nl(rbtit.rbtit_nl) {};
             ~RBiterator() {};
 
