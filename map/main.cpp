@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/21 13:04:08 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/22 15:15:13 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,13 +176,17 @@ int main()
     // else
         // std::cout << "The key was already present" ;
     
-    ft::map<int, float> num_map;
-    num_map[4] = 4.13;
-    num_map[9] = 9.24;
-    num_map[1] = 1.09;
+    ft::map<int, int> map;
+    std::cout << "len before " << map.size() << std::endl;
+    map[1] = 13;
+    map[2] = 24;
+    map[3] = 9;
+    // map.insert(ft::make_pair(-1, 99));
     // calls a_map.begin() and a_map.end()
-    for (ft::map<int, float>::iterator it = num_map.begin(); it != num_map.end(); ++it)
-        std::cout << "gg" << '\n';
-    
+    // int i=1;
+    // for (ft::map<int, int>::iterator it = map.begin(); it != map.end(); it++)
+    //     std::cout << map[i++] << '\n';
+    map.erase(1);
+    std::cout << "len after " << map.size() << std::endl;
     return 0;
 }

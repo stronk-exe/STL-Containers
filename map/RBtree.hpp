@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/21 16:19:46 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/22 20:52:21 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,20 +144,20 @@ namespace ft
 
                 iterator begin()
                 {
-                    return iterator(_root, min_element(_root), _nil);
+                    return iterator(min_element(_root), _root, _nil);
                 }
                 const_iterator begin() const
                 {
-                    return const_iterator(_root, min_element(_root), _nil);
+                    return const_iterator(min_element(_root), _root, _nil);
                 }
 
                 iterator end()
                 {
-                    return iterator(_root, _nil, _nil);
+                    return iterator(_nil, _root, _nil);
                 }
                 const_iterator end() const
                 {
-                    return const_iterator(_root, _nil, _nil);
+                    return const_iterator(_nil, _root, _nil);
                 }
 
                 reverse_iterator rbegin()
@@ -206,11 +206,11 @@ namespace ft
                     // fixViolation(temp_rt, n);
                     // return ft::make_pair(iterator(rt, n, nl), true);
                     // pointer n = new_node(value);
-                    _root = insert_node(value);
+                    pointer n = insert_node(value);
                     // fixViolation(_root, n);
                     // std::cout << n->data << std::endl;
-                    iterator it = find(value);
-                    return ft::make_pair(it, true);
+                    // iterator it = find(value);
+                    return ft::make_pair(iterator(n, _root, _nil), true);
                     // return insert_node(rt, value);
                 }
                 iterator insert( iterator pos, const value_type& value )
@@ -227,25 +227,25 @@ namespace ft
                         *first++;
                     }
                 }
-            /*    pointer insert_node( node &*n, const value_type value )
-                {
-                    node<value_type> *n;
-                    n->data = value;
-                    if (!rt)
-                        return n->right;
-                    if (n->data > rt->data)
-                    {
-                        rt->right = insert_node(rt->right, n->data);
-                        rt->right->parent = rt;
-                    }
-                    else if (n->data < rt->data)
-                    {
-                        rt->left = insert_node(rt->left, n);
-                        rt->left->parent = rt;
-                    }
-                    fixViolation(rt, n);
-                    return rt;
-                };*/
+                // pointer insert_node( node &*n, const value_type value )
+                // {
+                //     node<value_type> *n;
+                //     n->data = value;
+                //     if (!rt)
+                //         return n->right;
+                //     if (n->data > rt->data)
+                //     {
+                //         rt->right = insert_node(rt->right, n->data);
+                //         rt->right->parent = rt;
+                //     }
+                //     else if (n->data < rt->data)
+                //     {
+                //         rt->left = insert_node(rt->left, n);
+                //         rt->left->parent = rt;
+                //     }
+                //     fixViolation(rt, n);
+                //     return rt;
+                // };
 
             /*    pointer insert_node( pointer root, pointer n )
                 {
@@ -279,7 +279,8 @@ namespace ft
                     while (_temp_root != _nil)
                     {
                         _temp_nil = _temp_root;
-                        if (value < _temp_root->data)
+                        // if (value < _temp_root->data)
+                        if (comp(value, _temp_root->data))
                             _temp_root = _temp_root->left;
                         else
                             _temp_root = _temp_root->right;
@@ -287,10 +288,12 @@ namespace ft
                     n->parent = _temp_nil;
                     if (_temp_nil == _nil)
                         _root = n;
-                    else if (value < _temp_nil->data)
+                    else if (comp(n->data, _temp_nil->data))
+                    // else if (value < _temp_nil->data)
                         _temp_nil->left = n;
                     else
                         _temp_nil->right = n;
+                    // fixViolation(_root, n);
                     return n;
 
 
@@ -384,7 +387,7 @@ namespace ft
                     
                     if (n)
                     {
-                        erase(n);
+                        delete_node(value);
                         return 1;
                     }
                     return 0;
@@ -415,9 +418,29 @@ namespace ft
                         root->right = delete_node(root->right, n);
                     }
                     return root;
-                }*/
-                void delete_node(/*pointer root,*/ value_type value)
+                }
+                void delete_node(/*pointer root,*/ /*pointer n )
                 {
+                    if (n->color == BLACK)
+                    {
+                        if (n->right || n->left)
+                        {   
+                            if (n->right->color == RED)
+                                n->right->color = BLACK;
+                            else if (n->left->color == RED)
+                                n->left->color = BLACK;
+                            else
+                            {
+                                
+                            }
+                        }
+                        else
+                        {
+                            //its leaf taht we wanna delete
+                        }
+                    }
+
+                    
                     iterator it = find(value);
                     if (it == end())
                         return;
@@ -448,7 +471,13 @@ namespace ft
                             y->right->parent = y;
                         }
                     }
+                }*/
+                void	delete_node( value_type val )
+                {
+					//gg
                 }
+
+                
                 value_type successor( pointer n )
                 {
                     value_type temp_data = n->data;
@@ -504,7 +533,7 @@ namespace ft
                 pointer n = search(value);
 
                 if (n)
-                    return iterator(_root, n, _nil);
+                    return iterator(n, _root, _nil);
                 return end();
             }
             const_iterator find( const value_type &value ) const
@@ -512,7 +541,7 @@ namespace ft
                 pointer n = search(value);
 
                 if (n)
-                    return const_iterator(_root, n, _nil);
+                    return const_iterator(n, _root, _nil);
                 return end();
             }
 
@@ -634,9 +663,10 @@ namespace ft
 
                 while (n != _nil)
                 {
+                    // if (comp(value, n->data))
                     if (comp(value, n->data))
                         n = n->left;
-                    if (!comp(value, n->data))
+                    if (comp(n->data, value))
                         n = n->right;
                     else
                         return n;
@@ -646,13 +676,13 @@ namespace ft
 
             pointer min_element( pointer n )
             {
-                if (n->left != _nil)
+                if (n->left == _nil)
                     return n;
                 return min_element(n->left);
             };
 
             // Fix Violation function
-            void    rotateLeft( pointer &root, pointer &n )
+            void    rotateLeft( pointer root, pointer n )
             {
                 pointer temp = n->right;
 
@@ -670,7 +700,7 @@ namespace ft
                 n->parent = temp;
             };
 
-            void    rotateRight( pointer &root, pointer &n )
+            void    rotateRight( pointer root, pointer n )
             {
                 pointer temp = n->left;
 
@@ -688,7 +718,7 @@ namespace ft
                 n->parent = temp;
             };
 
-            void	fixViolation( pointer &root, pointer &n )
+            void	fixViolation( pointer root, pointer n )
             {
                 pointer temp_parent = NULL, temp_gparent = NULL, temp_uncle;
 

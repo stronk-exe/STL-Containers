@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:47 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/21 15:10:38 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/22 13:01:31 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ namespace ft
     template<typename T> class RBiterator
     {
         public:
-            // typedef T*                                  _n_pointer;
+            typedef T*                                      _n_pointer;
+            typedef T*            value_type;
             typedef T*                                      pointer;
             typedef const T*                                const_pointer;
             typedef T&                                      reference;
@@ -37,7 +38,7 @@ namespace ft
         
         public:
             RBiterator() : _node(NULL), rbtit_rt(NULL), rbtit_nl(NULL) {};
-            RBiterator( pointer n, pointer root, pointer nil ) : _node(n), rbtit_rt(root), rbtit_nl(nil) {};
+            RBiterator( _n_pointer n, _n_pointer root, _n_pointer nil ) : _node(n), rbtit_rt(root), rbtit_nl(nil) {};
             RBiterator( const RBiterator &rbtit ) : _node(rbtit._node), rbtit_rt(rbtit.rbtit_rt), rbtit_nl(rbtit.rbtit_nl) {};
             ~RBiterator() {};
 
@@ -69,7 +70,7 @@ namespace ft
             {
                 return _node->data;
             };
-            pointer	operator->()
+            _n_pointer	operator->()
             {
                 return &(_node->data);
             };
@@ -103,20 +104,23 @@ namespace ft
                 if (_node != rbtit_nl)
                 {
                     if (_node->right != rbtit_nl)
-                        return RBiterator(min_element(_node->right));
-                    while (_node->parent != rbtit_nl && _node == _node->parent->right)
+                        _node = min_element(_node->right);
+                    else
+                    {
+                        while (_node->parent != rbtit_nl && _node == _node->parent->right)
+                            _node = _node->parent;
                         _node = _node->parent;
-                    _node = _node->parent;
+                    }
                 }
                 return *this;
             };
 
-            RBiterator& operator++( int )
+            RBiterator operator++( int )
             {
-                RBiterator rbtit(*this);
+                RBiterator _rbtit(*this);
 
                 ++(*this);
-                return rbtit;
+                return _rbtit;
             };
 
             RBiterator& operator--()
@@ -138,33 +142,36 @@ namespace ft
                 if (_node != rbtit_nl)
                 {
                     if (_node->left != rbtit_nl)
-                        return RBiterator(max_element(_node->left));
-                    while (_node->parent != rbtit_nl && _node == _node->parent->left)
+                        _node = max_element(_node->left);
+                    else
+                    {
+                        while (_node->parent != rbtit_nl && _node == _node->parent->left)
+                            _node = _node->parent;
                         _node = _node->parent;
-                    _node = _node->parent;
+                    }
                 }
                 else
                     _node = max_element(rbtit_rt);
                 return *this;
             };
 
-            RBiterator& operator--( int )
+            RBiterator operator--( int )
             {
-                RBiterator rbtit(*this);
+                RBiterator _rbtit(*this);
 
                 --(*this);
-                return rbtit;
+                return _rbtit;
             };
 
-            pointer min_element( pointer n )
+            _n_pointer min_element( _n_pointer n )
             {
-                if (n->left != rbtit_nl)
+                if (n->left == rbtit_nl)
                     return n;
                 return min_element(n->left);
             };
-            pointer max_element( pointer n )
+            _n_pointer max_element( _n_pointer n )
             {
-                if (n->right != rbtit_nl)
+                if (n->right == rbtit_nl)
                     return n;
                 return max_element(n->right);
             };

@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:40 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/21 12:27:22 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/22 12:57:54 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ namespace ft
 
     template<typename T> struct node
     {
+        typedef T value_type;
         T		data;
         bool	color;
         node	*parent, *right, *left;
