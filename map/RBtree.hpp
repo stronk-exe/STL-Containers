@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/22 20:52:21 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/23 17:00:20 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,6 +294,14 @@ namespace ft
                     else
                         _temp_nil->right = n;
                     // fixViolation(_root, n);
+					if (!n->parent)
+					{
+						n->color = BLACK;
+						return n;;
+					}
+					if (!n->parent->parent)
+						return n;
+					_fixshiUp(n);
                     return n;
 
 
@@ -332,6 +340,62 @@ namespace ft
                     fixViolation(_root, n);
                     return _root;*/
                 }
+
+				void    _fixshiUp( pointer n )
+				{
+					pointer temp;
+
+					while (n->parent->color == RED)
+					{
+						if (n->parent == n->parent->parent->right)
+						{
+							temp = n->parent->parent->left;
+							if (temp->color == RED)
+							{
+								temp->color = BLACK;
+								temp->parent->color = BLACK;
+								temp->parent->parent->color = RED;
+								temp = temp->parent->parent;
+							}
+							else
+							{
+								if (temp == temp->parent->left)
+								{
+									temp = temp->parent;
+									rotateRight(temp);
+								}
+								temp->parent->color = BLACK;
+								temp->parent->parent->color = RED;
+								rotateLeft(temp->parent->parent);
+							}
+						}
+						else
+						{
+							temp = n->parent->parent->right;
+							if (temp->color == RED)
+							{
+								temp->color = BLACK;
+								temp->parent->color = BLACK;
+								temp->parent->parent->color = RED;
+								temp = temp->parent->parent;
+							}
+							else
+							{
+								if (temp == temp->parent->right)
+								{
+									temp = temp->parent;
+									rotateLeft(temp);
+								}
+								temp->parent->color = BLACK;
+								temp->parent->parent->color = RED;
+								rotateRight(temp->parent->parent);
+							}
+						}
+						if (temp == _root)
+							break;
+					}
+					_root->color = BLACK;
+				}
 
 
                 
@@ -387,8 +451,8 @@ namespace ft
                     
                     if (n)
                     {
-                        delete_node(value);
-                        return 1;
+						delete_node(n);
+						return 1;
                     }
                     return 0;
                 }
@@ -419,7 +483,7 @@ namespace ft
                     }
                     return root;
                 }
-                void delete_node(/*pointer root,*/ /*pointer n )
+                void delete_node(*//*pointer root,*/ /*pointer n )
                 {
                     if (n->color == BLACK)
                     {
@@ -472,10 +536,186 @@ namespace ft
                         }
                     }
                 }*/
-                void	delete_node( value_type val )
+                void	delete_node( pointer n )
                 {
-					//gg
+                    pointer x, y, z;
+					bool original_color;
+					pointer _temp_root = _root;
+					
+					while (_temp_root != _nil) // searching for the node of value
+                    {
+						if (!comp(n->data, _temp_root->data))
+						// if (n->data == _temp_root->data)
+							z = n;
+						if (comp(n->data, _temp_root->data) < 0)
+						// if (n->data > _temp_root->data)
+							_temp_root = _temp_root->right;
+						else
+							_temp_root = _temp_root->left;
+                    }
+					
+					std::cout << "gg\n";
+					if (!z) // value not found
+						return;
+					
+					y = z;
+					original_color = y->color;
+					if (!z->right)
+					{
+						x = z->left;
+						ft_transplant(z, z->left);
+					}
+					else if (!z->left)
+					{
+						x = z->right;
+						ft_transplant(z, z->right);
+					}
+					else
+					{
+						y = min_element(z->right);
+						original_color = y->color;
+						x = y->right;
+						if (y->parent == z)
+							x->parent = y;
+						else
+						{
+							ft_transplant(y, y->right);
+							y->right = z->right;
+							y->right->parent = y;
+						}
+						ft_transplant(z, y);
+						y->left = z->left;
+						y->left->parent = y;
+						y->color = z->color;
+					}
+					_allocator.destroy(z);
+					_allocator.deallocate(z, 1);
+					len--;
+					if (original_color == BLACK)// {}
+						__fixshiUp(x);
                 }
+				void	ft_transplant( pointer x, pointer y )
+				{
+					if (!x->parent)
+						_root = y;
+					else if (x == x->parent->left)
+						x->parent->left = y;
+					else
+						x->parent->right = y;
+					if (y->parent != _nil) //       <<<<<<<<<<<<< HADI 3LAAAACH
+						y->parent = x->parent;
+				}
+                
+                void    __fixshiUp( pointer n )
+                {
+                    pointer temp;
+                    
+                    while (n != _root && n->color == BLACK)
+                    {
+						if (n == n->parent->left)
+                        {
+							temp = n->parent->right;
+							if (temp->color == RED)
+							{
+								temp->color = BLACK;
+								n->parent->color = RED;
+								rotateLeft(n->parent);
+								temp = n->parent->right;
+							}
+
+							if (temp->left->color == BLACK && temp->right->color == BLACK)
+							{
+								temp->color = RED;
+								n = n->parent;
+							}
+							else
+							{
+								if (temp->right->color == BLACK)
+								{
+									temp->left->color = BLACK;
+									temp->color = RED;
+									rotateRight(temp);
+									temp = n->parent->right;
+								}
+								
+								temp->color = n->parent->color;
+								n->parent->color = BLACK;
+								temp->right->color = BLACK;
+								rotateLeft(temp->parent);
+								temp = _root;
+							}
+                        }
+                        else
+                        {
+							temp = n->parent->left;
+							if (temp->color == RED)
+							{
+								temp->color = BLACK;
+								n->parent->color = RED;
+								rotateRight(n->parent);
+								temp = n->parent->left;
+							}
+
+							if (temp->right->color == BLACK && temp->right->color == BLACK)
+							{
+								temp->color = RED;
+								n = n->parent;
+							}
+							else
+							{
+								if (temp->left->color == BLACK)
+								{
+									temp->right->color = BLACK;
+									temp->color = RED;
+									rotateLeft(temp);
+									temp = n->parent->left;
+								}
+								
+								temp->color = n->parent->color;
+								n->parent->color = BLACK;
+								temp->left->color = BLACK;
+								rotateRight(temp->parent);
+								temp = _root;
+							}
+                        }
+                    }
+					n->color = BLACK;
+                }
+				void    rotateLeft( pointer n )
+				{
+					pointer temp = n->right;
+
+					n->right = temp->left;
+					if (temp->left != NULL)
+						temp->left->parent = n;
+					temp->parent = n->parent;
+					if (!n->parent)
+						_root = temp;
+					else if (n == n->parent->left)
+						n->parent->left = temp;
+					else
+						n->parent->right = temp;
+					temp->left = n;
+					n->parent = temp;
+				};
+
+				void    rotateRight( pointer n )
+				{
+					pointer temp = n->left;
+
+					n->left = temp->right;
+					if (temp->right != NULL)
+						temp->right->parent = n;
+					temp->parent = n->parent;
+					if (!n->parent)
+						_root = temp;
+					else if (n == n->parent->right)
+						n->parent->right = temp;
+					else
+						n->parent->left = temp;
+					temp->right = n;
+					n->parent = temp;
+				};
 
                 
                 value_type successor( pointer n )
@@ -657,7 +897,9 @@ namespace ft
                 destroy_node(n);
             }*/
 
-            pointer search( const value_type &value ) const
+			
+
+            pointer	search( const value_type &value ) const
             {
                 pointer n = _root;
 
@@ -682,7 +924,7 @@ namespace ft
             };
 
             // Fix Violation function
-            void    rotateLeft( pointer root, pointer n )
+        /*    void    rotateLeft( pointer root, pointer n )
             {
                 pointer temp = n->right;
 
@@ -785,7 +1027,7 @@ namespace ft
                     }
                 }
                 root->color = BLACK;
-            };
+            };*/
 
 
 
