@@ -45,8 +45,8 @@ namespace ft
                 typedef	const node<T>*					                const_pointer;
                 typedef typename ft::RBiterator<nvalue_type>            iterator;
                 typedef typename ft::RBiterator<nvalue_type>            const_iterator;
-                typedef typename ft::Reverse_iterator<iterator>			reverse_iterator;
-                typedef typename ft::Reverse_iterator<const_iterator>   const_reverse_iterator;
+                typedef typename ft::reverse_iterator<iterator>			reverse_iterator;
+                typedef typename ft::reverse_iterator<const_iterator>   const_reverse_iterator;
         
         private:
             allocator_type	_allocator;

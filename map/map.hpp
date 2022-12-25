@@ -87,10 +87,8 @@ namespace ft
 					// 	std::cout << "map default constractor called" << std::endl;
 					// };
 					// explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : _allocator(alloc), _key_comp(comp) , val_comp(value_comp()), rbt(_allocator)
-					explicit map( const key_compare& comp=key_compare(), const allocator_type& alloc = allocator_type() ) : _allocator(alloc), _key_comp(comp) , val_comp(value_comp()), rbt(_allocator)
-					{
-
-					};
+					explicit map( const key_compare& comp=key_compare(), const allocator_type& alloc = allocator_type() ) : _allocator(alloc), _key_comp(comp) , val_comp(value_comp()), rbt(_allocator) {};
+					
 					template< class InputIt > map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) : _allocator(alloc), _key_comp(comp), val_comp(value_comp()), rbt(_allocator)
 					{
 						// int i=0;
@@ -131,22 +129,10 @@ namespace ft
 						// }
 						insert(first, last);
 					};
-					map( const map& other ) : _allocator(other._allocator), _key_comp(other._key_comp), val_comp(other.val_comp), rbt(other.rbt)
-					{
-
-					};
+					map( const map& other ) : _allocator(other._allocator), _key_comp(other._key_comp), val_comp(other.val_comp), rbt(other.rbt) {};
 
 				//----	Destructor
-					~map()
-					{
-						// int i=0;
-						// while (m[i])
-						// {
-						// 	_allocator.deallocate(m[i]);
-						// 	i++;
-						// }
-						std::cout << "map destructor called" << std::endl;
-					};
+					~map() {};
 
 				//----	operator=
 					map& operator=( const map& other )
@@ -169,20 +155,6 @@ namespace ft
 					};
 
 				//----	Element access
-					//	at
-				/*		T& at( const Key& key )
-						{
-							if (key<0 || key>len)
-								throw invalidIndex();
-							return *(m+key);
-						};
-						const T& at( const Key& key ) const
-						{
-							if (key<0 || key>len)
-								throw invalidIndex();
-							return *(m+key);
-						};*/
-
 					//	operator[]
 						T& operator[]( const Key& key )
 						{
