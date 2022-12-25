@@ -19,9 +19,9 @@
 int main ()
 {
 	// constructors used in the same order as described above:
-	ft::vector<int> first;                                // empty vector of ints
-	ft::vector<int> second (4,100);                       // four ints with value 100
-	ft::vector<int> third (second.begin(),second.end());  // iterating through second
+	// ft::vector<int> first;                                // empty vector of ints
+	// ft::vector<int> second (4,100);                       // four ints with value 100
+	// ft::vector<int> third (second.begin(),second.end());  // iterating through second
 	// ft::vector<int> fourth (third);                       // a copy of third
 
 	// std::cout << *(second.begin())+1 << std::endl;
@@ -29,15 +29,15 @@ int main ()
 	// first.assign(4, 7);
 	// typedef ft::vector<int>::const_iterator ci;
 	// ci gg (first.end());
-	// auto it = first.begin();
+	ft::vector<int> first;
 	ft::vector<int>::iterator t = first.begin();
 	// std::cout << "holla\n";
 	first.insert(t, 2);
-	const std::string extra(4, 7);
-	first.assign(extra.begin(), extra.end());
+	// const std::string extra(4, 7);
+	// first.assign(extra.begin(), extra.end());
 	// std::cout << "size after " << first.size() << std::endl;
-	for (ft::vector<int>::iterator it = first.begin() ; it != first.end(); ++it)
-    	std::cout << *it << std::endl;
+	// for (ft::vector<int>::iterator it = first.begin() ; it != first.end(); ++it)
+    // 	std::cout << *it << std::endl;
 	// ft::vector<double> vec;
 	// vec.assign(5, 8.8);
 	// vec.push_back(7.3);
