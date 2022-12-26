@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/08 17:10:13 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/26 17:57:28 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 #include "../utils/exceptions.hpp"
 // #include "../utils/Iterator_traits.hpp"
 #include "../utils/vector_Iterators.hpp"
+// #include "../utils/reverse_iterator.hpp"
 #include "../utils/utils.hpp"
 #include <cstddef>
-// #include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -101,9 +101,9 @@ namespace ft
 						if (*this != other)
 						{
 							clear();
+							if (capcity < other.len)
+								reserve(other.len);
 							len = other.len;
-							if (capcity < len)
-								reserve(len);
 							if (v)
 								_allocator.deallocate(v, len);
 							v = _allocator.allocate(capcity);
@@ -274,7 +274,7 @@ namespace ft
 					// empty
 						bool empty() const
 						{
-							return !len ? true : false;
+							return !len ? 1 : 0;
 						};
 
 					// size
