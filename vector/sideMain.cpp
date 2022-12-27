@@ -7,106 +7,115 @@
 
 int main()
 {
-	std::cout << "\033[1;36m<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< vector iterator tests >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m\n\n";
-    /*------------ std::vector ---------*/
-    std::vector<int> v(3, 4);
-    std::vector<int>::iterator it, it1;
-    it = v.begin();
-    it1 = v.begin() + 1;
-    /*----------------------------------*/
-    /*------------ ft::vector ---------*/
-    ft::vector<int> my_v(3, 4);
-    ft::vector<int>::iterator my_it, my_it1, tmp;
-    my_it = my_v.begin();
-    my_it1 = my_v.begin() + 1;
-    /*----------------------------------*/
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " copy constructor "
+    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " erase method (range) "
               << "] --------------------]\t\t\033[0m";
     {
-        ft::vector<int>::iterator ob(my_it);
-        EQUAL(&(*my_it) == &(*ob));
-    }
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " iterator to const_iterator "
-              << "] --------------------]\t\t\033[0m";
-    {
-        ft::vector<int>::const_iterator c_it, c_ob(my_it);
-        c_it = my_it;
-        EQUAL(&(*my_it) == &(*c_it) && (&(*my_it) == &(*c_ob)));
-    }
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " == operator "
-              << "] --------------------]\t\t\033[0m";
-    EQUAL((it == it1) == (my_it == my_it1));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " != operator "
-              << "] --------------------]\t\t\033[0m";
-    EQUAL((it != it1) == (my_it != my_it1));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " > operator "
-              << "] --------------------]\t\t\033[0m";
-    EQUAL((it > it1) == (my_it > my_it1));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " >= operator "
-              << "] --------------------]\t\t\033[0m";
-    EQUAL((it >= it1) == (my_it >= my_it1));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " < operator "
-              << "] --------------------]\t\t\033[0m";
-    EQUAL((it < it1) == (my_it < my_it1));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " <= operator "
-              << "] --------------------]\t\t\033[0m";
-    EQUAL((it <= it1) == (my_it <= my_it1));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " * operator "
-              << "] --------------------]\t\t\033[0m";
-    EQUAL(((*my_it = 6) == 6) && (*my_it == *(my_v.begin())));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " -> operator "
-              << "] --------------------]\t\t\033[0m";
-    {
-        /*--------------- std::vector-------------------- */
-        std::vector<std::string> v(3, "hello");
-        std::vector<std::string>::iterator it = v.begin();
-        /*---------------------------------------------- */
-        /*--------------- ft::vector-------------------- */
-        ft::vector<std::string> my_v(3, "hello");
-        ft::vector<std::string>::iterator my_it = my_v.begin();
-        /*---------------------------------------------- */
-        EQUAL(it->length() == my_it->length());
-    }
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " - operator "
-              << "] --------------------]\t\t\033[0m";
-    EQUAL(&(*my_it) == &(*(my_it1 - 1)));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " += operator "
-              << "] --------------------]\t\t\033[0m";
-    my_it += 1;
-    EQUAL(&(*my_it) == &(*my_it1));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " -= operator "
-              << "] --------------------]\t\t\033[0m";
-    my_it -= 1;
-    EQUAL(&(*my_it) == &(*(my_it1 - 1)));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " [] operator "
-              << "] --------------------]\t\t\033[0m";
-    EQUAL(((my_it[0] = 5) == 5) && (*my_it == 5));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " ++it operator "
-              << "] --------------------]\t\t\033[0m";
-    ++my_it; // I incremented here to make sure that the object changes
-    EQUAL(&(*my_it) == &(*my_it1));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " --it operator "
-              << "] --------------------]\t\t\033[0m";
-    --my_it; // I decremented here to make sure that the object changes
-    EQUAL(&(*my_it) == &(*(my_it1 - 1)));
+        /*
+         * strings to store the resutls
+         */
+        std::string str, ft_str;
+        /*
+         * var to store the size and the capacity
+         */
+        ft::vector<std::string>::size_type s, ft_s;
+        ft::vector<std::string>::size_type c, ft_c;
+        std::vector<std::string>::iterator it;
+        ft::vector<std::string>::iterator ft_it;
+        /*
+         * bool to store the comparison
+         */
+        bool cond;
+        /*------------------ test 1: erase from the begin to end -------------------*/
+        {
+            // std::vector<std::string> v(100, "hello");
+            // ft::vector<std::string> ft_v(100, "hello");
 
+            // it = v.erase(v.begin(), v.end());
+            // ft_it = ft_v.erase(ft_v.begin(), ft_v.end());
 
+            // s = v.size();
+            // ft_s = ft_v.size();
+            // c = v.size();
+            // ft_c = ft_v.size();
+            // for (size_t i = 0; i < v.size(); ++i)
+            //     str += v[i];
+            // for (size_t i = 0; i < ft_v.size(); ++i)
+            //     ft_str += ft_v[i];
+            // cond = ((str == ft_str) && (s == ft_s) && (c == ft_c));
+            // cond = (cond && (std::distance(v.begin(), it) == std::distance(ft_v.begin(), ft_it)));
+        }
 
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " + operator (n + it) "
-              << "] --------------------]\t\t\033[0m";
-    EQUAL(&(*(1 + my_it)) == &(*(my_it1)) && (&(*my_it) == &(*(my_v.begin()))));
-    // std::cout << "KO" << std::endl;
-    
-    
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " - operator (it1 - it) "
-              << "] --------------------]\t\t\033[0m";
-    EQUAL(((my_it1 - my_it == 1)) && ((my_it - my_it1) == -1));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " it++ operator "
-              << "] --------------------]\t\t\033[0m";
-    tmp = my_it++;
-    EQUAL(&(*my_it) != &(*tmp) && (&(*my_it) == &(*my_it1)));
-    std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " it-- operator "
-              << "] --------------------]\t\t\033[0m";
-    tmp = my_it--;
-    EQUAL(&(*my_it) != &(*tmp) && (&(*my_it) == &(*(my_v.begin()))));
+        /*--------------------------------------------------------------------------*/
+        /*------------------ test 2: erase from the begin to begin + 70 -------------------*/
+        {
+            std::vector<std::string> v(100, "hello");
+            ft::vector<std::string> ft_v(100, "hello");
+
+            it = v.erase(v.begin(), v.begin() + 70);
+            ft_it = ft_v.erase(ft_v.begin(), ft_v.begin() + 70);
+            ft_it->length();
+
+            str.clear();
+            ft_str.clear();
+            s = v.size();
+            ft_s = ft_v.size();
+            c = v.size();
+            ft_c = ft_v.size();
+            for (size_t i = 0; i < v.size(); ++i)
+                str += v[i];
+            for (size_t i = 0; i < ft_v.size(); ++i)
+                ft_str += ft_v[i];
+            cond = (cond && (str == ft_str) && (s == ft_s) && (c == ft_c));
+            // cond = (cond && (std::distance(v.begin(), it) == std::distance(ft_v.begin(), ft_it)));
+        }
+        /*--------------------------------------------------------------------------*/
+        /*------------------ test 3: erase from the begin + 60 to end -------------------*/
+
+        {
+            std::vector<std::string> v(100, "hello");
+            ft::vector<std::string> ft_v(100, "hello");
+
+            it = v.erase(v.begin() + 60, v.end());
+            ft_it = ft_v.erase(ft_v.begin() + 60, ft_v.end());
+
+            str.clear();
+            ft_str.clear();
+            s = v.size();
+            ft_s = ft_v.size();
+            c = v.size();
+            ft_c = ft_v.size();
+            for (size_t i = 0; i < v.size(); ++i)
+                str += v[i];
+            for (size_t i = 0; i < ft_v.size(); ++i)
+                ft_str += ft_v[i];
+            cond = (cond && (str == ft_str) && (s == ft_s) && (c == ft_c));
+            // cond = (cond && (std::distance(v.begin(), it) == std::distance(ft_v.begin(), ft_it)));
+        }
+
+        /*--------------------------------------------------------------------------*/
+        /*------------------ test 4: erase from the begin + 20 to end - 30 -------------------*/
+        {
+            std::vector<std::string> v(100, "hello");
+            ft::vector<std::string> ft_v(100, "hello");
+
+            it = v.erase(v.begin() + 20, v.end() - 30);
+            ft_it = ft_v.erase(ft_v.begin() + 20, ft_v.end() - 30);
+            ft_it->length();
+
+            str.clear();
+            ft_str.clear();
+            s = v.size();
+            ft_s = ft_v.size();
+            c = v.size();
+            ft_c = ft_v.size();
+            for (size_t i = 0; i < v.size(); ++i)
+                str += v[i];
+            for (size_t i = 0; i < ft_v.size(); ++i)
+                ft_str += ft_v[i];
+            cond = (cond && (str == ft_str) && (s == ft_s) && (c == ft_c));
+            // cond = (cond && (std::distance(v.begin(), it) == std::distance(ft_v.begin(), ft_it)));
+        }
+        /*--------------------------------------------------------------------------*/
+        EQUAL(cond);
+    }
 }

@@ -73,7 +73,7 @@ namespace ft
 
 			random_access_iterator&	operator++()
 			{
-				++p;
+				p++;
 				return *this;
 			}
 			random_access_iterator	operator++(int)
@@ -84,7 +84,7 @@ namespace ft
 			}
 			random_access_iterator&	operator--()
 			{
-				--p;
+				p--;
 				return *this;
 			}
 			random_access_iterator	operator--(int)
@@ -152,15 +152,15 @@ namespace ft
 
 	// >> Non-member functions
 		//	operator+=
-			template< class T > random_access_iterator<T> operator+( typename random_access_iterator<T>::difference_type d, const random_access_iterator<T> &it )
+			template< class T > ft::random_access_iterator<T> operator+( typename ft::random_access_iterator<T>::difference_type d, typename ft::random_access_iterator<T> &it )
 			{
-				std::cout << "LMACHAKIL!!!\n";
-				return d + it;
+				return it + d;
 			};
-			template< class T > random_access_iterator<T> operator-( typename random_access_iterator<T>::difference_type d, const random_access_iterator<T> &it )
+			template< class T > ft::random_access_iterator<T> operator-( typename ft::random_access_iterator<T>::difference_type d, typename ft::random_access_iterator<T> &it )
 			{
 				return d - it;
 			};
+
 		/*	template< class X, class Y > bool operator==( const random_access_iterator<X>& it1, const random_access_iterator<Y>& it2 )
 			{
 				return it1.base() == it2.base();
