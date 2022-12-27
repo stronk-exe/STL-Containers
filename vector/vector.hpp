@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/26 17:57:28 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/27 13:31:16 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,6 @@
 #include <sstream>
 namespace ft
 {
-
-template <typename T>
-std::string ft_itoa(T n) {
-	std::stringstream ss;
-
-	ss << n;
-	return ss.str();
-}
 	template <class T, class Allocator = std::allocator<T> > class vector
 	{
 		public:
@@ -198,25 +190,13 @@ std::string ft_itoa(T n) {
 						{
 								// throw invalidIndex();
 							if (pos >= len)
-							{
-								throw std::out_of_range(
-								std::string("ft::vector::__range_check: ") + \
-								std::string("pos (which is ") + ft_itoa(pos) + \
-								std::string(") >= this->size() (which is ") + \
-								ft_itoa(len) + std::string(")"));
-							}
+								throw std::out_of_range(std::string("ft::vector: std::out_of_range exception called"));
 							return v[pos];
 						};
 						const_reference at( size_type pos ) const
 						{
 							if (pos >= len)
-							{
-								throw std::out_of_range(
-								std::string("ft::vector::__range_check: ") + \
-								std::string("pos (which is ") + ft_itoa(pos) + \
-								std::string(") >= this->size() (which is ") + \
-								ft_itoa(len) + std::string(")"));
-							}
+								throw std::out_of_range(std::string("ft::vector: std::out_of_range exception called"));
 							return v[pos];
 						};
 
@@ -439,7 +419,9 @@ std::string ft_itoa(T n) {
 
 							if (len+range > capcity)
 							{
-								if (len+range > len*2)
+								if (!len)
+									reserve(1);
+								else if (len+range > len*2)
 									reserve(len*2);
 								else
 									reserve(len+range);
@@ -452,6 +434,7 @@ std::string ft_itoa(T n) {
 							}
 							for (size_type i=0; i < range; i++)
 							{
+							// std::cout << "LMACHAKIL!!!\n";
 								_allocator.construct(v+(i+index), *first);
 								first++;
 							}

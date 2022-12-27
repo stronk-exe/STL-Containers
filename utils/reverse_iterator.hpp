@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:08:58 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/26 17:13:00 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/27 13:08:41 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ namespace ft
 			{
 				return base()[index];
 			};
-			reference	operator*()
+			reference	operator*() const
 			{
 				// return *p;
 				iter_type rit = p;
@@ -99,14 +99,14 @@ namespace ft
 				return it;
 			}
 
-			// reverse_iterator operator+(difference_type n)   const
-			// {
-			// 	return reverse_iterator(p-n);
-			// }
-			// reverse_iterator operator-(int n)   const
-			// {
-			// 	return reverse_iterator(p+n);
-			// }
+			reverse_iterator operator+(difference_type n)   const
+			{
+				return reverse_iterator(p-n);
+			}
+			reverse_iterator operator-(int n)   const
+			{
+				return reverse_iterator(p+n);
+			}
 			reverse_iterator& operator+=(difference_type n)
 			{
 				p -= n;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   random_access_iterator.hpp                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/27 13:32:38 by ael-asri          #+#    #+#             */
+/*   Updated: 2022/12/27 13:36:13 by ael-asri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RANDOM_ACCESS_ITERATOR_HPP
 #define RANDOM_ACCESS_ITERATOR_HPP
 
@@ -142,6 +154,7 @@ namespace ft
 		//	operator+=
 			template< class T > random_access_iterator<T> operator+( typename random_access_iterator<T>::difference_type d, const random_access_iterator<T> &it )
 			{
+				std::cout << "LMACHAKIL!!!\n";
 				return d + it;
 			};
 			template< class T > random_access_iterator<T> operator-( typename random_access_iterator<T>::difference_type d, const random_access_iterator<T> &it )
