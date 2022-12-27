@@ -16,13 +16,25 @@
 #include <iostream>
 #include "../utils/exceptions.hpp"
 // #include "../utils/Iterator_traits.hpp"
-#include "../utils/vector_Iterators.hpp"
+// #include "../utils/vector_Iterators.hpp"
 // #include "../utils/reverse_iterator.hpp"
+#include "../utils/random_access_iterator.hpp"
+#include "../utils/reverse_iterator.hpp"
 #include "../utils/utils.hpp"
 #include <cstddef>
 
+	#include <string>
+#include <sstream>
 namespace ft
 {
+
+template <typename T>
+std::string ft_itoa(T n) {
+	std::stringstream ss;
+
+	ss << n;
+	return ss.str();
+}
 	template <class T, class Allocator = std::allocator<T> > class vector
 	{
 		public:
@@ -34,8 +46,8 @@ namespace ft
 			typedef	typename	allocator_type::const_reference	const_reference;
 			typedef	ptrdiff_t									difference_type;
 			typedef size_t										size_type;
-			typedef ft::iterator<T>								iterator;
-			typedef ft::iterator<const T>						const_iterator;
+			typedef ft::random_access_iterator<T>								iterator;
+			typedef ft::random_access_iterator<const T>						const_iterator;
 			typedef ft::reverse_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 
@@ -184,28 +196,37 @@ namespace ft
 					// at
 						reference at( size_type pos )
 						{
-							if (pos < 0 || pos >= len)
-								throw invalidIndex();
+								// throw invalidIndex();
+							if (pos >= len)
+							{
+								throw std::out_of_range(
+								std::string("ft::vector::__range_check: ") + \
+								std::string("pos (which is ") + ft_itoa(pos) + \
+								std::string(") >= this->size() (which is ") + \
+								ft_itoa(len) + std::string(")"));
+							}
 							return v[pos];
 						};
 						const_reference at( size_type pos ) const
 						{
-							if (pos < 0 || pos >= len)
-								throw invalidIndex();
+							if (pos >= len)
+							{
+								throw std::out_of_range(
+								std::string("ft::vector::__range_check: ") + \
+								std::string("pos (which is ") + ft_itoa(pos) + \
+								std::string(") >= this->size() (which is ") + \
+								ft_itoa(len) + std::string(")"));
+							}
 							return v[pos];
 						};
 
 					// operator[]
 						reference operator[]( size_type pos )
 						{
-							if (pos < 0 || pos >= len)
-								throw invalidIndex();
 							return v[pos];
 						};
 						const_reference operator[]( size_type pos ) const
 						{
-							if (pos < 0 || pos >= len)
-								throw invalidIndex();
 							return v[pos];
 						};
 
@@ -295,6 +316,8 @@ namespace ft
 							size_type	temp_len;
 							pointer		temp_v;
 
+							if (new_cap > _allocator.max_size())
+								throw std::length_error("bad_alloc");
 							if (new_cap > capcity)
 							{
 								temp_v = _allocator.allocate(new_cap);
@@ -329,6 +352,8 @@ namespace ft
 						{
 							size_type index = pos - begin();
 
+							// if (capcity < len+1)
+							// 	throw std::length_error("bad_alloc");
 							if (len + 1 > capcity)
 							{
 								if (!len)
@@ -340,7 +365,6 @@ namespace ft
 							{
 								_allocator.construct(v+i+1, v[i]);
 								_allocator.destroy(v+i);
-
 							}
 							_allocator.construct(v+index, value);
 							len++;
@@ -409,7 +433,7 @@ namespace ft
 						{
 							
 						};
-					*/	template< class InputIt > iterator insert( const_iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = InputIt())
+					*/	template< class InputIt > void insert( const_iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = InputIt())
 						{
 							size_type index = pos - begin(), range = last - first;
 
@@ -640,6 +664,12 @@ namespace ft
 				{
 					return !(lhs < rhs);
 				};
+
+			//	swap
+				template <class T , class Allocator> void swap( vector<T, Allocator> &it1, vector<T, Allocator> &it2 )
+				{
+					it1.swap(it2);
+				}
 }
 
 #endif
