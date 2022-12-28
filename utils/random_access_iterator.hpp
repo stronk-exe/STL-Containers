@@ -6,14 +6,14 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 13:32:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/27 13:36:13 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:10:49 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RANDOM_ACCESS_ITERATOR_HPP
 #define RANDOM_ACCESS_ITERATOR_HPP
 
-#include "Iterator_traits.hpp"
+// #include "Iterator_traits.hpp"
 #include <cstddef>
 
 namespace ft
@@ -26,7 +26,7 @@ namespace ft
 			typedef ptrdiff_t						difference_type;
 			typedef T*								pointer;
 			typedef T&								reference;
-			typedef ft::random_access_iterator_tag	iterator_category;
+			typedef std::random_access_iterator_tag	iterator_category;
 
 			// typedef	T														iter_type;
 			// typedef	typename	ft::random_access_iterator_traits<T>::value_type			value_type;
@@ -35,7 +35,7 @@ namespace ft
 			// typedef	typename	ft::random_access_iterator_traits<T>::pointer				pointer;
 			// typedef	typename	ft::random_access_iterator_traits<T>::random_access_iterator_category	random_access_iterator_category;
 		private:
-			T	*p;
+			pointer	p;
 
 		public:
 			random_access_iterator() : p(NULL) {};

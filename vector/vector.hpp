@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/27 13:31:16 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:09:02 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ namespace ft
 			typedef	typename	allocator_type::const_reference	const_reference;
 			typedef	ptrdiff_t									difference_type;
 			typedef size_t										size_type;
-			typedef ft::random_access_iterator<T>								iterator;
-			typedef ft::random_access_iterator<const T>						const_iterator;
+			typedef ft::random_access_iterator<value_type>								iterator;
+			typedef ft::random_access_iterator<const value_type>						const_iterator;
 			typedef ft::reverse_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 
@@ -416,48 +416,63 @@ namespace ft
 						// };
 						void insert( iterator pos, size_type count, const T& value )
 						{
-								size_type index = pos - begin();
+								// size_type index = pos - begin();
 
-								if (len+count <= capcity)
-								{
-									for (size_type i = len - 1; i >= index; --i) {
-											if (i + count < len)
-												v[i + count] = v[i];
-											else
-												_allocator.construct(v + i + count, v[i]);
-										}
-										for (size_type i = index; i < index + count; i++) {
-											if (i < len)
-												v[i] = value;
-											else
-												_allocator.construct(v + i, value);
-										}
-									len+=count;
-								}
-								else
-								{
-									// if (len == 0)
-									// 	reserve(count);
-									size_type new_cap;
-									if (count > len)
-										new_cap = len+count;
-									else
-										new_cap = len*2;
-									pointer temp = _allocator.allocate(new_cap);
-									for (size_type i=0; i<index; i++)
-										_allocator.construct(temp+i, v[i]);
-									for (size_type i=index; i < (index+count); i++)
-										_allocator.construct(temp+i, value);
-									for (size_type i=(index+count); i< (len+count); i++)
-										_allocator.construct(temp+i, v[i-count]);
-									size_type temp_len = len;
-									clear();
-									_allocator.deallocate(v, capcity);
-									capcity = new_cap;
-									v = temp;
-									len = temp_len+count;
-								}
+								// if (len+count <= capcity)
+								// {
+								// 	for (size_type i = len; i > index; --i) {
+								// 		if (i + count < len)
+								// 				v[i + count] = v[i];
+								// 		else
+								// 			_allocator.construct(v + i, v[i+1]);
+								// 	}
+								// 	for (size_type i = index; i < index + count; ++i) {
+								// 		if (i < len)
+								// 			v[i] = value;
+								// 		else
+								// 			_allocator.construct(v + i, value);
+								// 	}
+								// 	len+=count;
+								// }
+								// else
+								// {
+								// 	// if (len == 0)
+								// 	// 	reserve(count);
+								// 	size_type new_cap;
+								// 	if (count > len)
+								// 		new_cap = len+count;
+								// 	else
+								// 		new_cap = len*2;
+								// 	pointer temp = _allocator.allocate(new_cap);
+								// 	for (size_type i=0; i<index; i++)
+								// 		_allocator.construct(temp+i, v[i]);
+								// 	for (size_type i=index; i < (index+count); i++)
+								// 		_allocator.construct(temp+i, value);
+								// 	for (size_type i=(index+count); i< (len+count); i++)
+								// 		_allocator.construct(temp+i, v[i-count]);
+								// 	size_type temp_len = len;
+								// 	clear();
+								// 	_allocator.deallocate(v, capcity);
+								// 	capcity = new_cap;
+								// 	v = temp;
+								// 	len = temp_len+count;
+								// }
+								difference_type index = pos - begin();
 								
+								if (!len)
+									reserve(count);
+								else if (len+count > capcity)
+								{
+									if (count > len)
+										reserve(len+count);
+									else
+										reserve(capcity*2);
+								}
+								for (difference_type i=len-1; i>=index; --i)
+									_allocator.construct(v+(i+count), v[i]);
+								for (size_type i=0; i<count; ++i)
+									_allocator.construct(v+index++, value);
+								len += count;
 						}
 						// void insert(iterator position, size_type n, const_reference x) {
 						// 	size_type pos = position - begin();
@@ -501,48 +516,67 @@ namespace ft
 						};
 					*/	template< class InputIt > void insert( const_iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = InputIt())
 						{
-							size_type index = pos - begin(), count = last-first;
+							// size_type index = pos - begin(), count = last-first;
 
-								if (len+count < capcity)
+							// 	if (len+count < capcity)
+							// 	{
+							// 		for (size_type i = len - 1; i >= index; --i) {
+							// 				if (i + count < len)
+							// 					v[i + count] = v[i];
+							// 				else
+							// 					_allocator.construct(v + i + count, v[i]);
+							// 			}
+							// 			for (size_type i = index; i < index + count; i++) {
+							// 				if (i < len)
+							// 					v[i] = *first++;
+							// 				else
+							// 					_allocator.construct(v + i, *first++);
+							// 			}
+							// 		len+=count;
+							// 	}
+							// 	else
+							// 	{
+							// 		// if (len == 0)
+							// 		// 	reserve(count);
+							// 		size_type new_cap;
+							// 		if (count > len)
+							// 			new_cap = len+count;
+							// 		else
+							// 			new_cap = len*2;
+							// 		pointer temp = _allocator.allocate(new_cap);
+							// 		for (size_type i=0; i<index; i++)
+							// 			_allocator.construct(temp+i, v[i]);
+							// 		for (size_type i=index; i < (index+count); i++)
+							// 			_allocator.construct(temp+i, *first++);
+							// 		for (size_type i=(index+count); i< (len+count); i++)
+							// 			_allocator.construct(temp+i, v[i-count]);
+							// 		size_type temp_len = len;
+							// 		clear();
+							// 		_allocator.deallocate(v, capcity);
+							// 		capcity = new_cap;
+							// 		v = temp;
+							// 		len = temp_len+count;
+							// 	}
+							
+							difference_type index = pos - begin();
+							size_type count = last-first;
+								
+								if (!len)
+									reserve(count);
+								else if (len+count > capcity)
 								{
-									for (size_type i = len - 1; i >= index; --i) {
-											if (i + count < len)
-												v[i + count] = v[i];
-											else
-												_allocator.construct(v + i + count, v[i]);
-										}
-										for (size_type i = index; i < index + count; i++) {
-											if (i < len)
-												v[i] = *first++;
-											else
-												_allocator.construct(v + i, *first++);
-										}
-									len+=count;
-								}
-								else
-								{
-									// if (len == 0)
-									// 	reserve(count);
-									size_type new_cap;
 									if (count > len)
-										new_cap = len+count;
+										reserve(len+count);
 									else
-										new_cap = len*2;
-									pointer temp = _allocator.allocate(new_cap);
-									for (size_type i=0; i<index; i++)
-										_allocator.construct(temp+i, v[i]);
-									for (size_type i=index; i < (index+count); i++)
-										_allocator.construct(temp+i, *first++);
-									for (size_type i=(index+count); i< (len+count); i++)
-										_allocator.construct(temp+i, v[i-count]);
-									size_type temp_len = len;
-									clear();
-									_allocator.deallocate(v, capcity);
-									capcity = new_cap;
-									v = temp;
-									len = temp_len+count;
+										reserve(capcity*2);
 								}
+								for (difference_type i=len-1; i>=index; --i)
+									_allocator.construct(v+(i+count), v[i]);
+								for (size_type i=0; i<count; ++i)
+									_allocator.construct(v+index++, *first);
+								len += count;
 
+								
 							// size_type index = pos - begin(), range = last - first;
 
 							// if (len+range > capcity)
@@ -607,8 +641,8 @@ namespace ft
 							_allocator.destroy(v+index);
 							for (size_type i=index; i < len; i++)
 							{
-								_allocator.construct(v+i, v[index+1]);
-								_allocator.destroy(v+i+1);
+								_allocator.construct(v+i, v[i+1]);
+								// _allocator.destroy(v+i+1);
 
 							}
 							len--;
@@ -628,7 +662,7 @@ namespace ft
 								_allocator.destroy(v+start+range);
 							}
 							len-=range;
-							return iterator(v+range);
+							return iterator(v+start);
 
 							// index = &(*pos) - v;
 
