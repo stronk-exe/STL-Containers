@@ -83,56 +83,56 @@ namespace ft
 						};
 
                 // Relational operators
-                    friend bool operator==( const stack<T,Container>&, const stack<T,Container>& );
-                    // {
-                    //     return lhs.s == rhs.s;
-                    // };
-                    friend bool operator!=( const stack<T,Container>&, const stack<T,Container>& );
-                    // {
-                    //     return lhs.s != rhs.s;
-                    // };
-                    friend bool operator<( const stack<T,Container>&, const stack<T,Container>& );
-                    // {
-                    //     return lhs.s < rhs.s;
-                    // };
-                    friend bool operator<=( const stack<T,Container>&, const stack<T,Container>& );
-                    // {
-                    //     return lhs.s <= rhs.s;
-                    // };
-                    friend bool operator>( const stack<T,Container>&, const stack<T,Container>& );
-                    // {
-                    //     return lhs.s > rhs.s;
-                    // };
-                    friend bool operator>=( const stack<T,Container>&, const stack<T,Container>& );
-                    // {
-                    //     return lhs.s >= rhs.s;
-                    // };
+                    friend bool operator==( const stack<T,Container> &lhs, const stack<T,Container> &rhs )
+                    {
+                        return lhs.s == rhs.s;
+                    };
+                    friend bool operator!=( const stack<T,Container> &lhs, const stack<T,Container> &rhs )
+                    {
+                        return lhs.s != rhs.s;
+                    };
+                    friend bool operator<( const stack<T,Container> &lhs, const stack<T,Container> &rhs )
+                    {
+                        return lhs.s < rhs.s;
+                    };
+                    friend bool operator<=( const stack<T,Container> &lhs, const stack<T,Container> &rhs )
+                    {
+                        return lhs.s <= rhs.s;
+                    };
+                    friend bool operator>( const stack<T,Container> &lhs, const stack<T,Container> &rhs )
+                    {
+                        return lhs.s > rhs.s;
+                    };
+                    friend bool operator>=( const stack<T,Container> &lhs, const stack<T,Container> &rhs )
+                    {
+                        return lhs.s >= rhs.s;
+                    };
     };
             //>> Non member functions
-                template< class T, class Container > bool operator==( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
-                {
-                    return lhs.s == rhs.s;
-                };
-                template< class T, class Container > bool operator!=( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
-                {
-                    return lhs.s != rhs.s;
-                };
-                template< class T, class Container > bool operator<( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
-                {
-                    return lhs.s < rhs.s;
-                };
-                template< class T, class Container > bool operator<=( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
-                {
-                    return lhs.s <= rhs.s;
-                };
-                template< class T, class Container > bool operator>( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
-                {
-                    return lhs.s > rhs.s;
-                };
-                template< class T, class Container > bool operator>=( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
-                {
-                    return lhs.s <= rhs.s;
-                };
+                // template< class T, class Container > bool operator==( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
+                // {
+                //     return lhs.s == rhs.s;
+                // };
+                // template< class T, class Container > bool operator!=( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
+                // {
+                //     return lhs.s != rhs.s;
+                // };
+                // template< class T, class Container > bool operator<( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
+                // {
+                //     return lhs.s < rhs.s;
+                // };
+                // template< class T, class Container > bool operator<=( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
+                // {
+                //     return lhs.s <= rhs.s;
+                // };
+                // template< class T, class Container > bool operator>( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
+                // {
+                //     return lhs.s > rhs.s;
+                // };
+                // template< class T, class Container > bool operator>=( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
+                // {
+                //     return lhs.s <= rhs.s;
+                // };
                 // template< class T, class Container > bool operator!=( const std::stack<T,Container>& lhs, const std::stack<T,Container>& rhs )
                 // {
 
