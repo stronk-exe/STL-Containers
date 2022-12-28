@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/21 15:13:25 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:36:15 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 // #include "../utils/map_utils.hpp"
 // #include "RBiterators.hpp"
 #include "RBtree.hpp"
+#include "../utils/reverse_iterator.hpp"
 #include <cstddef>
 
 namespace ft

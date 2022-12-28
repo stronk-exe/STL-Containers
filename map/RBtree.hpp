@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/23 17:00:20 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:39:47 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "RBnode.hpp"
 #include "RBiterators.hpp"
 // #include "../utils/vector_Iterators.hpp"
+#include "../utils/reverse_iterator.hpp"
 #include "../utils/utils.hpp"
 
 namespace ft
@@ -103,7 +104,7 @@ namespace ft
                     // rt = nl;
                     new_empty_node();
                     // len++;
-                    rbt(other.rbt);
+                    // rbt(other.rbt);
                 //    new_rbt(other.rt, other.nl);
                 }
                 RBtree &operator=( const RBtree &other )
