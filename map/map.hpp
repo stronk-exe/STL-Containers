@@ -138,14 +138,14 @@ namespace ft
 				//----	operator=
 					map& operator=( const map& other )
 					{
-						if (*this != other)
+						if (this != &other)
 						{
 							_allocator = other._allocator;
 							_key_comp = other._key_comp;
 							val_comp = other.val_comp;
 							rbt = other.rbt;
 						}
-						std::cout << "map assignement operator called" << std::endl;
+						// std::cout << "map assignement operator called" << std::endl;
 						return *this;
 					};
 
@@ -179,16 +179,17 @@ namespace ft
 							// return it.second;
 							iterator it = rbt.find(ft::make_pair(key, mapped_type()));
 
-							if (it == end())
+							if (it != end())
 							{
-								// ft::pair<iterator, bool> n = insert(ft::make_pair(key, mapped_type()));
-								// return n.first._node->data.second;
-								insert(ft::make_pair(key, mapped_type()));
-								iterator gg = find(key);
-								return gg._node->data.second;
+								return it._node->data.second;
 								
 							}
-							return it._node->data.second;
+							// ft::pair<iterator, bool> n = insert(ft::make_pair(key, mapped_type()));
+							// return n.first._node->data.second;
+							ft::pair<iterator, bool> temp = insert(ft::make_pair(key, mapped_type()));
+							// std::cout << "LMACHAKIL!\n";
+							// iterator gg = find(key);
+								return temp.first._node->data.second;
 						};
 
 				//----	Iterators
@@ -370,23 +371,23 @@ namespace ft
 							// return find(value.first);
 							return rbt.insert(pos, value);
 						};
-						template< class InputIt >void insert( InputIt first, InputIt last )
+						template< class InputIt >void insert( InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value>::type * = NULL )
 						{
 							return rbt.insert(first, last);
 						};
 
 					//	erase
-						iterator erase( iterator pos )
+						void erase( iterator pos )
 						{
-							return rbt.erase(pos);
-						};
-						iterator erase( iterator first, iterator last )
-						{
-							return rbt.erase(first, last);
+							rbt.erase(pos);
 						};
 						size_type erase( const Key& key )
 						{
 							return rbt.erase(ft::make_pair(key, mapped_type()));
+						};
+						void erase( iterator first, iterator last )
+						{
+							rbt.erase(first, last);
 						};
 
 					//	swap
@@ -434,38 +435,38 @@ namespace ft
 					//	equal_range
 						ft::pair<iterator,iterator> equal_range( const Key& key )
 						{
-							return rbt.equal_range(key);
+							return rbt.equal_range(ft::make_pair(key, mapped_type()));
 						};
 						ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const
 						{
-							return rbt.equal_range(key);
+							return rbt.equal_range(ft::make_pair(key, mapped_type()));
 						};
 
 					//	lower_bound
 						iterator lower_bound( const Key& key )
 						{
-							return rbt.lower_bound(key);
+							return rbt.lower_bound(ft::make_pair(key, mapped_type()));
 						};
 						const_iterator lower_bound( const Key& key ) const
 						{
-							return rbt.lower_bound(key);
+							return rbt.lower_bound(ft::make_pair(key, mapped_type()));
 						};
 
 					//	upper_bound
 						iterator upper_bound( const Key& key )
 						{
-							return rbt.upper_bound(key);
+							return rbt.upper_bound(ft::make_pair(key, mapped_type()));
 						};
 						const_iterator upper_bound( const Key& key ) const
 						{
-							return rbt.upper_bound(key);
+							return rbt.upper_bound(ft::make_pair(key, mapped_type()));
 						};
 
 				//----	Observers
 					//	key_comp
 						key_compare key_comp() const
 						{
-							return key_comp;
+							return _key_comp;
 						};
 
 					//	value_comp
@@ -520,6 +521,12 @@ namespace ft
 				template< class Key, class T, class Compare, class Alloc > bool operator>=( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
 				{
 					return !(lhs < rhs);
+				};
+			
+			//	swap
+				template< class Key, class T, class Compare, class Alloc > void swap( map<Key,T,Compare,Alloc>& lhs, map<Key,T,Compare,Alloc>& rhs )
+				{
+					lhs.swap(rhs);
 				};
 };
 

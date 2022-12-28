@@ -13,15 +13,18 @@
 #ifndef RBNODE_HPP
 #define RBNODE_HPP
 
+    #define BLACK 0
+    #define RED    1
 namespace ft
 {
-    enum Color { RED, BLACK };
+
+    // enum Color : bool { RED, BLACK };
 
     template<typename T> struct node
     {
         typedef T value_type;
         T		data;
-        bool	color;
+        bool    color;
         node	*parent, *right, *left;
 
         node( const T &value ) : data(value)

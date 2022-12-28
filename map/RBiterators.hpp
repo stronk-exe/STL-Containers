@@ -22,24 +22,25 @@ namespace ft
     template<typename T> class RBiterator
     {
         public:
-            typedef T*                                      _n_pointer;
-            typedef T*            value_type;
-            typedef T*                                      pointer;
-            typedef const T*                                const_pointer;
-            typedef T&                                      reference;
-            typedef const T&                                const_reference;
+            typedef T*                                      n_pointer;
+            typedef typename T::value_type const            value_type;
+            typedef value_type*                                      pointer;
+            typedef value_type const*                                const_pointer;
+            typedef value_type&                                      reference;
+            typedef value_type const&                                const_reference;
+
             typedef typename std::ptrdiff_t                 difference_type;
-            typedef typename ft::bidirectional_iterator_tag iterator_category;
+            typedef typename std::bidirectional_iterator_tag iterator_category;
         
-            pointer _node;
+            n_pointer _node;
         // private:
-            pointer rbtit_rt;
-            pointer rbtit_nl;
+            n_pointer it_nil;
+            n_pointer it_root;
         
         public:
-            RBiterator() : _node(NULL), rbtit_rt(NULL), rbtit_nl(NULL) {};
-            RBiterator( _n_pointer n, _n_pointer root, _n_pointer nil ) : _node(n), rbtit_rt(root), rbtit_nl(nil) {};
-            RBiterator( const RBiterator &rbtit ) : _node(rbtit._node), rbtit_rt(rbtit.rbtit_rt), rbtit_nl(rbtit.rbtit_nl) {};
+            RBiterator() : _node(NULL), it_root(NULL), it_nil(NULL) {};
+            RBiterator( n_pointer n, n_pointer root, n_pointer nil ) : _node(n), it_root(root), it_nil(nil) {};
+            RBiterator( const RBiterator &rbtit ) : _node(rbtit._node), it_root(rbtit.it_root), it_nil(rbtit.it_nil) {};
             ~RBiterator() {};
 
             RBiterator& operator=( const RBiterator& rbtit )
@@ -47,10 +48,15 @@ namespace ft
                 if (*this != rbtit)
                 {
                     _node = rbtit._node;
-                    rbtit_rt = rbtit.rbtit_rt;
-                    rbtit_nl = rbtit.rbtit_nl;
+                    it_root = rbtit.it_root;
+                    it_nil = rbtit.it_nil;
                 }
                 return *this;
+            }
+
+            operator RBiterator<T const>() const
+            {
+                return RBiterator<T const>(_node, it_root, it_nil);
             }
 
             bool operator==( const RBiterator& rbtit ) const
@@ -70,13 +76,13 @@ namespace ft
             {
                 return _node->data;
             };
-            _n_pointer	operator->()
+            pointer	operator->()
             {
-                return &(_node->data);
+                return &_node->data;
             };
             const_pointer	operator->() const
             {
-                return &(_node->data);
+                return &_node->data;
             };
 
             RBiterator& operator++()
@@ -101,13 +107,13 @@ namespace ft
                 //     _node = parent;
                 // }
                 // return *this;
-                if (_node != rbtit_nl)
+                if (_node != it_nil)
                 {
-                    if (_node->right != rbtit_nl)
+                    if (_node->right != it_nil)
                         _node = min_element(_node->right);
                     else
                     {
-                        while (_node->parent != rbtit_nl && _node == _node->parent->right)
+                        while (_node->parent != it_nil && _node == _node->parent->right)
                             _node = _node->parent;
                         _node = _node->parent;
                     }
@@ -139,19 +145,19 @@ namespace ft
                 //     }
                 //     node = parent;
                 // }
-                if (_node != rbtit_nl)
+                if (_node != it_nil)
                 {
-                    if (_node->left != rbtit_nl)
+                    if (_node->left != it_nil)
                         _node = max_element(_node->left);
                     else
                     {
-                        while (_node->parent != rbtit_nl && _node == _node->parent->left)
+                        while (_node->parent != it_nil && _node == _node->parent->left)
                             _node = _node->parent;
                         _node = _node->parent;
                     }
                 }
                 else
-                    _node = max_element(rbtit_rt);
+                    _node = max_element(it_root);
                 return *this;
             };
 
@@ -163,15 +169,15 @@ namespace ft
                 return _rbtit;
             };
 
-            _n_pointer min_element( _n_pointer n )
+            n_pointer min_element( n_pointer n )
             {
-                if (n->left == rbtit_nl)
+                if (n->left == it_nil)
                     return n;
                 return min_element(n->left);
             };
-            _n_pointer max_element( _n_pointer n )
+            n_pointer max_element( n_pointer n )
             {
-                if (n->right == rbtit_nl)
+                if (n->right == it_nil)
                     return n;
                 return max_element(n->right);
             };

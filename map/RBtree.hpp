@@ -103,29 +103,44 @@ namespace ft
                     // rt = nl;
                     // rt = nl;
                     new_empty_node();
+                    copy_tree(other._root, other._nil);
                     // len++;
                     // rbt(other.rbt);
                 //    new_rbt(other.rt, other.nl);
                 }
                 RBtree &operator=( const RBtree &other )
                 {
-                    if (*this != other)
+                    if (this != &other)
                     {
                         clear();
-                        _allocator.destroy(*this);
-                        _allocator.deallocate(*this, 1);
+                        // _allocator.destroy(*this);
+                        // destroy_node();
+                        if (_nil != NULL)
+                        {
+                            _allocator.destroy(_nil);
+                            _allocator.deallocate(_nil, 1);
+                            _nil = NULL;
+                        }
                         _allocator = other._allocator;
                         // nl = _allocator.allocate(1);
                         // nl->parent = other->parent;
                         // nl->right = other->right;
                         // nl->left = other->left;
                         // nl->color = BLACK;
-                        _root = new_node(_root->data);
+                        new_empty_node();
                         // _root = nl;
-                        rbt(other.rbt);
+                        // rbt(other.rbt);
+                        copy_tree(other._root, other._nil);
                      //   new_rbt(other.rt, other.nl);
                     }
                     return *this;
+                }
+                void copy_tree(pointer node, pointer _nil) {
+                    if (node == NULL || node == _nil)
+                        return;
+                    copy_tree(node->left, _nil);
+                    new_node(node->data);
+                    copy_tree(node->right, _nil);
                 }
                 ~RBtree()
                 {
@@ -218,14 +233,16 @@ namespace ft
                 {
                     (void)pos;
                     // return insert_node(value).first;
-                    return iterator(insert_node(value));
+                    pointer n = insert_node(value);
+                    return ft::make_pair(iterator(n, _root, _nil), true);
+                    // return iterator(insert_node(value));
                 }
-                template<class InputIt> void insert( InputIt first, InputIt last/*, typename ft::enable_if<!ft::is_integral<InputIt>::value>::type *= NULL*/ )
+                template <class InputIterator> void insert(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = NULL)
                 {
                     while (first != last)
                     {
                         insert_node(*first);
-                        *first++;
+                        first++;
                     }
                 }
                 // pointer insert_node( node &*n, const value_type value )
@@ -272,9 +289,14 @@ namespace ft
                     return root;
                 }*/
 
-                pointer insert_node(/*pointer root,*/ value_type value)
+                pointer insert_node(/*pointer root,*/ const value_type &value)
                 {
+                    // pointer gg = search(value);
+                    // if (gg)
+                    //     return gg;
+                        // return ft::make_pair(iterator(temp, _root, _nil), false);
                     pointer n = new_node(value);
+                    // std::cout << "LMACHAKIL!\n";
                     
                     pointer _temp_root=_root, _temp_nil=_nil;
                     while (_temp_root != _nil)
@@ -302,7 +324,7 @@ namespace ft
 					}
 					if (!n->parent->parent)
 						return n;
-					_fixshiUp(n);
+					// _fixshiUp(n);
                     return n;
 
 
@@ -409,7 +431,7 @@ namespace ft
                 //     n->right = NULL;
                 //     return n;
                 // }
-                pointer new_node( value_type value )
+                pointer new_node( const value_type &value )
                 {
                     pointer n = _allocator.allocate(1);
                     // if (!_root)
@@ -420,6 +442,7 @@ namespace ft
                     n->right = _nil;
                     n->color = RED;
                     n->data = value;
+                    // std::cout << "LMACHAKIL!\n";
                     len++;
                     // rt = nl;
                     return n;
@@ -545,17 +568,16 @@ namespace ft
 					
 					while (_temp_root != _nil) // searching for the node of value
                     {
-						if (!comp(n->data, _temp_root->data))
-						// if (n->data == _temp_root->data)
+						// if (!comp(n->data, _temp_root->data))
+						if (n->data == _temp_root->data)
 							z = n;
-						if (comp(n->data, _temp_root->data) < 0)
-						// if (n->data > _temp_root->data)
+						// if (comp(n->data, _temp_root->data) < 0)
+						if (n->data > _temp_root->data)
 							_temp_root = _temp_root->right;
 						else
 							_temp_root = _temp_root->left;
                     }
 					
-					std::cout << "gg\n";
 					if (!z) // value not found
 						return;
 					
@@ -822,61 +844,81 @@ namespace ft
             iterator lower_bound( const value_type &value )
 		    {
 		    	// return rbt.lower_bound();
-                iterator it = find(value);
-                if (it == begin())
-                    return begin();
-                // else if (++it == end())
-                //     return --it;
-                return --it;
+                // iterator it = find(value);
+                // if (it == begin())
+                //     return begin();
+                // // else if (++it == end())
+                // //     return --it;
+                // return --it;
+                for (iterator it = begin(); it != end(); ++it) {
+                    if (comp(it._node->data, value) == false)
+                        return it;
+                }
+                return end();
 		    };
 		    const_iterator lower_bound( const value_type &value ) const
 		    {
 		    	// return rbt.lower_bound();
-                const_iterator it = find(value);
-                if (it == begin())
-                    return begin();
-                // else if (++it == end())
-                //     return --it;
-                return --it;
+                // const_iterator it = find(value);
+                // if (it == begin())
+                //     return begin();
+                // // else if (++it == end())
+                // //     return --it;
+                // return --it;
+                for (const_iterator it = begin(); it != end(); ++it) {
+                    if (comp(it._node->data, value) == false)
+                        return it;
+                }
+                return end();
 		    };
 
             iterator upper_bound( const value_type &value )
 		    {
 		    	// return rbt.lower_bound();
-                iterator it = find(value);
-                if (it == end())
-                    return end();
+                // iterator it = find(value);
+                // if (it == end())
+                //     return end();
                 // else if (--it == end())
                 //     return ++it;
-                return ++it;
+                // return ++it;
+                for (iterator it = begin(); it != end(); ++it) {
+                    if (comp(value, it._node->data))
+                        return it;
+                }
+                return end();
 		    };
 		    const_iterator upper_bound( const value_type &value ) const
 		    {
 		    	// return rbt.lower_bound();
-                const_iterator it = find(value);
-                if (it == end())
-                    return end();
+                // const_iterator it = find(value);
+                // if (it == end())
+                //     return end();
+                for (const_iterator it = begin(); it != end(); ++it) {
+                    if (comp(value, it._node->data))
+                        return it;
+                }
+                return end();
                 // else if (--it == end())
                 //     return ++it;
-                return ++it;
+                // return ++it;
 		    };
 
             ft::pair<iterator,iterator> equal_range( const value_type &value )
 		    {
 		    	// return rbt.equal_range();
-                iterator it = lower_bound(value);
+                // iterator it = lower_bound(value);
                 // while (it != upper_bound(value))
                 // {
                 //     ft::make_pair(value);
                 //     i++;
                 // }
-                return make_pair(it, upper_bound(value));
+                return ft::make_pair(lower_bound(value), upper_bound(value));
 		    };
 		    ft::pair<const_iterator,const_iterator> equal_range( const value_type& value ) const
 		    {
 		    	// return rbt.equal_range();
-                const_iterator it = lower_bound(value);
-                return make_pair(it, upper_bound(value));
+                // const_iterator it = lower_bound(value);
+                return ft::make_pair(lower_bound(value), upper_bound(value));
 		    };
 
             //----  Utils
@@ -889,14 +931,22 @@ namespace ft
                 new_rbt(n->right, _nl);
             }*/
 
-        /*    void destroy_node( pointer n )
-            {
-                if (!n || n == _nil)
-                    return;
-                destroy_node(n->left);
-                destroy_node(n->right);
-                destroy_node(n);
-            }*/
+            // void destroy_node( pointer n )
+            // {
+            //     if (!n || n == _nil)
+            //         return;
+            //     destroy_node(n->left);
+            //     destroy_node(n->right);
+            //     destroy_node(n);
+            // }
+            // void destroy_empty_node()
+            // {
+            //     if (!_nil)
+            //         return;
+            //     destroy_node(n->left);
+            //     destroy_node(n->right);
+            //     destroy_node(n);
+            // }
 
 			
 
@@ -917,7 +967,7 @@ namespace ft
                 return NULL;
             }
 
-            pointer min_element( pointer n )
+            pointer min_element( pointer n ) const
             {
                 if (n->left == _nil)
                     return n;

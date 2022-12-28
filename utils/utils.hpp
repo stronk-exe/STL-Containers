@@ -86,14 +86,14 @@ namespace ft
             first_type first;
             second_type second;
 
-            pair() : first(first_type()), second(second_type()) {};
-            // template<class X, class Y> pair( const pair<X, Y> &pr ) : first(pr.first), second(pr.second) {};
-            pair( first_type a, second_type b ) : first(a), second(b) {};
+            pair() : first(), second() {};
+            pair( const first_type &a, const second_type &b ) : first(a), second(b) {};
+            template<class X, class Y> pair( const pair<X, Y> &pr ) : first(pr.first), second(pr.second) {};
             ~pair() {};
 
-            pair& operator=( pair const& pr )
+            pair& operator=( const pair& pr )
             {
-                if (*this != pr)
+                if (this != &pr)
                 {
                     first = pr.first;
                     second = pr.second;
@@ -126,7 +126,7 @@ namespace ft
     {
         return !(lhs < rhs);
     }
-    template<class T1, class T2> ft::pair<T1, T2> make_pair( const T1 &x, const T2 &y )
+    template<class T1, class T2> ft::pair<T1, T2> make_pair( T1 x, T2 y )
     {
         return ft::pair<T1, T2>(x, y);
     }
