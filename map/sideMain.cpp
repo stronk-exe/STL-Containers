@@ -16,16 +16,15 @@
 
 int main()
 {
-    std::map<int, std::string> m1;
-    ft::map<int, std::string> ft_m1;
-    std::map<int, std::string>::iterator it;
-    ft::map<int, std::string>::iterator ft_it;
+    std::map<char, int> m;
+    ft::map<char, int> ft_m;
 
-    for (size_t i = 0; i < 100000/*1e6*/; i++)
-    {
-        m1.insert(std::make_pair(i, "string2"));
-        ft_m1.insert(ft::make_pair(i, "string2"));
-        std::cout << ft_m1.size() << " LMACHAKIL!\n";
-    }
+    std::pair<std::map<char, int>::iterator, bool> ret;
+    ft::pair<ft::map<char, int>::iterator, bool> ft_ret;
+
+    ret = m.insert(std::pair<char, int>('z', 500));
+    ft_ret = ft_m.insert(ft::pair<char, int>('z', 500));
+
+    std::cout << ret.second << ft_ret.second << std::endl;
 
 }

@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/28 12:39:47 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/29 11:51:24 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,9 +233,9 @@ namespace ft
                 {
                     (void)pos;
                     // return insert_node(value).first;
-                    pointer n = insert_node(value);
-                    return ft::make_pair(iterator(n, _root, _nil), true);
-                    // return iterator(insert_node(value));
+                    // pointer n = insert_node(value);
+                    // return ft::make_pair(iterator(n, _root, _nil), true);
+                    return iterator(insert_node(value), _root, _nil);
                 }
                 template <class InputIterator> void insert(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = NULL)
                 {
@@ -484,7 +484,7 @@ namespace ft
                 {
                     while (first != last)
                     {
-                        delete_node(*first);
+                        delete_node(first._node);
                         *first++;
                     }
                 }
