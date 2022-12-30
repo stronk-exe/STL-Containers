@@ -30,18 +30,19 @@ int main()
 
     m['a'] = "an element";
     m['b'] = "another element";
-    // m['c'] = m['b'];
+    m['c'] = m['b'];
     m['b'] = "test";
     m['d'] = "test";
 
     ft_m['a'] = "an element";
-    ft_m['c'] = "an element";
-    ft_m['v'] = "an element";
-    ft_m['x'] = "an element";
     ft_m['b'] = "another element";
-    // ft_m['c'] = ft_m['b'];
+    ft_m['c'] = m['b'];
     ft_m['b'] = "test";
-    // ft_m['d'] = "test";
+    ft_m['d'] = "test";
+    // ft::map<char, std::string>::iterator it;
+    // it = ft_m.find(ft::make_pair('d', "test"));
 
-    std::cout << m.size() << ft_m.size() << std::endl;
+    // if ()
+
+    std::cout << ft_m.size() << " X " << m.size() << std::endl;
 }

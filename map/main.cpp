@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/30 12:51:01 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/30 21:46:26 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1193,6 +1193,9 @@ void testElementAccess()
         ft_m['c'] = ft_m['b'];
         ft_m['a'] = "test";
 
+        std::cout << m.size() << " x " << ft_m.size() << std::endl;
+        // exit(1);`
+
         EQUAL(m['a'] == ft_m['a'] && m['b'] == ft_m['b'] && m['c'] == ft_m['c'] && m.size() == ft_m.size());
     }
 }
@@ -1341,8 +1344,6 @@ void testModifiers()
 
         // insert some values:
         ft_m['a'] = 10;
-        ft_m['a'] = 10;
-        exit(1);
         ft_m['b'] = 20;
         ft_m['c'] = 30;
         ft_m['d'] = 40;
@@ -1356,23 +1357,23 @@ void testModifiers()
         m['e'] = 50;
         m['f'] = 60;
 
+        cond = m.size() == ft_m.size() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
-        // cond = m.size() == ft_m.size() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        it = m.find('b');
+        ft_it = ft_m.find('b');
 
-        // it = m.find('b');
-        // ft_it = ft_m.find('b');
-
-        // cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second);
+        exit(1);
+        cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second);
         // m.erase(it);       // erasing by iterator
         // ft_m.erase(ft_it); // erasing by iterator
 
         // cond = cond && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
-        int ret = m.erase('c');       // erasing by key
-        int ft_ret = ft_m.erase('c'); // erasing by key
-        std::cout << m.size() << " x " << ft_m.size() << std::endl;
+        // int ret = m.erase('c');       // erasing by key
+        // int ft_ret = ft_m.erase('c'); // erasing by key
+        // std::cout << ret << " x " << ft_ret << std::endl;
 
-        cond = cond && ret == ft_ret && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        // cond = cond && ret == ft_ret && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
         // it = m.find('e');
         // ft_it = ft_m.find('e');
@@ -1751,71 +1752,72 @@ void testOperations()
     {
         bool cond(true);
         {
-            time_t start, end, diff;
-            /*------------------ std::maps ---------------------*/
-            std::map<int, std::string> m1;
-            ft::map<int, std::string> ft_m1;
-            for (size_t i = 0; i < 1e4; i++)
-            {
-                m1.insert(std::make_pair(i, "string2"));
-                ft_m1.insert(ft::make_pair(i, "string2"));
-            }
+            // time_t start, end, diff;
+            // /*------------------ std::maps ---------------------*/
+            // std::map<int, std::string> m1;
+            // ft::map<int, std::string> ft_m1;
+            // for (size_t i = 0; i < 1e4; i++)
+            // {
+            //     m1.insert(std::make_pair(i, "string2"));
+            //     ft_m1.insert(ft::make_pair(i, "string2"));
+            // }
 
-            start = get_time();
+            // start = get_time();
 
-            for (size_t i = 1e1; i < 1e3; i += 10)
-                m1.find(i);
+            // for (size_t i = 1e1; i < 1e3; i += 10)
+            //     m1.find(i);
 
-            end = get_time();
-            diff = end - start;
-            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
-            /*-----------------------------------------------------*/
-            /*------------------ ft::maps ---------------------*/
-            ualarm(diff * 1e2, 0);
-            for (size_t i = 1e1; i < 1e3; i += 10)
-                ft_m1.find(i);
-            ualarm(0, 0);
+            // end = get_time();
+            // diff = end - start;
+            // diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+            // /*-----------------------------------------------------*/
+            // /*------------------ ft::maps ---------------------*/
+            // ualarm(diff * 1e2, 0);
+            // for (size_t i = 1e1; i < 1e3; i += 10)
+            //     ft_m1.find(i);
+            // ualarm(0, 0);
             /*----------------------------------------------------*/
         }
 
         std::vector<int> vec;
         std::vector<int> ft_vec;
-        std::random_device randDev;
-        std::mt19937 generator(randDev());
-        std::uniform_int_distribution<int> distr(0, 1e8);
+        // std::random_device randDev;
+        // std::mt19937 generator(randDev());
+        // std::uniform_int_distribution<int> distr(0, 1e8);
 
-        std::map<int, std::string> m1;
-        ft::map<int, std::string> ft_m1;
-        std::map<int, std::string>::iterator it;
-        ft::map<int, std::string>::iterator ft_it;
+        // std::map<int, std::string> m1;
+        // ft::map<int, std::string> ft_m1;
+        // std::map<int, std::string>::iterator it;
+        // ft::map<int, std::string>::iterator ft_it;
 
-        for (size_t i = 0; i < 4/*1e6*/; i++)
-        {
-            m1.insert(std::make_pair(i, "string2"));
-            ft_m1.insert(ft::make_pair(i, "string2"));
-        }
+        // for (size_t i = 0; i < 4/*1e6*/; i++)
+        // {
+        //     m1.insert(std::make_pair(i, "string2"));
+        //     ft_m1.insert(ft::make_pair(i, "string2"));
+        // }
 
-        // std::cout << ft_m1.size() << "LMACHAKIL!\n";
-        // exit(1);
-        for (size_t i = 0; i < 1e4; i++)
-        {
-            int n = distr(generator);
-            it = m1.find(n);
-            ft_it = ft_m1.find(n);
-            if (it == m1.end() && ft_it == ft_m1.end())
-                continue;
-            if (it == m1.end() && ft_it != ft_m1.end())
-            {
-                cond = false;
-                break;
-            }
-            else
-            {
-                vec.push_back(it->first);
-                ft_vec.push_back(ft_it->first);
-            }
-        }
+        // // std::cout << ft_m1.size() << "LMACHAKIL!\n";
+        // // exit(1);
+        // for (size_t i = 0; i < 1e4; i++)
+        // {
+        //     int n = distr(generator);
+        //     it = m1.find(n);
+        //     ft_it = ft_m1.find(n);
+        //     if (it == m1.end() && ft_it == ft_m1.end())
+        //         continue;
+        //     if (it == m1.end() && ft_it != ft_m1.end())
+        //     {
+        //         cond = false;
+        //         break;
+        //     }
+        //     else
+        //     {
+        //         vec.push_back(it->first);
+        //         ft_vec.push_back(ft_it->first);
+        //     }
+        // }
 
+        std::cout <<"\n";
         std::map<char, int> m;
         ft::map<char, int> ft_m;
         std::map<char, int>::iterator it2;
@@ -1831,19 +1833,20 @@ void testOperations()
         ft_m['c'] = 150;
         ft_m['d'] = 200;
 
-        it2 = m.find('b');
-        ft_it2 = ft_m.find('b');
+        it2 = m.find('c');
+        ft_it2 = ft_m.find('c');
 
         cond = cond && it2->first == ft_it2->first && it2->second == ft_it2->second;
 
-        if (it2 != m.end())
-            m.erase(it2);
-        if (ft_it2 != ft_m.end())
-            ft_m.erase(ft_it2);
+        // if (it2 != m.end())
+        //     m.erase(it2);
+        // if (ft_it2 != ft_m.end())
+        //     ft_m.erase(ft_it2);
 
-        cond = cond && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        // cond = cond && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
         EQUAL(cond && vec == ft_vec);
+        exit(1);
     }
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " count method "
               << "] --------------------]\t\t\033[0m";
@@ -2260,9 +2263,9 @@ int main()
     // TEST_CASE(testCapacityMethods)
     // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
-    TEST_CASE(testElementAccess);
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
+    // TEST_CASE(testElementAccess);
+    // std::cout << std::endl;
 
     // std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
     // TEST_CASE(testModifiers)
@@ -2272,9 +2275,9 @@ int main()
     // TEST_CASE(testObservers)
     // std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
-    // TEST_CASE(testOperations)
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
+    TEST_CASE(testOperations)
+    std::cout << std::endl;
 
     // std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
     // TEST_CASE(testAllocatorMethodes)

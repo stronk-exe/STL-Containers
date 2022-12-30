@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:47 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/28 22:03:33 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/30 22:00:10 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ namespace ft
         
             n_pointer _node;
         // private:
-            n_pointer it_root;
             n_pointer it_nil;
+            n_pointer it_root;
         
         public:
-            RBiterator() : _node(NULL), it_root(NULL), it_nil(NULL) {};
-            RBiterator( n_pointer n, n_pointer root, n_pointer nil ) : _node(n), it_root(root), it_nil(nil) {};
-            RBiterator( const RBiterator &rbtit ) : _node(rbtit._node), it_root(rbtit.it_root), it_nil(rbtit.it_nil) {};
+            RBiterator() : _node(NULL), it_nil(NULL), it_root(NULL) {};
+            RBiterator( n_pointer n, n_pointer nil, n_pointer root ) : _node(n), it_nil(nil), it_root(root) {};
+            RBiterator( const RBiterator &rbtit ) : _node(rbtit._node), it_nil(rbtit.it_nil), it_root(rbtit.it_root) {};
             ~RBiterator() {};
 
             RBiterator& operator=( const RBiterator& rbtit )
@@ -48,15 +48,15 @@ namespace ft
                 if (*this != rbtit)
                 {
                     _node = rbtit._node;
-                    it_root = rbtit.it_root;
                     it_nil = rbtit.it_nil;
+                    it_root = rbtit.it_root;
                 }
                 return *this;
             }
 
             operator RBiterator<T const>() const
             {
-                return RBiterator<T const>(_node, it_root, it_nil);
+                return RBiterator<T const>(_node, it_nil, it_root);
             }
 
             bool operator==( const RBiterator& rbtit ) const

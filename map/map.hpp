@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/30 12:55:05 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/30 20:56:06 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,10 @@ namespace ft
 							// }
 							if (it != end())
 							{
-								std::cout << "Ladies and gentlemans we got him\n";
+								// std::cout << "Ladies and gentlemans we got him\n";
 								return it._node->data.second;
 							}
-							std::cout << "Not Found\n";
+							// std::cout << "Not Found\n";
 							ft::pair<iterator, bool> temp = insert(ft::make_pair(key, mapped_type()));
 							return temp.first._node->data.second;
 
