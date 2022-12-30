@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/29 12:32:58 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/30 12:55:05 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,13 +180,10 @@ namespace ft
 							iterator it = rbt.find(ft::make_pair(key, mapped_type()));
 
 							if (it != end())
-							{
 								return it._node->data.second;
-								
-							}
 							// ft::pair<iterator, bool> n = insert(ft::make_pair(key, mapped_type()));
 							// return n.first._node->data.second;
-							std::cout << "Ya\n";
+							std::cout << "Not found\n";
 							ft::pair<iterator, bool> temp = insert(ft::make_pair(key, mapped_type()));
 							// std::cout << "LMACHAKIL!\n";
 							// iterator gg = find(key);

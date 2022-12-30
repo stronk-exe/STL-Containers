@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/29 12:34:50 by ael-asri         ###   ########.fr       */
+/*   Updated: 2022/12/30 12:51:01 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1341,45 +1341,48 @@ void testModifiers()
 
         // insert some values:
         ft_m['a'] = 10;
+        ft_m['a'] = 10;
+        exit(1);
         ft_m['b'] = 20;
         ft_m['c'] = 30;
-        // ft_m['d'] = 40;
+        ft_m['d'] = 40;
         ft_m['e'] = 50;
-        // ft_m['f'] = 60;
+        ft_m['f'] = 60;
 
         m['a'] = 10;
         m['b'] = 20;
         m['c'] = 30;
-        // m['d'] = 40;
+        m['d'] = 40;
         m['e'] = 50;
-        // m['f'] = 60;
+        m['f'] = 60;
 
 
-        cond = m.size() == ft_m.size() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        // cond = m.size() == ft_m.size() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
-        it = m.find('b');
-        ft_it = ft_m.find('b');
+        // it = m.find('b');
+        // ft_it = ft_m.find('b');
 
-        cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second);
-        m.erase(it);       // erasing by iterator
-        ft_m.erase(ft_it); // erasing by iterator
+        // cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second);
+        // m.erase(it);       // erasing by iterator
+        // ft_m.erase(ft_it); // erasing by iterator
 
-        cond = cond && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        // cond = cond && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
         int ret = m.erase('c');       // erasing by key
         int ft_ret = ft_m.erase('c'); // erasing by key
+        std::cout << m.size() << " x " << ft_m.size() << std::endl;
 
         cond = cond && ret == ft_ret && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
-        it = m.find('e');
-        ft_it = ft_m.find('e');
+        // it = m.find('e');
+        // ft_it = ft_m.find('e');
 
-        cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second) && m.size() == ft_m.size();
+        // cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second) && m.size() == ft_m.size();
 
-        m.erase(it, m.end());          // erasing by range
-        ft_m.erase(ft_it, ft_m.end()); // erasing by range
+        // m.erase(it, m.end());          // erasing by range
+        // ft_m.erase(ft_it, ft_m.end()); // erasing by range
 
-        cond = cond && m.empty() == ft_m.empty() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        // cond = cond && m.empty() == ft_m.empty() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
         /* ---------- Testing some edge cases ---------- */
 
@@ -2066,23 +2069,23 @@ void testOperations()
     }
 }
 
-void testAllocatorMethodes()
-{
-    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " get_allocator method "
-              << "] --------------------]\t\t\033[0m";
-    {
-        int psize;
-        ft::map<char, int> mymap;
-        ft::pair<const char, int> *p;
+// void testAllocatorMethodes()
+// {
+//     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " get_allocator method "
+//               << "] --------------------]\t\t\033[0m";
+//     {
+//         int psize;
+//         ft::map<char, int> mymap;
+//         ft::pair<const char, int> *p;
 
-        // allocate an array of 5 elements using mymap's allocator:
-        p = mymap.get_allocator().allocate(5);
+//         // allocate an array of 5 elements using mymap's allocator:
+//         p = mymap.get_allocator().allocate(5);
 
-        psize = sizeof(std::map<char, int>::value_type) * 5;
-        EQUAL(psize == 40);
-        mymap.get_allocator().deallocate(p, 5);
-    }
-}
+//         psize = sizeof(std::map<char, int>::value_type) * 5;
+//         EQUAL(psize == 40);
+//         mymap.get_allocator().deallocate(p, 5);
+//     }
+// }
 void testRetionalOperators()
 {
 
@@ -2249,9 +2252,9 @@ int main()
     // // testConstructors();
     // std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
-    // TEST_CASE(testIterators);
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
+    TEST_CASE(testIterators);
+    std::cout << std::endl;
 
     // std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
     // TEST_CASE(testCapacityMethods)

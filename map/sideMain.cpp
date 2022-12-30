@@ -25,16 +25,34 @@ bool comparemaps(Iter1 first1, Iter1 last1, Iter2 first2, Iter2 last2)
 
 int main()
 {
-    std::map<int, std::string> m;
-        ft::map<int, std::string> ft_m;
+    std::map<char, int> m;
+        ft::map<char, int> ft_m;
+        std::map<char, int>::iterator it;
+        ft::map<char, int>::iterator ft_it;
 
-        for (size_t i = 0; i < 1e3; i++)
-        {
-            // m.insert(std::make_pair(i, "string1"));
-            m[i] = "stronk";
-            std::cout << "Yo\n";
-            ft_m[i] = "stronkest";
-            // ft_m.insert(ft::make_pair(i, "string1"));
-        }
-        std::cout << m.size() << " - " << ft_m.size() << std::endl;
+        // insert some values:
+        std::cout << "len " << ft_m.size() << std::endl; 
+        ft_m['a'] = 10;
+        std::cout << "len " << ft_m.size() << std::endl;
+        ft_m['a'] = 10;
+        std::cout << "len " << ft_m.size() << std::endl;
+        exit(1);
+        ft_m['b'] = 20;
+        ft_m['c'] = 30;
+        ft_m['d'] = 40;
+        ft_m['e'] = 50;
+        ft_m['f'] = 60;
+
+        m['a'] = 10;
+        m['b'] = 20;
+        m['c'] = 30;
+        m['d'] = 40;
+        m['e'] = 50;
+        m['f'] = 60;
+    
+    ft_m.erase('e');
+    m.erase('e');
+    std::cout << m.size() << " X "<< ft_m.size() << std::endl;
+    // std::cout <<(ft_m.begin() == ft_m.end()) << std::endl;
+    // && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 }
