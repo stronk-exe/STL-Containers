@@ -25,34 +25,23 @@ bool comparemaps(Iter1 first1, Iter1 last1, Iter2 first2, Iter2 last2)
 
 int main()
 {
-    std::map<char, int> m;
-        ft::map<char, int> ft_m;
-        std::map<char, int>::iterator it;
-        ft::map<char, int>::iterator ft_it;
+    std::map<char, std::string> m;
+    ft::map<char, std::string> ft_m;
 
-        // insert some values:
-        std::cout << "len " << ft_m.size() << std::endl; 
-        ft_m['a'] = 10;
-        std::cout << "len " << ft_m.size() << std::endl;
-        ft_m['a'] = 10;
-        std::cout << "len " << ft_m.size() << std::endl;
-        exit(1);
-        ft_m['b'] = 20;
-        ft_m['c'] = 30;
-        ft_m['d'] = 40;
-        ft_m['e'] = 50;
-        ft_m['f'] = 60;
+    m['a'] = "an element";
+    m['b'] = "another element";
+    // m['c'] = m['b'];
+    m['b'] = "test";
+    m['d'] = "test";
 
-        m['a'] = 10;
-        m['b'] = 20;
-        m['c'] = 30;
-        m['d'] = 40;
-        m['e'] = 50;
-        m['f'] = 60;
-    
-    ft_m.erase('e');
-    m.erase('e');
-    std::cout << m.size() << " X "<< ft_m.size() << std::endl;
-    // std::cout <<(ft_m.begin() == ft_m.end()) << std::endl;
-    // && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+    ft_m['a'] = "an element";
+    ft_m['c'] = "an element";
+    ft_m['v'] = "an element";
+    ft_m['x'] = "an element";
+    ft_m['b'] = "another element";
+    // ft_m['c'] = ft_m['b'];
+    ft_m['b'] = "test";
+    // ft_m['d'] = "test";
+
+    std::cout << m.size() << ft_m.size() << std::endl;
 }

@@ -180,11 +180,9 @@ namespace ft
             // insertion
                 ft::pair<iterator, bool> insert_node(const value_type &value)
                 {
-                    pointer temp = search(value);
+                    pointer temp = __lookup_node(value);
                     if (temp)
-                        {
-                        return ft::make_pair(iterator(temp, _root, _nil), false);}
-                            std::cout << "502\n";
+                        return ft::make_pair(iterator(temp, _root, _nil), false);
                     
                     pointer n = new_node(value);
                     pointer _temp_root=_root, _temp_nil=_nil;
@@ -392,7 +390,8 @@ namespace ft
                     n->left = _nil;
                     n->right = _nil;
                     n->color = RED;
-                    n->data = value;
+                    // n->data = value;
+                    _allocator.construct(n, value);
                     // std::cout << "LMACHAKIL!\n";
                     len++;
                     // rt = nl;
@@ -457,11 +456,11 @@ namespace ft
 					
 					while (_temp_root != _nil) // searching for the node of value
                     {
-						// if (!comp(n->data, _temp_root->data))
-						if (n->data == _temp_root->data)
+						if (!comp(n->data, _temp_root->data))
+						// if (n->data == _temp_root->data)
 							z = n;
-						// if (comp(n->data, _temp_root->data) < 0)
-						if (n->data > _temp_root->data)
+						if (comp(n->data, _temp_root->data) < 0)
+						// if (n->data > _temp_root->data)
 							_temp_root = _temp_root->right;
 						else
 							_temp_root = _temp_root->left;
@@ -951,7 +950,6 @@ namespace ft
 
                 if (n)
                     return iterator(n, _root, _nil);
-                std::cout << "not in here\n";
                 return end();
             }
             const_iterator find( const value_type &value ) const
@@ -962,6 +960,36 @@ namespace ft
                     return const_iterator(n, _root, _nil);
                 return end();
             }
+
+
+    //         iterator find(const value_type &value) {
+	// 	pointer tmp = __lookup_node(value);
+
+	// 	if (tmp)
+	// 		return iterator(tmp, _root, _nil);
+	// 	return end();
+	// }
+	// const_iterator find(const value_type &value) const {
+	// 	pointer tmp = __lookup_node(value);
+
+	// 	if (tmp)
+	// 		return const_iterator(tmp, _root, _nil);
+	// 	return end();
+	// }
+
+            pointer __lookup_node(const value_type &data) const {
+		pointer node = _root;
+
+		while (node != _nil) {
+			if (comp(data, node->data))
+				node = node->left;
+			else if (comp(node->data, data))
+				node = node->right;
+			else
+				return node;
+		}
+		return NULL;
+	}
 
             bool empty() const
             {
@@ -1043,21 +1071,22 @@ namespace ft
             pointer search(const value_type &value) const {
                 pointer node = _root;
 
-                int i=0;
+                // int i=0;
                 // while (i<len)
                 while (node != _nil)
                 {
-                    // if (comp(value, node->data))
-                    if (value == node->data)
-                        return node;
-                    else if (value < node->data)
+                    if (comp(value, node->data))
                         node = node->left;
-                    else
+                    // if (value == node->data)
+                    else if (comp(node->data, value))
+                    // else if (value < node->data)
                         node = node->right;
-                    i++;
-                    // else if (comp(node->data, value))
+                    else
+                        return node;
+                    // i++;
+                    std::cout << "Not the one\n";
                 }
-                std::cout << "o " << i << std::endl;
+                // std::cout << "o " << i << std::endl;
                 return NULL;
             }
 

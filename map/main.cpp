@@ -1131,55 +1131,55 @@ void testElementAccess()
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " operator [] "
               << "] --------------------]\t\t\033[0m";
     {
-        {
-            time_t start, end, diff;
-            /*------------------ std::maps ---------------------*/
-            std::map<int, std::string> m1;
-            ft::map<int, std::string> ft_m1;
+        // {
+        //     time_t start, end, diff;
+        //     /*------------------ std::maps ---------------------*/
+        //     std::map<int, std::string> m1;
+        //     ft::map<int, std::string> ft_m1;
 
-            for (size_t i = 0; i < 1e4; i++)
-            // for (size_t i = 0; i < 1e6; i++)
-            {
-                m1.insert(std::make_pair(i, "string2"));
-                ft_m1.insert(ft::make_pair(i, "string2"));
-                // std::cout << i << std::endl;
-            }
-            start = get_time();
-            m1[1e6] = "string";
-            end = get_time();
-            diff = end - start;
-            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
-            /*-----------------------------------------------------*/
-            /*------------------ ft::maps ---------------------*/
-            ualarm(diff * 1e3, 0);
-            ft_m1[1e6] = "string";
-            ualarm(0, 0);
-            /*----------------------------------------------------*/
-            /*------------------ std::maps ---------------------*/
-            start = get_time();
-            m1[1e6 - 100] = "string";
-            end = get_time();
-            diff = end - start;
-            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
-            /*-----------------------------------------------------*/
-            /*------------------ ft::maps ---------------------*/
-            ualarm(diff * 1e3, 0);
-            ft_m1[1e6 - 100] = "string";
-            ualarm(0, 0);
-            /*----------------------------------------------------*/
-            /*------------------ std::maps ---------------------*/
-            start = get_time();
-            m1[1e6 - 100] = m1[1e5];
-            end = get_time();
-            diff = end - start;
-            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
-            /*-----------------------------------------------------*/
-            /*------------------ ft::maps ---------------------*/
-            ualarm(diff * 1e3, 0);
-            ft_m1[1e6 - 100] = ft_m1[1e5];
-            ualarm(0, 0);
-            /*----------------------------------------------------*/
-        }
+        //     for (size_t i = 0; i < 1e4; i++)
+        //     // for (size_t i = 0; i < 1e6; i++)
+        //     {
+        //         m1.insert(std::make_pair(i, "string2"));
+        //         ft_m1.insert(ft::make_pair(i, "string2"));
+        //         // std::cout << i << std::endl;
+        //     }
+        //     start = get_time();
+        //     m1[1e6] = "string";
+        //     end = get_time();
+        //     diff = end - start;
+        //     diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+        //     /*-----------------------------------------------------*/
+        //     /*------------------ ft::maps ---------------------*/
+        //     ualarm(diff * 1e3, 0);
+        //     ft_m1[1e6] = "string";
+        //     ualarm(0, 0);
+        //     /*----------------------------------------------------*/
+        //     /*------------------ std::maps ---------------------*/
+        //     start = get_time();
+        //     m1[1e6 - 100] = "string";
+        //     end = get_time();
+        //     diff = end - start;
+        //     diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+        //     /*-----------------------------------------------------*/
+        //     /*------------------ ft::maps ---------------------*/
+        //     ualarm(diff * 1e3, 0);
+        //     ft_m1[1e6 - 100] = "string";
+        //     ualarm(0, 0);
+        //     /*----------------------------------------------------*/
+        //     /*------------------ std::maps ---------------------*/
+        //     start = get_time();
+        //     m1[1e6 - 100] = m1[1e5];
+        //     end = get_time();
+        //     diff = end - start;
+        //     diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+        //     /*-----------------------------------------------------*/
+        //     /*------------------ ft::maps ---------------------*/
+        //     ualarm(diff * 1e3, 0);
+        //     ft_m1[1e6 - 100] = ft_m1[1e5];
+        //     ualarm(0, 0);
+        //     /*----------------------------------------------------*/
+        // }
         std::map<char, std::string> m;
         ft::map<char, std::string> ft_m;
 
@@ -2252,21 +2252,21 @@ int main()
     // // testConstructors();
     // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
-    TEST_CASE(testIterators);
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
+    // TEST_CASE(testIterators);
+    // std::cout << std::endl;
 
     // std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
     // TEST_CASE(testCapacityMethods)
     // std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
-    // TEST_CASE(testElementAccess);
-    // std::cout << std::endl;
-
-    std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
-    TEST_CASE(testModifiers)
+    std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
+    TEST_CASE(testElementAccess);
     std::cout << std::endl;
+
+    // std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
+    // TEST_CASE(testModifiers)
+    // std::cout << std::endl;
 
     // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
     // TEST_CASE(testObservers)
