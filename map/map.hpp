@@ -26,7 +26,7 @@
 
 namespace ft
 {
-	template<class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > > class map
+	template<class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<Key, T> > > class map
 	{
 		public:
 			typedef	Key											key_type;
@@ -186,6 +186,7 @@ namespace ft
 							}
 							// ft::pair<iterator, bool> n = insert(ft::make_pair(key, mapped_type()));
 							// return n.first._node->data.second;
+							std::cout << "Ya\n";
 							ft::pair<iterator, bool> temp = insert(ft::make_pair(key, mapped_type()));
 							// std::cout << "LMACHAKIL!\n";
 							// iterator gg = find(key);

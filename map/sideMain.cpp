@@ -14,17 +14,27 @@
 
 #define EQUAL(x) ((x) ? (std::cout << "\033[1;32mAC\033[0m\n") : (std::cout << "\033[1;31mWA\033[0m\n"))
 
+template <typename Iter1, typename Iter2>
+bool comparemaps(Iter1 first1, Iter1 last1, Iter2 first2, Iter2 last2)
+{
+    for (; (first1 != last1) && (first2 != last2); ++first1, ++first2)
+        if (first1->first != first2->first || first1->second != first2->second)
+            return false;
+    return true;
+}
+
 int main()
 {
-    std::map<char, int> m;
-    ft::map<char, int> ft_m;
+    std::map<int, std::string> m;
+        ft::map<int, std::string> ft_m;
 
-    std::pair<std::map<char, int>::iterator, bool> ret;
-    ft::pair<ft::map<char, int>::iterator, bool> ft_ret;
-
-    ret = m.insert(std::pair<char, int>('z', 500));
-    ft_ret = ft_m.insert(ft::pair<char, int>('z', 500));
-
-    std::cout << ret.second << ft_ret.second << std::endl;
-
+        for (size_t i = 0; i < 1e3; i++)
+        {
+            // m.insert(std::make_pair(i, "string1"));
+            m[i] = "stronk";
+            std::cout << "Yo\n";
+            ft_m[i] = "stronkest";
+            // ft_m.insert(ft::make_pair(i, "string1"));
+        }
+        std::cout << m.size() << " - " << ft_m.size() << std::endl;
 }

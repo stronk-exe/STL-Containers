@@ -1278,9 +1278,10 @@ void testModifiers()
         ft::pair<ft::map<char, int>::iterator, bool> ft_ret;
 
         ret = m.insert(std::pair<char, int>('z', 500));
-        // ft_ret = ft_m.insert(ft::pair<char, int>('z', 500));
+        ft_ret = ft_m.insert(ft::pair<char, int>('z', 500));
 
         cond = cond && ret.second == ft_ret.second;
+        // exit(1);
 
         // second insert function version (with hint position):
         std::map<char, int>::iterator it = m.begin();
@@ -1342,16 +1343,17 @@ void testModifiers()
         ft_m['a'] = 10;
         ft_m['b'] = 20;
         ft_m['c'] = 30;
-        ft_m['d'] = 40;
+        // ft_m['d'] = 40;
         ft_m['e'] = 50;
-        ft_m['f'] = 60;
+        // ft_m['f'] = 60;
 
         m['a'] = 10;
         m['b'] = 20;
         m['c'] = 30;
-        m['d'] = 40;
+        // m['d'] = 40;
         m['e'] = 50;
-        m['f'] = 60;
+        // m['f'] = 60;
+
 
         cond = m.size() == ft_m.size() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
@@ -1374,34 +1376,34 @@ void testModifiers()
 
         cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second) && m.size() == ft_m.size();
 
-        // m.erase(it, m.end());          // erasing by range
-        // ft_m.erase(ft_it, ft_m.end()); // erasing by range
+        m.erase(it, m.end());          // erasing by range
+        ft_m.erase(ft_it, ft_m.end()); // erasing by range
 
-        // cond = cond && m.empty() == ft_m.empty() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        cond = cond && m.empty() == ft_m.empty() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
         /* ---------- Testing some edge cases ---------- */
 
-        std::map<int, std::string> m2;
-        ft::map<int, std::string> ft_m2;
+        // std::map<int, std::string> m2;
+        // ft::map<int, std::string> ft_m2;
 
-        for (size_t i = 0; i < 1e3; i++)
-        {
-            m2.insert(std::make_pair(i, "string1"));
-            ft_m2.insert(ft::make_pair(i, "string1"));
-        }
+        // for (size_t i = 0; i < 1e3; i++)
+        // {
+        //     m2.insert(std::make_pair(i, "string1"));
+        //     ft_m2.insert(ft::make_pair(i, "string1"));
+        // }
 
-        std::map<int, std::string>::reverse_iterator it2 = m2.rbegin();
-        ft::map<int, std::string>::reverse_iterator ft_it2 = ft_m2.rbegin();
+        // std::map<int, std::string>::reverse_iterator it2 = m2.rbegin();
+        // ft::map<int, std::string>::reverse_iterator ft_it2 = ft_m2.rbegin();
 
-        m2.erase(m2.begin());
-        ft_m2.erase(ft_m2.begin());
+        // m2.erase(m2.begin());
+        // ft_m2.erase(ft_m2.begin());
 
-        cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
+        // cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
 
-        m2.erase(it2->first);
-        ft_m2.erase(ft_it2->first);
+        // m2.erase(it2->first);
+        // ft_m2.erase(ft_it2->first);
 
-        cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
+        // cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
 
         // std::map<int, std::string> m3;
         // ft::map<int, std::string> ft_m3;
@@ -1411,12 +1413,12 @@ void testModifiers()
         // std::mt19937 generator(randDev());
         // std::uniform_int_distribution<int> distr(0, 1e8);
 
-        // for (size_t i = 0; i < 1e3; i++)
-        // // for (size_t i = 0; i < 1e6; i++)
-        // {
-        //     m3.insert(std::make_pair(i, "string1"));
-        //     ft_m3.insert(ft::make_pair(i, "string1"));
-        // }
+        // // for (size_t i = 0; i < 1e3; i++)
+        // // // for (size_t i = 0; i < 1e6; i++)
+        // // {
+        // //     m3.insert(std::make_pair(i, "string1"));
+        // //     ft_m3.insert(ft::make_pair(i, "string1"));
+        // // }
 
         // for (size_t i = 0; i < 1e3; i++)
         // // for (size_t i = 0; i < 1e6; ++i)
@@ -1442,11 +1444,12 @@ void testModifiers()
         //     ft_m3.erase(ft_m3.begin(), ft_m3.end());
         //     ft_m3.erase(ft_m3.begin(), ft_m3.end());
         // }
+        // // std::cou
         // cond = cond && (m3.size() == ft_m3.size() && comparemaps(m3.begin(), m3.end(), ft_m3.begin(), ft_m3.end()));
 
         EQUAL(cond);
     }
-
+    exit(1);
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " swap method "
               << "] --------------------]\t\t\033[0m";
 
@@ -2235,11 +2238,11 @@ int main()
     std::cout << RED << "--------------------------------------------------------------------------------------------------------" << RESET << std::endl;
     signal(SIGALRM, alarm_handler);
 
-    std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
-    TEST_CASE(iterator_tests);
-    TEST_CASE(const_iterator_tests);
-    TEST_CASE(reverse_iterator_tests);
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
+    // TEST_CASE(iterator_tests);
+    // TEST_CASE(const_iterator_tests);
+    // TEST_CASE(reverse_iterator_tests);
+    // std::cout << std::endl;
 
     // std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
     // TEST_CASE(testmapConstructors);
@@ -2250,37 +2253,37 @@ int main()
     // TEST_CASE(testIterators);
     // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
-    TEST_CASE(testCapacityMethods)
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
+    // TEST_CASE(testCapacityMethods)
+    // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
-    TEST_CASE(testElementAccess);
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
+    // TEST_CASE(testElementAccess);
+    // std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
     TEST_CASE(testModifiers)
     std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
-    TEST_CASE(testObservers)
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
+    // TEST_CASE(testObservers)
+    // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
-    TEST_CASE(testOperations)
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
+    // TEST_CASE(testOperations)
+    // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
-    TEST_CASE(testAllocatorMethodes)
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
+    // TEST_CASE(testAllocatorMethodes)
+    // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
-    TEST_CASE(testRetionalOperators);
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
+    // TEST_CASE(testRetionalOperators);
+    // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
-    TEST_CASE(testNonMemberSwap);
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
+    // TEST_CASE(testNonMemberSwap);
+    // std::cout << std::endl;
     return 0;
 }
 
