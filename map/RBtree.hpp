@@ -123,21 +123,21 @@ namespace ft
 
                 iterator begin()
                 {
-                    return iterator(_root, min_element(_root), _nil);
+                    return iterator(min_element(_root), _root, _nil);
                 }
                 const_iterator begin() const
                 {
-                    return const_iterator(_root, min_element(_root), _nil);
+                    return const_iterator(min_element(_root), _root, _nil);
                 }
 
                 iterator end()
                 {
                     // std::cout << "Why its always you?" << std::endl;
-                    return iterator(_root, _nil, _nil); // node, nil, root
+                    return iterator(_nil, _root, _nil); // node, nil, root
                 }
                 const_iterator end() const
                 {
-                    return const_iterator(_root, _nil, _nil);
+                    return const_iterator(_nil, _root, _nil);
                 }
 
                 reverse_iterator rbegin()
@@ -161,6 +161,7 @@ namespace ft
 
                 ft::pair<iterator, bool> insert( const value_type& value )
                 {
+                    // std::cout << "hola\n";
                     return insert_node(value);
                     // return ft::make_pair(iterator(insert_node(value), _root, _nil), true);
                 }
@@ -273,11 +274,11 @@ namespace ft
 				// }
 
             ft::pair<iterator, bool>	insert_node(const value_type &data) {
-		pointer look = search(data);
+		pointer look = __lookup_node(data);
 		if (look)
-			return ft::make_pair(iterator(look, _nil, _root), false);
+			return ft::make_pair(iterator(look, _root, _nil), false);
 
-		pointer node = __alloc_node(data);
+		pointer node = new_node(data);
         // std::cout << "Yu\n";
 		if (!node)
 			throw std::bad_alloc();
@@ -303,14 +304,14 @@ namespace ft
 
 		if (node->parent == _nil) {
 			node->color = BLACK;
-			return ft::make_pair(iterator(node, _nil, _root), true);
+			return ft::make_pair(iterator(node, _root, _nil), true);
 		}
 
 		if (node->parent->parent == _nil)
-			return ft::make_pair(iterator(node, _nil, _root), true);
+			return ft::make_pair(iterator(node, _root, _nil), true);
 
 		__insert_fixup(node);
-		return ft::make_pair(iterator(node, _nil, _root), true);
+		return ft::make_pair(iterator(node, _root, _nil), true);
 	}
     pointer __alloc_node(const value_type &data) {
 		pointer node = _allocator.allocate(1);
@@ -947,19 +948,19 @@ namespace ft
 
             iterator find( const value_type &value )
             {
-                pointer n = search(value);
+                pointer n = __lookup_node(value);
 
                 if (n)
-                    return iterator(n, _nil, _root);
-                std::cout << "shit not found!" << std::endl;
+                    return iterator(n, _root, _nil);
+                // std::cout << "shit not found!" << std::endl;
                 return end();
             }
             const_iterator find( const value_type &value ) const
             {
-                pointer n = search(value);
+                pointer n = __lookup_node(value);
 
                 if (n)
-                    return const_iterator(n, _nil, _root);
+                    return const_iterator(n, _root, _nil);
                 return end();
             }
 

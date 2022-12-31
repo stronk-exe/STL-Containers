@@ -34,38 +34,38 @@ namespace ft
         
             n_pointer _node;
         // private:
-            n_pointer it_nil;
             n_pointer it_root;
+            n_pointer it_nil;
         
         public:
-            RBiterator() : _node(NULL), it_nil(NULL), it_root(NULL) {};
-            RBiterator( n_pointer n, n_pointer nil, n_pointer root ) : _node(n), it_nil(nil), it_root(root) {};
-            RBiterator( const RBiterator &rbtit ) : _node(rbtit._node), it_nil(rbtit.it_nil), it_root(rbtit.it_root) {};
+            RBiterator() : _node(NULL), it_root(NULL), it_nil(NULL) {};
+            RBiterator( n_pointer n, n_pointer root , n_pointer nil) : _node(n), it_root(root), it_nil(nil) {};
+            RBiterator( const RBiterator &rbtit ) : _node(rbtit._node), it_root(rbtit.it_root), it_nil(rbtit.it_nil) {};
             ~RBiterator() {};
 
-            RBiterator& operator=( const RBiterator& rbtit )
+            RBiterator& operator=( const RBiterator& other )
             {
-                if (*this != rbtit)
+                if (this != &other)
                 {
-                    _node = rbtit._node;
-                    it_nil = rbtit.it_nil;
-                    it_root = rbtit.it_root;
+                    _node = other._node;
+                    it_root = other.it_root;
+                    it_nil = other.it_nil;
                 }
                 return *this;
             }
 
             operator RBiterator<T const>() const
             {
-                return RBiterator<T const>(_node, it_nil, it_root);
+                return RBiterator<T const>(_node, it_root, it_nil);
             }
 
-            bool operator==( const RBiterator& rbtit ) const
+            bool operator==( const RBiterator& other ) const
             {
-                return _node == rbtit._node;
+                return _node == other._node;
             }
-            bool operator!=( const RBiterator& rbtit ) const
+            bool operator!=( const RBiterator& other ) const
             {
-                return _node != rbtit._node;
+                return _node != other._node;
             }
 
             reference	operator*()

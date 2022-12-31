@@ -123,7 +123,7 @@ namespace ft
 					//	operator[]
 						T& operator[]( const Key& key )
 						{
-							iterator it = rbt.find(ft::make_pair(key, mapped_type()));
+							iterator it = find(key);
 
 							// if (it != end())
 							// {
@@ -253,6 +253,7 @@ namespace ft
 							iterator it = find(key);
 							if (it != end())
 								return 1;
+							// std::cout << "thereee\n";
 							return 0;
 						};
 
@@ -320,7 +321,7 @@ namespace ft
 
 	// >> Non-member functions
 		//	operator==
-			template< class Key, class T, class Compare, class Alloc > bool operator==( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
+			template< class Key, class T, class Compare, class Alloc > bool operator==( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
 			{
 				if (lhs.size() != rhs.size())
 					return false;
