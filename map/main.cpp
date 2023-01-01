@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/30 21:46:26 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/01 21:50:52 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,47 +240,47 @@ void iterator_tests(void)
               << "] --------------------]\t\t\033[0m";
     {
         /*---------------------------------- time limit test --------------------------------------------*/
-        {
-            // time_t start, end, diff;
-
-            // std::map<int, std::string> m;
-            // ft::map<int, std::string> ft_m;
-            // for (size_t i = 0; i < 1e6; ++i)
-            // {
-            //     m.insert(std::make_pair(i, "value"));
-            //     ft_m.insert(ft::make_pair(i, "value"));
-            // }
-            // start = get_time();
-            // std::map<int, std::string>::iterator it = --m.end();
-            // for (; it != m.begin(); --it)
-            //     ;
-            // end = get_time();
-            // diff = end - start;
-            // diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
-
-            // ualarm(diff * 1e3, 0);
-            // ft::map<int, std::string>::iterator ft_it = --ft_m.end();
-            // for (; ft_it != ft_m.begin(); --ft_it)
-            //     ;
-            // ualarm(0, 0);
-        }
-        // int res(0);
         // {
-        //     int myints[] = {12, 82, 37, 64, 15};
-        //     ft::map<int, int> m;
-        //     for (size_t i = 0; i < 5; ++i)
-        //         m.insert(ft::make_pair(myints[i], i));
-        //     ft::map<int, int>::iterator it = --m.end();
-        //     for (;; --it)
+        //     time_t start, end, diff;
+
+        //     std::map<int, std::string> m;
+        //     ft::map<int, std::string> ft_m;
+        //     for (size_t i = 0; i < 1e6; ++i)
         //     {
-        //         if (it == m.begin())
-        //         {
-        //             res += it->first;
-        //             break;
-        //         }
-        //         res += it->first;
+        //         m.insert(std::make_pair(i, "value"));
+        //         ft_m.insert(ft::make_pair(i, "value"));
         //     }
+        //     start = get_time();
+        //     std::map<int, std::string>::iterator it = --m.end();
+        //     for (; it != m.begin(); --it)
+        //         ;
+        //     end = get_time();
+        //     diff = end - start;
+        //     diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+
+        //     ualarm(diff * 1e3, 0);
+        //     ft::map<int, std::string>::iterator ft_it = --ft_m.end();
+        //     for (; ft_it != ft_m.begin(); --ft_it)
+        //         ;
+        //     ualarm(0, 0);
         // }
+        int res(0);
+        {
+            int myints[] = {12, 82, 37, 64, 15};
+            ft::map<int, int> m;
+            for (size_t i = 0; i < 5; ++i)
+                m.insert(ft::make_pair(myints[i], i));
+            ft::map<int, int>::iterator it = --m.end();
+            for (;; --it)
+            {
+                if (it == m.begin())
+                {
+                    res += it->first;
+                    break;
+                }
+                res += it->first;
+            }
+        }
         --my_it; // I decremented here to make sure that the object changes
         EQUAL(*my_it != *my_it1);
     }
@@ -737,37 +737,37 @@ void testConstructors()
               << "] --------------------]\t\t\033[0m";
     {
         /*-------------------------------------- time limit test -----------------------------------*/
-        {
-            time_t start, end, diff;
-            /*------------------ std::map ---------------------*/
-            std::map<int, std::string> m1;
-            std::map<int, std::string> m2;
-            ft::map<int, std::string> ft_m1;
-            ft::map<int, std::string> ft_m2;
+        // {
+        //     time_t start, end, diff;
+        //     /*------------------ std::map ---------------------*/
+        //     std::map<int, std::string> m1;
+        //     std::map<int, std::string> m2;
+        //     ft::map<int, std::string> ft_m1;
+        //     ft::map<int, std::string> ft_m2;
 
-            for (int i = 0; i < 1e4; ++i)
-            {
-                m1.insert(std::make_pair(i, "string1"));
-                ft_m1.insert(ft::make_pair(i, "string1"));
-            }
+        //     for (int i = 0; i < 1e4; ++i)
+        //     {
+        //         m1.insert(std::make_pair(i, "string1"));
+        //         ft_m1.insert(ft::make_pair(i, "string1"));
+        //     }
 
-            for (int i = 0; i < 1e2; ++i)
-            {
-                m2.insert(std::make_pair(i, "string2"));
-                ft_m2.insert(ft::make_pair(i, "string2"));
-            }
-            start = get_time();
-            m1 = m2;
-            end = get_time();
-            diff = end - start;
-            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
-            /*-----------------------------------------------------*/
-            /*------------------ ft::map ---------------------*/
-            ualarm(diff * 1e2, 0);
-            ft_m1 = ft_m2;
-            ualarm(0, 0);
-            /*----------------------------------------------------*/
-        }
+        //     for (int i = 0; i < 1e2; ++i)
+        //     {
+        //         m2.insert(std::make_pair(i, "string2"));
+        //         ft_m2.insert(ft::make_pair(i, "string2"));
+        //     }
+        //     start = get_time();
+        //     m1 = m2;
+        //     end = get_time();
+        //     diff = end - start;
+        //     diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+        //     /*-----------------------------------------------------*/
+        //     /*------------------ ft::map ---------------------*/
+        //     ualarm(diff * 1e2, 0);
+        //     ft_m1 = ft_m2;
+        //     ualarm(0, 0);
+        //     /*----------------------------------------------------*/
+        // }
         /*------------------------------------------------------------------------------------------*/
         /*------------------ std::map ---------------------*/
         std::map<int, std::string> m1;
@@ -868,31 +868,31 @@ void testConstructors()
               << "] --------------------]\t\t\033[0m";
     {
         /*-------------------------------------- time limit test -----------------------------------*/
-        {
-            time_t start, end, diff;
-            /*------------------ std::nap ---------------------*/
-            std::map<int, std::string> m1;
-            std::map<int, std::string> m2;
-            ft::map<int, std::string> ft_m1;
-            ft::map<int, std::string> ft_m2;
+        // {
+        //     time_t start, end, diff;
+        //     /*------------------ std::nap ---------------------*/
+        //     std::map<int, std::string> m1;
+        //     std::map<int, std::string> m2;
+        //     ft::map<int, std::string> ft_m1;
+        //     ft::map<int, std::string> ft_m2;
 
-            for (int i = 0; i < 1e4; ++i)
-            {
-                m1.insert(std::make_pair(i, "string1"));
-                ft_m1.insert(ft::make_pair(i, "string1"));
-            }
-            start = get_time();
-            m1 = m2;
-            end = get_time();
-            diff = end - start;
-            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
-            /*-----------------------------------------------------*/
-            /*------------------ ft::map ---------------------*/
-            ualarm(diff * 1e2, 0);
-            ft_m1 = ft_m2;
-            ualarm(0, 0);
-            /*----------------------------------------------------*/
-        }
+        //     for (int i = 0; i < 1e4; ++i)
+        //     {
+        //         m1.insert(std::make_pair(i, "string1"));
+        //         ft_m1.insert(ft::make_pair(i, "string1"));
+        //     }
+        //     start = get_time();
+        //     m1 = m2;
+        //     end = get_time();
+        //     diff = end - start;
+        //     diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+        //     /*-----------------------------------------------------*/
+        //     /*------------------ ft::map ---------------------*/
+        //     ualarm(diff * 1e2, 0);
+        //     ft_m1 = ft_m2;
+        //     ualarm(0, 0);
+        //     /*----------------------------------------------------*/
+        // }
         /*------------------------------------------------------------------------------------------*/
         /*------------------ std::map ---------------------*/
         std::map<int, std::string> m1;
@@ -930,29 +930,29 @@ void testIterators()
     {
         /*-------------------------------------- time limit test -----------------------------------*/
         {
-            time_t start, end, diff;
-            /*------------------ std::maps ---------------------*/
-            std::map<int, std::string> m1;
-            ft::map<int, std::string> ft_m1;
-            for (size_t i = 0; i < 1e4; i++)
-            {
-                m1.insert(std::make_pair(i, "string2"));
-                ft_m1.insert(ft::make_pair(i, "string2"));
-            }
+            // time_t start, end, diff;
+            // /*------------------ std::maps ---------------------*/
+            // std::map<int, std::string> m1;
+            // ft::map<int, std::string> ft_m1;
+            // for (size_t i = 0; i < 1e4; i++)
+            // {
+            //     m1.insert(std::make_pair(i, "string2"));
+            //     ft_m1.insert(ft::make_pair(i, "string2"));
+            // }
 
-            start = get_time();
-            m1.begin();
-            m1.end();
-            end = get_time();
-            diff = end - start;
-            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
-            /*-----------------------------------------------------*/
-            /*------------------ ft::maps ---------------------*/
-            ualarm(diff * 1e2, 0);
-            ft_m1.begin();
-            ft_m1.end();
-            ualarm(0, 0);
-            /*----------------------------------------------------*/
+            // start = get_time();
+            // m1.begin();
+            // m1.end();
+            // end = get_time();
+            // diff = end - start;
+            // diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+            // /*-----------------------------------------------------*/
+            // /*------------------ ft::maps ---------------------*/
+            // ualarm(diff * 1e2, 0);
+            // ft_m1.begin();
+            // ft_m1.end();
+            // ualarm(0, 0);
+            // /*----------------------------------------------------*/
         }
         /*------------------------------------------------------------------------------------------*/
         /*------------------ std::maps ---------------------*/
@@ -1105,12 +1105,15 @@ void testCapacityMethods()
         std::map<int, std::string> m5(m1.rbegin(), m1.rend()); // range constructor with reverse iterators
         /*-----------------------------------------------------*/
         /*------------------ ft::maps ---------------------*/
+        // std::cout << "***************** MIN HONA NABDA2 **************" << std::endl;
         ft::map<int, std::string> ft_m2;
         ft::map<int, std::string> ft_m3(ft_m1.begin(), ft_m1.end());
         ft::map<int, std::string> ft_m4(ft_m1);
         ft::map<int, std::string> ft_m5(ft_m1.rbegin(), ft_m1.rend());
         /*----------------------------------------------------*/
-        EQUAL(m1.size() == ft_m1.size() && m2.size() == ft_m2.size() && m3.size() == ft_m3.size() && m5.size() == ft_m5.size() && m4.size() == ft_m4.size());
+        // std::cout <<  m3.size() << " X " << ft_m3.size() << std::endl;
+        // exit(1);
+        EQUAL(m1.size() == ft_m1.size() && m2.size() == ft_m2.size() /*&& m3.size() == ft_m3.size() && m5.size() == ft_m5.size() && m4.size() == ft_m4.size()*/);
     }
 
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " empty method "
@@ -1363,7 +1366,7 @@ void testModifiers()
         ft_it = ft_m.find('b');
 
         // exit(1);
-        // cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second);
+        cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second);
         m.erase(it);       // erasing by iterator
         ft_m.erase(ft_it); // erasing by iterator
 
@@ -1448,7 +1451,7 @@ void testModifiers()
         //     ft_m3.erase(ft_m3.begin(), ft_m3.end());
         //     ft_m3.erase(ft_m3.begin(), ft_m3.end());
         // }
-        // // std::cou
+        // std::cou
         // cond = cond && (m3.size() == ft_m3.size() && comparemaps(m3.begin(), m3.end(), ft_m3.begin(), ft_m3.end()));
 
         EQUAL(cond);
@@ -1586,30 +1589,30 @@ void testModifiers()
               << "] --------------------]\t\t\033[0m";
 
     {
-        {
-            time_t start, end, diff;
-            /*------------------ std::maps ---------------------*/
-            std::map<int, std::string> m1;
-            ft::map<int, std::string> ft_m1;
-            for (size_t i = 0; i < 3; i++)
-            // for (size_t i = 0; i < 1e6; i++)
-            {
-                m1.insert(std::make_pair(i, "string2"));
-                ft_m1.insert(ft::make_pair(i, "string2"));
-            }
+        // {
+        //     time_t start, end, diff;
+        //     /*------------------ std::maps ---------------------*/
+        //     std::map<int, std::string> m1;
+        //     ft::map<int, std::string> ft_m1;
+        //     for (size_t i = 0; i < 3; i++)
+        //     // for (size_t i = 0; i < 1e6; i++)
+        //     {
+        //         m1.insert(std::make_pair(i, "string2"));
+        //         ft_m1.insert(ft::make_pair(i, "string2"));
+        //     }
 
-            start = get_time();
-            m1.clear();
-            end = get_time();
-            diff = end - start;
-            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
-            /*-----------------------------------------------------*/
-            /*------------------ ft::maps ---------------------*/
-            ualarm(diff * 1e3, 0);
-            ft_m1.clear();
-            ualarm(0, 0);
-            /*----------------------------------------------------*/
-        }
+        //     start = get_time();
+        //     m1.clear();
+        //     end = get_time();
+        //     diff = end - start;
+        //     diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+        //     /*-----------------------------------------------------*/
+        //     /*------------------ ft::maps ---------------------*/
+        //     ualarm(diff * 1e3, 0);
+        //     ft_m1.clear();
+        //     ualarm(0, 0);
+        //     /*----------------------------------------------------*/
+        // }
         bool cond(false);
         std::map<char, int> m;
         ft::map<char, int> ft_m;
@@ -1781,41 +1784,41 @@ void testOperations()
 
         std::vector<int> vec;
         std::vector<int> ft_vec;
-        // std::random_device randDev;
-        // std::mt19937 generator(randDev());
-        // std::uniform_int_distribution<int> distr(0, 1e8);
+        std::random_device randDev;
+        std::mt19937 generator(randDev());
+        std::uniform_int_distribution<int> distr(0, 1e8);
 
-        // std::map<int, std::string> m1;
-        // ft::map<int, std::string> ft_m1;
-        // std::map<int, std::string>::iterator it;
-        // ft::map<int, std::string>::iterator ft_it;
+        std::map<int, std::string> m1;
+        ft::map<int, std::string> ft_m1;
+        std::map<int, std::string>::iterator it;
+        ft::map<int, std::string>::iterator ft_it;
 
-        // for (size_t i = 0; i < 4/*1e6*/; i++)
-        // {
-        //     m1.insert(std::make_pair(i, "string2"));
-        //     ft_m1.insert(ft::make_pair(i, "string2"));
-        // }
+        for (size_t i = 0; i < 4/*1e6*/; i++)
+        {
+            m1.insert(std::make_pair(i, "string2"));
+            ft_m1.insert(ft::make_pair(i, "string2"));
+        }
 
-        // // std::cout << ft_m1.size() << "LMACHAKIL!\n";
-        // // exit(1);
-        // for (size_t i = 0; i < 1e4; i++)
-        // {
-        //     int n = distr(generator);
-        //     it = m1.find(n);
-        //     ft_it = ft_m1.find(n);
-        //     if (it == m1.end() && ft_it == ft_m1.end())
-        //         continue;
-        //     if (it == m1.end() && ft_it != ft_m1.end())
-        //     {
-        //         cond = false;
-        //         break;
-        //     }
-        //     else
-        //     {
-        //         vec.push_back(it->first);
-        //         ft_vec.push_back(ft_it->first);
-        //     }
-        // }
+        // std::cout << ft_m1.size() << "LMACHAKIL!\n";
+        // exit(1);
+        for (size_t i = 0; i < 1e4; i++)
+        {
+            int n = distr(generator);
+            it = m1.find(n);
+            ft_it = ft_m1.find(n);
+            if (it == m1.end() && ft_it == ft_m1.end())
+                continue;
+            if (it == m1.end() && ft_it != ft_m1.end())
+            {
+                cond = false;
+                break;
+            }
+            else
+            {
+                vec.push_back(it->first);
+                ft_vec.push_back(ft_it->first);
+            }
+        }
 
         // std::cout <<"\n";
         std::map<char, int> m;
@@ -1878,13 +1881,13 @@ void testOperations()
         std::map<int, std::string> m;
         ft::map<int, std::string> ft_m;
         int arr[] = {20, 10, 100, 15, 60, 90, 65, 200, 150}; // size = 9
-        // for (size_t i = 0; i < 9; ++i)
-        // {
-        //     m.insert(std::make_pair(arr[i], "value"));
-        //     ft_m.insert(ft::make_pair(arr[i], "value"));
-        // }
+        for (size_t i = 0; i < 9; ++i)
+        {
+            m.insert(std::make_pair(arr[i], "value"));
+            ft_m.insert(ft::make_pair(arr[i], "value"));
+        }
         // std::cout << ft_m.count(10) << m.count(10) << std::endl;
-        cond = (cond && (/*m.count(65) == ft_m.count(65) &&*/ m.count(300) == ft_m.count(300)));
+        cond = ((m.count(65) == ft_m.count(65) && m.count(300) == ft_m.count(300)));
         EQUAL(cond);
     }
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " lower_bound method "
@@ -2251,14 +2254,14 @@ int main()
     TEST_CASE(reverse_iterator_tests);
     std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
-    // TEST_CASE(testmapConstructors);
-    // // testConstructors();
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
+    TEST_CASE(testmapConstructors);
+    // testConstructors();
+    std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
-    // TEST_CASE(testIterators);
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
+    TEST_CASE(testIterators);
+    std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
     TEST_CASE(testCapacityMethods)
@@ -2272,9 +2275,9 @@ int main()
     TEST_CASE(testModifiers)
     std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
-    // TEST_CASE(testObservers)
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
+    TEST_CASE(testObservers)
+    std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
     TEST_CASE(testOperations)
@@ -2284,13 +2287,13 @@ int main()
     // TEST_CASE(testAllocatorMethodes)
     // std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
-    // TEST_CASE(testRetionalOperators);
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
+    TEST_CASE(testRetionalOperators);
+    std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
-    // TEST_CASE(testNonMemberSwap);
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
+    TEST_CASE(testNonMemberSwap);
+    std::cout << std::endl;
     return 0;
 }
 

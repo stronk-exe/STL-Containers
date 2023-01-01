@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:47 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/30 22:00:10 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/01 20:52:50 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ namespace ft
                 //     _node = parent;
                 // }
                 // return *this;
+                // std::cout << "mal mok mnlkhr\n";
                 if (_node != it_nil)
                 {
                     if (_node->right != it_nil)
@@ -123,6 +124,7 @@ namespace ft
 
             RBiterator operator++( int )
             {
+                // std::cout << "mal mok mnlkhr\n";
                 RBiterator _rbtit(*this);
 
                 ++(*this);

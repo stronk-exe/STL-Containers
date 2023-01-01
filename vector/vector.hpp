@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/28 12:09:02 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/01 17:04:20 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 #define VECTOR_HPP
 
 #include <iostream>
+#include <cstddef>
+	#include <string>
+// #include <sstream>
 #include "../utils/exceptions.hpp"
-// #include "../utils/Iterator_traits.hpp"
-// #include "../utils/vector_Iterators.hpp"
-// #include "../utils/reverse_iterator.hpp"
 #include "../utils/random_access_iterator.hpp"
 #include "../utils/reverse_iterator.hpp"
-#include "../utils/utils.hpp"
-#include <cstddef>
+#include "../utils/pair.hpp"
+#include "../utils/equal.hpp"
+#include "../utils/enable_if.hpp"
+#include "../utils/lexicographical_compare.hpp"
 
-	#include <string>
-#include <sstream>
 namespace ft
 {
 	template <class T, class Allocator = std::allocator<T> > class vector

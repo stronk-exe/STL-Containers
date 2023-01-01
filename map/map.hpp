@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/30 20:56:06 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/01 22:15:04 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,10 @@ namespace ft
 						{
 							return val_comp;
 						};
+
+						void printTree() {
+							rbt.printRBtree();
+						}
 
 			// >> Non-member functions
 				//	operator==
