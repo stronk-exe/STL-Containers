@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/01 22:15:04 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/02 19:27:22 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #define MAP_HPP
 
 #include <iostream>
-#include "../utils/exceptions.hpp"
+// #include "../utils/exceptions.hpp"
 // #include "../utils/utils.hpp"
 // #include "../utils/Iterator_traits.hpp"
 // #include "../utils/map_Iterators.hpp"
 // #include "../utils/map_utils.hpp"
 // #include "RBiterators.hpp"
 #include "RBtree.hpp"
-#include "../utils/reverse_iterator.hpp"
+// #include "../utils/reverse_iterator.hpp"
 #include <cstddef>
 
 namespace ft
@@ -31,7 +31,7 @@ namespace ft
 		public:
 			typedef	Key											key_type;
 			typedef	T											mapped_type;
-			typedef	ft::pair<key_type, mapped_type>							value_type;
+			typedef	ft::pair<key_type, mapped_type>				value_type;
 			typedef	size_t										size_type;
 			typedef	ptrdiff_t									difference_type;
 			typedef	Compare										key_compare;
@@ -121,21 +121,23 @@ namespace ft
 
 				//----	Element access
 					//	operator[]
-						T& operator[]( const Key& key )
+						mapped_type& operator[]( const key_type& key )
 						{
 							iterator it = find(key);
 
-							// if (it != end())
-							// {
-							// 	exit(1);
-							// }
 							if (it != end())
 							{
 								// std::cout << "Ladies and gentlemans we got him\n";
+								// std::cout << it._node->data.first << std::endl;
 								return it._node->data.second;
 							}
 							// std::cout << "Not Found\n";
+							// value_type gg = ft::make_pair(key, mapped_type());
+							// // std::cout << "wwaww node " << gg.second << std::endl;
+							// // exit(1);
+							// rpointer vv = rbt.new_node(gg);
 							ft::pair<iterator, bool> temp = insert(ft::make_pair(key, mapped_type()));
+							// ft::pair<iterator, bool> temp = rbt.insert_node(value_type(key, mapped_type()));
 							return temp.first._node->data.second;
 
 							// reference ret = rbt.insert(v).first;

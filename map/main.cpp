@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/01 21:50:52 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/02 15:54:06 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1372,87 +1372,87 @@ void testModifiers()
 
         cond = cond && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
-        // int ret = m.erase('c');       // erasing by key
-        // int ft_ret = ft_m.erase('c'); // erasing by key
-        // std::cout << ret << " x " << ft_ret << std::endl;
+        int ret = m.erase('c');       // erasing by key
+        int ft_ret = ft_m.erase('c'); // erasing by key
+        std::cout << ret << " x " << ft_ret << std::endl;
 
-        // cond = cond && ret == ft_ret && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        cond = cond && ret == ft_ret && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
-        // it = m.find('e');
-        // ft_it = ft_m.find('e');
+        it = m.find('e');
+        ft_it = ft_m.find('e');
 
-        // cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second) && m.size() == ft_m.size();
+        cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second) && m.size() == ft_m.size();
 
-        // m.erase(it, m.end());          // erasing by range
-        // ft_m.erase(ft_it, ft_m.end()); // erasing by range
+        m.erase(it, m.end());          // erasing by range
+        ft_m.erase(ft_it, ft_m.end()); // erasing by range
 
-        // cond = cond && m.empty() == ft_m.empty() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        cond = cond && m.empty() == ft_m.empty() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
         /* ---------- Testing some edge cases ---------- */
 
-        // std::map<int, std::string> m2;
-        // ft::map<int, std::string> ft_m2;
+        std::map<int, std::string> m2;
+        ft::map<int, std::string> ft_m2;
 
-        // for (size_t i = 0; i < 1e3; i++)
-        // {
-        //     m2.insert(std::make_pair(i, "string1"));
-        //     ft_m2.insert(ft::make_pair(i, "string1"));
-        // }
+        for (size_t i = 0; i < 1e3; i++)
+        {
+            m2.insert(std::make_pair(i, "string1"));
+            ft_m2.insert(ft::make_pair(i, "string1"));
+        }
 
-        // std::map<int, std::string>::reverse_iterator it2 = m2.rbegin();
-        // ft::map<int, std::string>::reverse_iterator ft_it2 = ft_m2.rbegin();
+        std::map<int, std::string>::reverse_iterator it2 = m2.rbegin();
+        ft::map<int, std::string>::reverse_iterator ft_it2 = ft_m2.rbegin();
 
-        // m2.erase(m2.begin());
-        // ft_m2.erase(ft_m2.begin());
+        m2.erase(m2.begin());
+        ft_m2.erase(ft_m2.begin());
 
-        // cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
+        cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
 
-        // m2.erase(it2->first);
-        // ft_m2.erase(ft_it2->first);
+        m2.erase(it2->first);
+        ft_m2.erase(ft_it2->first);
 
-        // cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
+        cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
 
-        // std::map<int, std::string> m3;
-        // ft::map<int, std::string> ft_m3;
-        // std::vector<int> vec;
-        // std::vector<int> ft_vec;
-        // std::random_device randDev;
-        // std::mt19937 generator(randDev());
-        // std::uniform_int_distribution<int> distr(0, 1e8);
+        std::map<int, std::string> m3;
+        ft::map<int, std::string> ft_m3;
+        std::vector<int> vec;
+        std::vector<int> ft_vec;
+        std::random_device randDev;
+        std::mt19937 generator(randDev());
+        std::uniform_int_distribution<int> distr(0, 1e8);
 
-        // // for (size_t i = 0; i < 1e3; i++)
-        // // // for (size_t i = 0; i < 1e6; i++)
-        // // {
-        // //     m3.insert(std::make_pair(i, "string1"));
-        // //     ft_m3.insert(ft::make_pair(i, "string1"));
-        // // }
+        for (size_t i = 0; i < 1e3; i++)
+        // // for (size_t i = 0; i < 1e6; i++)
+        {
+            m3.insert(std::make_pair(i, "string1"));
+            ft_m3.insert(ft::make_pair(i, "string1"));
+        }
 
-        // for (size_t i = 0; i < 1e3; i++)
+        for (size_t i = 0; i < 1e3; i++)
         // // for (size_t i = 0; i < 1e6; ++i)
-        // {
-        //     int n = distr(generator);
-        //     int ret1 = m3.erase(n);
-        //     int ret2 = ft_m3.erase(n);
+        {
+            int n = distr(generator);
+            int ret1 = m3.erase(n);
+            int ret2 = ft_m3.erase(n);
 
-        //     if (ret1 != ret2)
-        //     {
-        //         cond = false;
-        //         break;
-        //     }
-        // }
+            if (ret1 != ret2)
+            {
+                cond = false;
+                break;
+            }
+        }
 
-        // if (!m3.empty())
-        // {
-        //     m3.erase(m3.begin(), m3.end());
-        //     m3.erase(m3.begin(), m3.end());
-        // }
-        // if (!ft_m3.empty())
-        // {
-        //     ft_m3.erase(ft_m3.begin(), ft_m3.end());
-        //     ft_m3.erase(ft_m3.begin(), ft_m3.end());
-        // }
+        if (!m3.empty())
+        {
+            m3.erase(m3.begin(), m3.end());
+            m3.erase(m3.begin(), m3.end());
+        }
+        if (!ft_m3.empty())
+        {
+            ft_m3.erase(ft_m3.begin(), ft_m3.end());
+            ft_m3.erase(ft_m3.begin(), ft_m3.end());
+        }
         // std::cou
-        // cond = cond && (m3.size() == ft_m3.size() && comparemaps(m3.begin(), m3.end(), ft_m3.begin(), ft_m3.end()));
+        cond = cond && (m3.size() == ft_m3.size() && comparemaps(m3.begin(), m3.end(), ft_m3.begin(), ft_m3.end()));
 
         EQUAL(cond);
     }
@@ -2248,24 +2248,24 @@ int main()
     std::cout << RED << "--------------------------------------------------------------------------------------------------------" << RESET << std::endl;
     signal(SIGALRM, alarm_handler);
 
-    std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
-    TEST_CASE(iterator_tests);
-    TEST_CASE(const_iterator_tests);
-    TEST_CASE(reverse_iterator_tests);
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
+    // TEST_CASE(iterator_tests);
+    // TEST_CASE(const_iterator_tests);
+    // TEST_CASE(reverse_iterator_tests);
+    // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
-    TEST_CASE(testmapConstructors);
-    // testConstructors();
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
+    // TEST_CASE(testmapConstructors);
+    // // testConstructors();
+    // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
-    TEST_CASE(testIterators);
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
+    // TEST_CASE(testIterators);
+    // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
-    TEST_CASE(testCapacityMethods)
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
+    // TEST_CASE(testCapacityMethods)
+    // std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
     TEST_CASE(testElementAccess);
@@ -2275,25 +2275,25 @@ int main()
     TEST_CASE(testModifiers)
     std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
-    TEST_CASE(testObservers)
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
+    // TEST_CASE(testObservers)
+    // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
-    TEST_CASE(testOperations)
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
+    // TEST_CASE(testOperations)
+    // std::cout << std::endl;
 
     // std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
     // TEST_CASE(testAllocatorMethodes)
     // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
-    TEST_CASE(testRetionalOperators);
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
+    // TEST_CASE(testRetionalOperators);
+    // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
-    TEST_CASE(testNonMemberSwap);
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
+    // TEST_CASE(testNonMemberSwap);
+    // std::cout << std::endl;
     return 0;
 }
 

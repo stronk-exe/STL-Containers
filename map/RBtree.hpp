@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/01 22:14:52 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/02 19:22:50 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ namespace ft
 
                 ft::pair<iterator, bool> insert( const value_type& value )
                 {
+                    // std::cout << "~~~~Shit made it to here~~~~~> " << value.second << std::endl;
                     return insert_node(value);
                     // return ft::make_pair(iterator(insert_node(value), _root, _nil), true);
                 }
@@ -217,10 +218,15 @@ namespace ft
                     if (_temp_nil == _nil)
                         _root = n;
                     // else if (comp(n->data, _temp_nil->data))
-                    else if (value < _temp_nil->data)
+                    else if (n->data < _temp_nil->data)
+                    {
+                        std::cout << "why mista\n";
                         _temp_nil->left = n;
+                    }
                     else
                         _temp_nil->right = n;
+                    std::cout << ">> node data " << _temp_nil->data.second << " X " << n->data.second << std::endl;
+                    printRBtree();
 					if (n->parent == _nil)
 					{
 						n->color = BLACK;
@@ -233,6 +239,8 @@ namespace ft
                     fix_insertion(n);
                     return ft::make_pair(iterator(n, _root, _nil), true);
                 }
+
+                
 
 				void    fix_insertion( pointer n )
 				{
@@ -991,11 +999,12 @@ namespace ft
 
             iterator find( const value_type &value )
             {
+                // std::cout << "Ha lmachakil hahoma " << value.second << std::endl;
                 pointer n = search(value);
 
                 if (n)
                     return iterator(n, _root, _nil);
-                // std::cout << "shit not found!" << std::endl;
+                std::cout << "shit not found!" << std::endl;
                 return end();
             }
             const_iterator find( const value_type &value ) const
@@ -1116,19 +1125,26 @@ namespace ft
             //----  Utils
             pointer search(const value_type &value) const {
                 pointer node = _root;
+                int i=0;
 
                 while (node != _nil)
                 {
-                    // if (comp(value, node->data))
-                    if (value < node->data)
+                    // std::cout << i << " - we got " << node->data.first << " - " << value.first << std::endl;
+                    if (comp(value, node->data))
+                    // if (value < node->data)
                         node = node->left;
                     // if (value == node->data)
-                    // else if (comp(node->data, value))
-                    else if (value > node->data)
+                    else if (comp(node->data, value))
+                    // else if (value > node->data)
                         node = node->right;
                     else
+                    {
                         return node;
+                    }
+                    // std::cout << i << " - we got " << node->data.first << " - " << value.first << std::endl;
+                    i++;
                 }
+                // std::cout << i << " Yiip\n";
                 return NULL;
             }
 

@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set.hpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/02 13:00:45 by ael-asri          #+#    #+#             */
+/*   Updated: 2023/01/02 13:01:45 by ael-asri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SET_HPP
 #define SET_HPP
 
-#include "../map/map.hpp"
+// #include "../map/map.hpp"
 #include "../map/RBtree.hpp"
-#include "../utils/exceptions.hpp"
+// #include "../utils/exceptions.hpp"
 #include <iostream>
+#include <cstddef>
 
 namespace ft
 {
@@ -55,7 +68,7 @@ namespace ft
 					set( const set& other ) : _allocator(other._allocator), _key_comp(other._key_comp), val_cmp(other.val_cmp), rbt(other.rbt) {};
 
 				//----	Destructor
-					~set() { std::cout << "set destructor called" << std::endl;};
+					~set() {};
 
 				//----	operator=
 					set& operator=( const set& other )
@@ -183,33 +196,33 @@ namespace ft
 					//	insert
 						ft::pair<iterator, bool> insert( const value_type& value )
 						{
-							return rbt.insert(value);
+							return rbt.insert_node(value);
 						};
 
 						iterator insert( iterator pos, const value_type& value )
 						{
-							return rbt.insert(pos, value);
+							return rbt.insert_node(pos, value);
 						};
 
 						template< class InputIt >void insert( InputIt first, InputIt last /*, typename_sh*tt*/)
 						{
-							return rbt.insert(first, last);
+							return rbt.insert_node(first, last);
 						};
 
 					//	erase
 						iterator erase( iterator pos )
 						{
-							return rbt.erase(pos);
+							return rbt.delete_node(pos);
 						};
 
 						iterator erase( iterator first, iterator last )
 						{
-							return rbt.erase(first, last);
+							return rbt.delete_node(first, last);
 						};
 
 						size_type erase( const Key& key )
 						{
-							return rbt.erase(key);
+							return rbt.delete_node(key);
 						};
 
 					//	swap
