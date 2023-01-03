@@ -97,7 +97,7 @@ namespace ft
                         // nl->color = BLACK;
                         new_empty_node();
                         // _root = nl;
-                        len=other.len;
+                        // len=other.len;
                         // rbt(other.rbt);
                         copy_tree(other._root, other._nil);
                      //   new_rbt(other.rt, other.nl);
@@ -132,22 +132,22 @@ namespace ft
                 iterator begin()
                 {
                     // std::cout << "Why its always you?" << std::endl;
-                    return iterator(min_element(_root), _root, _nil);
+                    return iterator(_root, min_element(_root), _nil);
                 }
                 const_iterator begin() const
                 {
-                    return const_iterator(min_element(_root), _root, _nil);
+                    return const_iterator(_root, min_element(_root), _nil);
                 }
 
                 iterator end()
                 {
                     // std::cout << "and you?" << std::endl;
                     // std::cout << _root->data.first << std::endl;
-                    return iterator(_nil, _root, _nil); // node, nil, root
+                    return iterator(_root, _nil, _nil); // node, nil, root
                 }
                 const_iterator end() const
                 {
-                    return const_iterator(_nil, _root, _nil);
+                    return const_iterator(_root, _nil, _nil);
                 }
 
                 reverse_iterator rbegin()
@@ -201,15 +201,15 @@ namespace ft
                 {
                     pointer temp = search(value);
                     if (temp)
-                        return ft::make_pair(iterator(temp, _root, _nil), false);
+                        return ft::make_pair(iterator(_root, temp, _nil), false);
                     
                     pointer n = new_node(value);
                     pointer _temp_root=_root, _temp_nil=_nil;
                     while (_temp_root != _nil)
                     {
                         _temp_nil = _temp_root;
-                        if (value < _temp_root->data)
-                        // if (comp(value, _temp_root->data)>0)
+                        // if (value < _temp_root->data)
+                        if (comp(value, _temp_root->data)>0)
                             _temp_root = _temp_root->left;
                         else
                             _temp_root = _temp_root->right;
@@ -217,27 +217,27 @@ namespace ft
                     n->parent = _temp_nil;
                     if (_temp_nil == _nil)
                         _root = n;
-                    // else if (comp(n->data, _temp_nil->data))
-                    else if (n->data < _temp_nil->data)
+                    else if (comp(n->data, _temp_nil->data))
+                    // else if (n->data < _temp_nil->data)
                     {
-                        std::cout << "why mista\n";
+                        // std::cout << "why mista\n";
                         _temp_nil->left = n;
                     }
                     else
                         _temp_nil->right = n;
-                    std::cout << ">> node data " << _temp_nil->data.second << " X " << n->data.second << std::endl;
-                    printRBtree();
+                    // std::cout << ">> node data " << _temp_nil->data.second << " X " << n->data.second << std::endl;
+                    // printRBtree();
 					if (n->parent == _nil)
 					{
 						n->color = BLACK;
-						return ft::make_pair(iterator(n, _root, _nil), true);
+						return ft::make_pair(iterator(_root, n, _nil), true);
 					}
 					if (n->parent->parent == _nil)
-						return ft::make_pair(iterator(n, _root, _nil), true);
+						return ft::make_pair(iterator( _root, n, _nil), true);
                     // std::cout << "hola\n";
 					// _fixshiUp(n);
                     fix_insertion(n);
-                    return ft::make_pair(iterator(n, _root, _nil), true);
+                    return ft::make_pair(iterator(_root, n, _nil), true);
                 }
 
                 
@@ -298,6 +298,125 @@ namespace ft
 					}
 					_root->color = BLACK;
 				}
+    //             void	__insert_fixup(pointer node) {
+	// 	pointer u;
+
+	// 	while (node->parent->color == RED) {
+	// 		if (node->parent == node->parent->parent->right) {
+	// 			u = node->parent->parent->left;
+	// 			if (u->color == RED) {
+	// 				u->color = BLACK;
+	// 				node->parent->color = BLACK;
+	// 				node->parent->parent->color = RED;
+	// 				node = node->parent->parent;
+	// 			} else {
+	// 				if (node == node->parent->left) {
+	// 					node = node->parent;
+	// 					__rotate_right(node);
+	// 				}
+	// 				node->parent->color = BLACK;
+	// 				node->parent->parent->color = RED;
+	// 				__rotate_left(node->parent->parent);
+	// 			}
+	// 		} else {
+	// 			u = node->parent->parent->right;
+	// 			if (u->color == RED) {
+	// 				u->color = BLACK;
+	// 				node->parent->color = BLACK;
+	// 				node->parent->parent->color = RED;
+	// 				node = node->parent->parent;
+	// 			} else {
+	// 				if (node == node->parent->right) {
+	// 					node = node->parent;
+	// 					__rotate_left(node);
+	// 				}
+	// 				node->parent->color = BLACK;
+	// 				node->parent->parent->color = RED;
+	// 				__rotate_right(node->parent->parent);
+	// 			}
+	// 		}
+
+	// 		if (node == _root)
+	// 			break;
+	// 	}
+	// 	_root->color = BLACK;
+	// }
+
+	// ft::pair<iterator, bool>	insert_node(const value_type &data) {
+	// 	pointer look = __lookup_node(data);
+	// 	if (look)
+	// 		return ft::make_pair(iterator(look, _root, _nil), false);
+
+	// 	pointer node = __alloc_node(data);
+	// 	if (!node)
+	// 		throw std::bad_alloc();
+
+	// 	pointer y = _nil;
+	// 	pointer x = _root;
+
+	// 	while (x != _nil) {
+	// 		y = x;
+	// 		if (comp(data, x->data) > 0)
+	// 			x = x->left;
+	// 		else
+	// 			x = x->right;
+	// 	}
+
+	// 	node->parent = y;
+	// 	if (y == _nil)
+	// 		_root = node;
+	// 	else if (comp(node->data, y->data))
+	// 		y->left = node;
+	// 	else
+	// 		y->right = node;
+
+	// 	if (node->parent == _nil) {
+	// 		node->color = BLACK;
+	// 		return ft::make_pair(iterator(node, _root, _nil), true);
+	// 	}
+
+	// 	if (node->parent->parent == _nil)
+	// 		return ft::make_pair(iterator(node, _root, _nil), true);
+
+	// 	__insert_fixup(node);
+	// 	return ft::make_pair(iterator(node, _root, _nil), true);
+	// }
+
+    // void	__rotate_left(pointer node) {
+	// 	pointer tmp = node->right;
+
+	// 	node->right = tmp->left;
+	// 	if (tmp->left != _nil)
+	// 		tmp->left->parent = node;
+
+	// 	tmp->parent = node->parent;
+	// 	if (node->parent == _nil)
+	// 		_root = tmp;
+	// 	else if (node == node->parent->left)
+	// 		node->parent->left = tmp;
+	// 	else
+	// 		node->parent->right = tmp;
+	// 	tmp->left = node;
+	// 	node->parent = tmp;
+	// }
+
+	// void	__rotate_right(pointer node) {
+	// 	pointer tmp = node->left;
+
+	// 	node->left = tmp->right;
+	// 	if (tmp->right != _nil)
+	// 		tmp->right->parent = node;
+
+	// 	tmp->parent = node->parent;
+	// 	if (node->parent == _nil)
+	// 		_root = tmp;
+	// 	else if (node == node->parent->right)
+	// 		node->parent->right = tmp;
+	// 	else
+	// 		node->parent->left = tmp;
+	// 	tmp->right = node;
+	// 	node->parent = tmp;
+	// }
 
                 // ft::pair<iterator, bool>	insert_node(const value_type &data)
                 // {
@@ -345,7 +464,7 @@ namespace ft
 
                         node->data = data;
                         // std::cout << "Ui\n";
-                        node->color = _nil;
+                        node->color = RED;
                         node->left = _nil;
                         node->right = _nil;
                         node->parent = _nil;
@@ -1003,8 +1122,8 @@ namespace ft
                 pointer n = search(value);
 
                 if (n)
-                    return iterator(n, _root, _nil);
-                std::cout << "shit not found!" << std::endl;
+                    return iterator(_root, n, _nil);
+                // std::cout << "shit not found!" << std::endl;
                 return end();
             }
             const_iterator find( const value_type &value ) const
@@ -1012,7 +1131,7 @@ namespace ft
                 pointer n = search(value);
 
                 if (n)
-                    return const_iterator(n, _root, _nil);
+                    return const_iterator(_root, n, _nil);
                 return end();
             }
 
@@ -1065,9 +1184,19 @@ namespace ft
 
             void clear()
             {
-            //    destroy_nodes(_root);
+                ft_destroy(_root);
                 _root = _nil;
                 len = 0;
+            }
+            void ft_destroy( pointer n )
+            {
+                if (n == NULL || n == _nil)
+                    return;
+                ft_destroy(n->left);
+                ft_destroy(n->right);
+                _allocator.destroy(n);
+                _allocator.deallocate(n,1);
+                len--;
             }
 
             void    swap( RBtree &rbt )
