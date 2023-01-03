@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:08:58 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/28 12:20:08 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/03 16:04:05 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ namespace ft
 		public:
 			reverse_iterator() : p(iterator()) {};
 			explicit reverse_iterator(iter_type _p) : p(_p) {};
-			explicit reverse_iterator(pointer _p) : p(_p) {};
+			// explicit reverse_iterator(pointer _p) : p(_p) {};
 			template<class iter> reverse_iterator( const reverse_iterator<iter> &other ) : p(other.base()) {};
 			~reverse_iterator() {};
 
 			reverse_iterator& operator=( const reverse_iterator &other )
 			{
-				if (*this != other)
+				if (this != &other)
 					p = other.p;
 				return *this;
 			};

@@ -177,6 +177,24 @@ bool comparemaps(Iter1 first1, Iter1 last1, Iter2 first2, Iter2 last2)
 //     }
 // }
 
+#define TIME_FAC 4 // the ft::map methods can be slower up to std::map methods * TIME_FAC (MAX 20)
+time_t get_time(void)
+{
+    struct timeval time_now;
+
+    gettimeofday(&time_now, NULL);
+    time_t msecs_time = (time_now.tv_sec * 1e3) + (time_now.tv_usec / 1e3);
+    return (msecs_time);
+}
+#include <random>
+void alarm_handler(int seg)
+{
+    (void)seg;
+    std::cout << "\033[1;33mTLE\033[0m\n";
+    kill(getpid(), SIGINT);
+}
+
+
 int main()
 {
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " erase method "
@@ -184,7 +202,7 @@ int main()
 
     {
         bool cond(false);
-        // // erasing all the elements in the map;
+        // erasing all the elements in the map;
         // {
         //     time_t start, end, diff;
         //     /*------------------ std::maps ---------------------*/
@@ -204,81 +222,113 @@ int main()
         //     /*-----------------------------------------------------*/
         //     /*------------------ ft::maps ---------------------*/
         //     ualarm(diff * 1e3, 0);
+        //     std::cout << "gg\n";
         //     ft_m1.erase(ft_m1.begin(), ft_m1.end());
         //     ualarm(0, 0);
         //     /*----------------------------------------------------*/
         // }
-        std::map<char, int> m;
-        ft::map<char, int> ft_m;
-        std::map<char, int>::iterator it;
-        ft::map<char, int>::iterator ft_it;
+        // std::map<char, int> m;
+        // ft::map<char, int> ft_m;
+        // std::map<char, int>::iterator it;
+        // ft::map<char, int>::iterator ft_it;
 
-        // insert some values:
-        ft_m['a'] = 10;
-        ft_m['b'] = 20;
-        ft_m['c'] = 30;
-        ft_m['d'] = 40;
-        ft_m['e'] = 50;
-        ft_m['f'] = 60;
+        // // insert some values:
+        // ft_m['a'] = 10;
+        // ft_m['b'] = 20;
+        // ft_m['c'] = 30;
+        // ft_m['d'] = 40;
+        // ft_m['e'] = 50;
+        // ft_m['f'] = 60;
 
-        m['a'] = 10;
-        m['b'] = 20;
-        m['c'] = 30;
-        m['d'] = 40;
-        m['e'] = 50;
-        m['f'] = 60;
+        // m['a'] = 10;
+        // m['b'] = 20;
+        // m['c'] = 30;
+        // m['d'] = 40;
+        // m['e'] = 50;
+        // m['f'] = 60;
 
-        cond = m.size() == ft_m.size() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        // cond = m.size() == ft_m.size() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
-        it = m.find('b');
-        ft_it = ft_m.find('b');
+        // it = m.find('b');
+        // ft_it = ft_m.find('b');
 
-        // exit(1);
-        cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second);
-        m.erase(it);       // erasing by iterator
-        ft_m.erase(ft_it); // erasing by iterator
+        // cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second);
+        // m.erase(it);       // erasing by iterator
+        // ft_m.erase(ft_it); // erasing by iterator
 
-        cond = cond && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        // cond = cond && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
-        int ret = m.erase('c');       // erasing by key
-        int ft_ret = ft_m.erase('c'); // erasing by key
-        std::cout << ret << " x " << ft_ret << std::endl;
+        // int ret = m.erase('c');       // erasing by key
+        // int ft_ret = ft_m.erase('c'); // erasing by key
 
-        cond = cond && ret == ft_ret && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        // cond = cond && ret == ft_ret && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
-        it = m.find('e');
-        ft_it = ft_m.find('e');
+        // it = m.find('e');
+        // ft_it = ft_m.find('e');
 
-        cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second) && m.size() == ft_m.size();
+        // cond = cond && (it->first == ft_it->first) && (it->second == ft_it->second) && m.size() == ft_m.size();
 
-        m.erase(it, m.end());          // erasing by range
-        ft_m.erase(ft_it, ft_m.end()); // erasing by range
+        // m.erase(it, m.end());          // erasing by range
+        // ft_m.erase(ft_it, ft_m.end()); // erasing by range
 
-        cond = cond && m.empty() == ft_m.empty() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        // cond = cond && m.empty() == ft_m.empty() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
         /* ---------- Testing some edge cases ---------- */
 
         std::map<int, std::string> m2;
         ft::map<int, std::string> ft_m2;
 
-        for (size_t i = 0; i < 1e3; i++)
+        for (size_t i = 0; i < 5; i++)
         {
             m2.insert(std::make_pair(i, "string1"));
             ft_m2.insert(ft::make_pair(i, "string1"));
         }
-
+        std::cout << "\n";
+        std::cout << "Ljadid: \n";
+        ft_m2.printTree();
+        std::cout << "----------------------------\n";
+        std::cout << "ft_m2: " << ft_m2.begin()->first << std::endl;
+         std::cout << "ft_m2: " << ft_m2.rbegin()->first << std::endl;
+        std::cout << "m2: " << m2.begin()->first << std::endl;
+        std::cout << "m2: " << m2.rbegin()->first << std::endl;
+        std::cout << "----------------------------\n";
         std::map<int, std::string>::reverse_iterator it2 = m2.rbegin();
         ft::map<int, std::string>::reverse_iterator ft_it2 = ft_m2.rbegin();
 
-        m2.erase(m2.begin());
-        ft_m2.erase(ft_m2.begin());
+        std::cout << "2 ~ft_it2: " << ft_it2->first << std::endl;
+        std::cout << "2 ~it2: " << it2->first << std::endl;
+        ft_m2.printTree();
+        m2.erase(0);
+        ft_m2.erase(0);
+        std::cout << "Ljadid: \n";
+        ft_m2.printTree();
+        std::cout << "----------------------------\n";
+        std::cout << "3~ ft_it2: " << ft_it2->first << std::endl;
+        std::cout << "3~ it2: " << it2->first << std::endl;
+        exit(1);
+        std::cout << "ft_m2: " << ft_m2.begin()->first << std::endl;
+         std::cout << "ft_m2: " << ft_m2.rbegin()->first << std::endl;
+        std::cout << "m2: " << m2.begin()->first << std::endl;
+        std::cout << "m2: " << m2.rbegin()->first << std::endl;
+        std::cout << "----------------------------\n";
 
-        cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
+        cond = m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
 
         m2.erase(it2->first);
         ft_m2.erase(ft_it2->first);
+        std::cout << "Ljadid: \n";
+        ft_m2.printTree();
+        std::cout << "----------------------------\n";
+        std::cout << "ft_m2: " << ft_m2.begin()->first << std::endl;
+         std::cout << "ft_m2: " << ft_m2.rbegin()->first << std::endl;
+        std::cout << "m2: " << m2.begin()->first << std::endl;
+        std::cout << "m2: " << m2.rbegin()->first << std::endl;
+        std::cout << "----------------------------\n";
+        exit(1);                                                                                                                                                                                                                                                                                                                                                                                                
 
+        // ++ft_it2;
         cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
+        // std::cout << "sf salina\n";
 
         // std::map<int, std::string> m3;
         // ft::map<int, std::string> ft_m3;
@@ -288,15 +338,13 @@ int main()
         // std::mt19937 generator(randDev());
         // std::uniform_int_distribution<int> distr(0, 1e8);
 
-        // for (size_t i = 0; i < 1e3; i++)
-        // // // for (size_t i = 0; i < 1e6; i++)
+        // for (size_t i = 0; i < 1e6; i++)
         // {
         //     m3.insert(std::make_pair(i, "string1"));
         //     ft_m3.insert(ft::make_pair(i, "string1"));
         // }
 
-        // for (size_t i = 0; i < 1e3; i++)
-        // // // for (size_t i = 0; i < 1e6; ++i)
+        // for (size_t i = 0; i < 1e6; ++i)
         // {
         //     int n = distr(generator);
         //     int ret1 = m3.erase(n);
@@ -319,7 +367,6 @@ int main()
         //     ft_m3.erase(ft_m3.begin(), ft_m3.end());
         //     ft_m3.erase(ft_m3.begin(), ft_m3.end());
         // }
-        // // std::cou
         // cond = cond && (m3.size() == ft_m3.size() && comparemaps(m3.begin(), m3.end(), ft_m3.begin(), ft_m3.end()));
 
         EQUAL(cond);

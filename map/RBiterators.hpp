@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:47 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/01 20:52:50 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/03 16:22:06 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ namespace ft
         
         public:
             RBiterator() : _node(NULL), it_nil(NULL), it_root(NULL) {};
-            RBiterator( n_pointer root, n_pointer n,  n_pointer nil) : _node(n), it_nil(nil), it_root(root) {};
+            RBiterator( n_pointer root, n_pointer n, n_pointer nil) : _node(n), it_nil(nil), it_root(root) {};
             RBiterator( const RBiterator &rbtit ) : _node(rbtit._node), it_nil(rbtit.it_nil), it_root(rbtit.it_root) {};
             ~RBiterator() {};
 

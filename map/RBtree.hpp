@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/02 19:22:50 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/03 17:10:12 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -600,7 +600,7 @@ namespace ft
                 }
                 size_type erase( const value_type &value )
                 {
-                    pointer n = __lookup_node(value);
+                    pointer n = search(value);
                     
                     if (n)
                     {
@@ -628,14 +628,14 @@ namespace ft
 					
 					while (_temp_root != _nil) // searching for the node of value
                     {
-						// if (!comp(n->data, _temp_root->data))
-						if (n->data == _temp_root->data)
-							z = n;
-						// if (comp(n->data, _temp_root->data) < 0)
-						if (n->data > _temp_root->data)
-							_temp_root = _temp_root->right;
-						else
+						if (!comp(n->data, _temp_root->data))
+						// if (n->data == _temp_root->data)
+							z = _temp_root;
+						if (comp(n->data, _temp_root->data) > 0)
+						// if (n->data > _temp_root->data)
 							_temp_root = _temp_root->left;
+						else
+							_temp_root = _temp_root->right;
                     }
 					
 					if (z == _nil) // value not found
@@ -674,7 +674,7 @@ namespace ft
 					_allocator.destroy(z);
 					_allocator.deallocate(z, 1);
 					len--;
-					if (original_color == BLACK)// {}
+                    if (original_color == BLACK)// {}
 						fix_deletion(x);
                 }
                 

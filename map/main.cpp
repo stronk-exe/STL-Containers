@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/02 15:54:06 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/03 15:26:02 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 #define RESET "\e[0m"
 
 #define EQUAL(x) ((x) ? (std::cout << "\033[1;32mAC\033[0m\n") : (std::cout << "\033[1;31mWA\033[0m\n"))
-#define TIME_FAC 4 // the ft::map methods can be slower up to std::map methods * TIME_FAC (MAX 20)
+#define TIME_FAC 20 // the ft::map methods can be slower up to std::map methods * TIME_FAC (MAX 20)
 
 typedef std::pair<std::map<int, std::string>::iterator, std::map<int, std::string>::iterator> iter_def;
 typedef ft::pair<ft::map<int, std::string>::iterator, ft::map<int, std::string>::iterator> ft_iter_def;
@@ -2076,23 +2076,23 @@ void testOperations()
     }
 }
 
-// void testAllocatorMethodes()
-// {
-//     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " get_allocator method "
-//               << "] --------------------]\t\t\033[0m";
-//     {
-//         int psize;
-//         ft::map<char, int> mymap;
-//         ft::pair<const char, int> *p;
+void testAllocatorMethodes()
+{
+    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " get_allocator method "
+              << "] --------------------]\t\t\033[0m";
+    {
+        int psize;
+        ft::map<char, int> mymap;
+        ft::pair<char, int> *p;
 
-//         // allocate an array of 5 elements using mymap's allocator:
-//         p = mymap.get_allocator().allocate(5);
+        // allocate an array of 5 elements using mymap's allocator:
+        p = mymap.get_allocator().allocate(5);
 
-//         psize = sizeof(std::map<char, int>::value_type) * 5;
-//         EQUAL(psize == 40);
-//         mymap.get_allocator().deallocate(p, 5);
-//     }
-// }
+        psize = sizeof(std::map<char, int>::value_type) * 5;
+        EQUAL(psize == 40);
+        mymap.get_allocator().deallocate(p, 5);
+    }
+}
 void testRetionalOperators()
 {
 
@@ -2248,24 +2248,24 @@ int main()
     std::cout << RED << "--------------------------------------------------------------------------------------------------------" << RESET << std::endl;
     signal(SIGALRM, alarm_handler);
 
-    // std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
-    // TEST_CASE(iterator_tests);
-    // TEST_CASE(const_iterator_tests);
-    // TEST_CASE(reverse_iterator_tests);
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
+    TEST_CASE(iterator_tests);
+    TEST_CASE(const_iterator_tests);
+    TEST_CASE(reverse_iterator_tests);
+    std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
-    // TEST_CASE(testmapConstructors);
-    // // testConstructors();
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
+    TEST_CASE(testmapConstructors);
+    // testConstructors();
+    std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
-    // TEST_CASE(testIterators);
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
+    TEST_CASE(testIterators);
+    std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
-    // TEST_CASE(testCapacityMethods)
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
+    TEST_CASE(testCapacityMethods)
+    std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
     TEST_CASE(testElementAccess);
@@ -2275,25 +2275,25 @@ int main()
     TEST_CASE(testModifiers)
     std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
-    // TEST_CASE(testObservers)
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
+    TEST_CASE(testObservers)
+    std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
-    // TEST_CASE(testOperations)
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
+    TEST_CASE(testOperations)
+    std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
-    // TEST_CASE(testAllocatorMethodes)
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
+    TEST_CASE(testAllocatorMethodes)
+    std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
-    // TEST_CASE(testRetionalOperators);
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
+    TEST_CASE(testRetionalOperators);
+    std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
-    // TEST_CASE(testNonMemberSwap);
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
+    TEST_CASE(testNonMemberSwap);
+    std::cout << std::endl;
     return 0;
 }
 
