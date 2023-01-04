@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:08:58 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/03 16:04:05 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/04 14:32:20 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ namespace ft
 			// typedef T*								pointer;
 			// typedef T&								reference;
 			// typedef ft::random_access_iterator_tag	iterator_category;
-		private:
+		// private:
 			iter_type	p;
 
 		public:
 			reverse_iterator() : p(iterator()) {};
 			explicit reverse_iterator(iter_type _p) : p(_p) {};
-			// explicit reverse_iterator(pointer _p) : p(_p) {};
+			explicit reverse_iterator(pointer _p) : p(_p) {};
 			template<class iter> reverse_iterator( const reverse_iterator<iter> &other ) : p(other.base()) {};
 			~reverse_iterator() {};
 

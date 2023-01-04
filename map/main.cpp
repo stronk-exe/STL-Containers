@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/03 15:26:02 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/04 15:33:05 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,28 +187,28 @@ void iterator_tests(void)
               << "] --------------------]\t\t\033[0m";
     {
         /*---------------------------------- time limit test --------------------------------------------*/
-        {
-            // time_t start, end, diff;
+        // {
+        //     time_t start, end, diff;
 
-            // std::map<int, std::string> m;
-            // ft::map<int, std::string> ft_m;
-            // for (size_t i = 0; i < 1e6; ++i)
-            // {
-            //     m.insert(std::make_pair(i, "value"));
-            //     ft_m.insert(ft::make_pair(i, "value"));
-            // }
-            // start = get_time();
-            // for (std::map<int, std::string>::iterator it = m.begin(); it != m.end(); ++it)
-            //     ;
-            // end = get_time();
-            // diff = end - start;
-            // diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+        //     std::map<int, std::string> m;
+        //     ft::map<int, std::string> ft_m;
+        //     for (size_t i = 0; i < 1e6; ++i)
+        //     {
+        //         m.insert(std::make_pair(i, "value"));
+        //         ft_m.insert(ft::make_pair(i, "value"));
+        //     }
+        //     start = get_time();
+        //     for (std::map<int, std::string>::iterator it = m.begin(); it != m.end(); ++it)
+        //         ;
+        //     end = get_time();
+        //     diff = end - start;
+        //     diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
 
-            // ualarm(diff * 1e3, 0);
-            // for (ft::map<int, std::string>::iterator it = ft_m.begin(); it != ft_m.end(); ++it)
-            //     ;
-            // ualarm(0, 0);
-        }
+        //     ualarm(diff * 1e3, 0);
+        //     for (ft::map<int, std::string>::iterator it = ft_m.begin(); it != ft_m.end(); ++it)
+        //         ;
+        //     ualarm(0, 0);
+        // }
         bool cond(false);
         {
             int res(0);
@@ -583,9 +583,9 @@ void testConstructors()
             res1 += it->second;
         EQUAL(res == res1);
     }
-    // std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " Constructors with costum compare "
-    //           << "] --------------------]\t\t\033[0m";
-    // EQUAL(testmapConstructors());
+    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " Constructors with costum compare "
+              << "] --------------------]\t\t\033[0m";
+    EQUAL(testmapConstructors());
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " operator= (lhs.size = rhs.size) "
               << "] --------------------]\t\t\033[0m";
     {
@@ -2083,7 +2083,7 @@ void testAllocatorMethodes()
     {
         int psize;
         ft::map<char, int> mymap;
-        ft::pair<char, int> *p;
+        ft::pair<const char, int> *p;
 
         // allocate an array of 5 elements using mymap's allocator:
         p = mymap.get_allocator().allocate(5);

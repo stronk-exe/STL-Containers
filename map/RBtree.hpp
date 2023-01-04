@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/03 17:10:12 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:14:18 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -643,17 +643,24 @@ namespace ft
 					
 					y = z;
 					original_color = y->color;
-					if (z->right == _nil)
+					if (z->left == _nil) // no children or only right
+					{
+                        std::cout << "hoy\n";
+                        // std::cout << "rbegin before " << rbegin().p._node->data.first << std::endl;
+						x = z->right;
+                        // std::cout << brgin()->_node.first << std::endl;
+						// printRBtree();
+                        ft_transplant(z, z->right);
+                        // std::cout << "rbegin after " << rbegin().p._node->data.first << std::endl;
+                        // printRBtree();
+                        // exit(1);
+					}
+					else if (z->right == _nil) // only left
 					{
 						x = z->left;
 						ft_transplant(z, z->left);
 					}
-					else if (z->left == _nil)
-					{
-						x = z->right;
-						ft_transplant(z, z->right);
-					}
-					else
+					else // both children
 					{
 						y = min_element(z->right);
 						original_color = y->color;
@@ -671,6 +678,7 @@ namespace ft
 						y->left->parent = y;
 						y->color = z->color;
 					}
+                    // x = z->parent;
 					_allocator.destroy(z);
 					_allocator.deallocate(z, 1);
 					len--;
@@ -681,7 +689,6 @@ namespace ft
                 void    fix_deletion( pointer n )
                 {
                     pointer temp;
-                    
                     while (n != _root && n->color == BLACK)
                     {
 						if (n == n->parent->left)
@@ -709,11 +716,11 @@ namespace ft
 									rotateRight(temp);
 									temp = n->parent->right;
 								}
-								
+                                std::cout << "jaa\n";
 								temp->color = n->parent->color;
 								n->parent->color = BLACK;
 								temp->right->color = BLACK;
-								rotateLeft(n->parent);
+                                rotateLeft(n->parent);
 								n = _root;
 							}
                         }
@@ -752,8 +759,12 @@ namespace ft
                         }
                     }
 					n->color = BLACK;
+                // if (n == _root)
+                // {
+                //     rotateLeft(n);
+                    
+                // }
                 }
-                
             /*    pointer    delete_node( pointer root, value_type n )
                 {
                     if (!root)
@@ -1019,13 +1030,13 @@ namespace ft
 
 				void	ft_transplant( pointer x, pointer y )
 				{
-					if (x->parent == _nil)
+					if (x->parent == _nil) // x is the root
 						_root = y;
-					else if (x == x->parent->left)
+					else if (x == x->parent->left) // y is the left child
 						x->parent->left = y;
-					else
+					else // y is the left child
 						x->parent->right = y;
-					if (y) //       <<<<<<<<<<<<< HADI 3LAAAACH
+					// if (y) //       <<<<<<<<<<<<< HADI 3LAAAACH
 						y->parent = x->parent;
 				}
                 

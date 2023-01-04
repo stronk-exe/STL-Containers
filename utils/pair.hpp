@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:56:43 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/03 11:56:07 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/04 13:49:36 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ namespace  ft
             second_type second;
 
             pair() : first(), second() {};
-            pair( const first_type &a, const second_type &b ) : first(a), second(b) {};
-            template<class X, class Y> pair( const pair<X, Y> &pr ) : first(pr.first), second(pr.second) {};
+            pair(  const first_type &a, const second_type &b ) : first(a), second(b) {};
+            template<class X, class Y> pair( const pair<X,Y> &pr ) : first(pr.first), second(pr.second) {};
             ~pair() {};
 
             pair& operator=( const pair& pr )
