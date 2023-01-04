@@ -6,13 +6,13 @@
 #    By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/28 11:42:40 by ael-asri          #+#    #+#              #
-#    Updated: 2022/12/28 11:42:41 by ael-asri         ###   ########.fr        #
+#    Updated: 2023/01/04 22:56:06 by ael-asri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_stack
 
-SRCS =  main.cpp
+SRCS = main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

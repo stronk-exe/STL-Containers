@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:12:15 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/28 13:22:44 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/04 22:56:14 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ namespace ft
 
 		protected:
             container_type	s;
-        
+
 		public:
 			// >> Member functions
 				//----	Constructors
@@ -108,51 +108,6 @@ namespace ft
                         return lhs.s >= rhs.s;
                     };
     };
-            //>> Non member functions
-                // template< class T, class Container > bool operator==( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
-                // {
-                //     return lhs.s == rhs.s;
-                // };
-                // template< class T, class Container > bool operator!=( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
-                // {
-                //     return lhs.s != rhs.s;
-                // };
-                // template< class T, class Container > bool operator<( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
-                // {
-                //     return lhs.s < rhs.s;
-                // };
-                // template< class T, class Container > bool operator<=( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
-                // {
-                //     return lhs.s <= rhs.s;
-                // };
-                // template< class T, class Container > bool operator>( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
-                // {
-                //     return lhs.s > rhs.s;
-                // };
-                // template< class T, class Container > bool operator>=( const stack<T,Container>& lhs, const stack<T,Container>& rhs )
-                // {
-                //     return lhs.s <= rhs.s;
-                // };
-                // template< class T, class Container > bool operator!=( const std::stack<T,Container>& lhs, const std::stack<T,Container>& rhs )
-                // {
-
-                // };
-                // template< class T, class Container > bool operator<( const std::stack<T,Container>& lhs, const std::stack<T,Container>& rhs )
-                // {
-
-                // };
-                // template< class T, class Container > bool operator<=( const std::stack<T,Container>& lhs, const std::stack<T,Container>& rhs )
-                // {
-
-                // };
-                // template< class T, class Container > bool operator>( const std::stack<T,Container>& lhs, const std::stack<T,Container>& rhs )
-                // {
-
-                // };
-                // template< class T, class Container > bool operator>=( const std::stack<T,Container>& lhs, const std::stack<T,Container>& rhs )
-                // {
-
-                // };
 }
 
 #endif

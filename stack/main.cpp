@@ -6,21 +6,13 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 11:45:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/28 12:02:10 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/04 22:56:40 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.hpp"
-
 #include <vector>
 #include <stack>
-#include <iostream>
-#include <ctime>
-#include <iomanip>
-#include <unistd.h>
-#include <signal.h>
-#include <sys/time.h>
-
 
 #define EQUAL(x) ((x) ? (std::cout << "\033[1;32mOK\033[0m\n") : (std::cout << "\033[1;31mKO\033[0m\n"))
 
@@ -93,7 +85,7 @@ void	stackMemberFunctions(void)
 	}
 }
 
-void	stackRelationalOperators(void)
+void stackRelationalOperators(void)
 {
     std::cout << "	operator== ----		";
 	{
