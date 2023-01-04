@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/01 17:04:20 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/04 22:52:20 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 #include <iostream>
 #include <cstddef>
-	#include <string>
-// #include <sstream>
+#include <string>
 #include "../utils/exceptions.hpp"
 #include "../utils/random_access_iterator.hpp"
 #include "../utils/reverse_iterator.hpp"
@@ -57,7 +56,6 @@ namespace ft
 					explicit vector( size_type count, const T& value = T(), const allocator_type& alloc = Allocator()) : _allocator(alloc), v(NULL), capcity(0), len(0)
 					{
 						reserve(count);
-						// v = _allocator.allocate(count);
 						for (size_type i=0; i < count; i++)
 							_allocator.construct(v+i, value);
 						len = count;
@@ -126,10 +124,6 @@ namespace ft
 						for (size_type i=0; i < count; i++)
 							_allocator.construct(v+i, value);
 						len = count;
-						// {
-						// 	capcity = count;
-						// 	v = _allocator.allocate(capcity);
-						// }
 					};
 					template< class InputIt > void assign( InputIt first, InputIt last, typename ft::enable_if<!is_integral<InputIt>::value, InputIt>::type = InputIt())
 					{
@@ -143,39 +137,6 @@ namespace ft
 							first++;
 						}
 						len = count;
-
-						// // int i=0;
-						// // for (iterator it=first; it != last; ++it)
-						// // 	v[i++] = it;
-						// size_type i=0;
-						// InputIt tempf, templ;
-
-						// tempf = first;
-						// templ = last;
-						// // std::cout << "holla\n";
-						// // while (tempf != templ)
-						// // {
-						// // 	i++;
-						// // }
-						// i = templ-tempf;
-						// clear();
-						// if (i > capcity)
-						// {
-						// 	capcity = i;
-						// 	v = _allocator.allocate(capcity);
-						// }
-						// len = capcity;
-						// i=0;
-						// // pointer tmp= _allocator.allocate(capcity);
-						// while (first != last)
-						// {
-						// 	// std::cout << "whota"<< i<<"\n";
-						// 	_allocator.construct(v+i, *first);
-						// 	first++;
-						// 	i++;
-						// }
-						// // v = tmp;
-
 					};
 
 				//----	get_allocator
@@ -188,7 +149,6 @@ namespace ft
 					// at
 						reference at( size_type pos )
 						{
-								// throw invalidIndex();
 							if (pos >= len)
 								throw std::out_of_range(std::string("ft::vector: std::out_of_range exception called"));
 							return v[pos];
@@ -339,297 +299,49 @@ namespace ft
 							if (len + 1 > capcity)
 								reserve(len*2);
 							for (size_type i=len; i > index; i--)
-							{
 								_allocator.construct(v+i, v[i-1]);
-								// _allocator.destroy(v+i);
-							}
 							_allocator.construct(v+index, value);
 							len++;
 							return iterator(v+index);
-
-							// size_type index;
-							// value_type temp;
-
-							// index = &(*pos) - v;
-							// if (!capcity)
-							// {
-							// 	// capcity+=1;
-							// 	// len+=1;
-							// 	reserve(1);
-							// }
-							// else if (len+1 > capcity)
-							// 	capcity *= 2;
-							// std::cout << v+len << "holla\n";
-							// for (size_type i=len; i > index; i--)
-							// {
-							// 	temp = v[i];
-							// 	v[i] = v[i-1];
-							// 	v[i-1] = temp;
-							// }
 						};
-						// void insert( iterator pos, size_type count, const T& value )
-						// {
-						// 	size_type index = pos - begin();
-
-						// 	if (len == 0)
-						// 		reserve(count);
-						// 	else if (len + count > capcity)
-						// 	{
-						// 		if (count > len)
-						// 			reserve(len + count);
-						// 		else
-						// 			reserve(capcity*2);
-						// 	}
-						// 	for (size_type i=len; i > index; --i)
-						// 	{
-						// 	// std::cout << "LMACHAKIL!!\n";
-						// 		_allocator.construct(v+i+index, v[i]);
-						// 		// _allocator.destroy(v+i);
-
-						// 	}
-						// 	for (size_type i=0; i < count; ++i)
-						// 		_allocator.construct(v+ index++, value);
-						// 	len+=count;
-
-						// 	// size_type index;
-						// 	// value_type temp;
-
-						// 	// index = &(*pos) - v;
-						// 	// if (len+count > capcity)
-						// 	// 	capcity *= 2;
-						// 	// for (size_type i=0; i < count; i++)
-						// 	// {
-						// 	// 	_allocator.construct(v+len, value);
-						// 	// 	len += 1;
-						// 	// }
-						// 	// for (size_type x=0; x < count; x++)
-						// 	// {
-						// 	// 	for (size_type i=len-count+x; i > index; i--)
-						// 	// 	{
-						// 	// 		temp = v[i];
-						// 	// 		v[i] = v[i-1];
-						// 	// 		v[i-1] = temp;
-						// 	// 	}
-						// 	// 	index+=1;
-						// 	// }
-						// 	// return iterator(v+index);
-						// };
 						void insert( iterator pos, size_type count, const T& value )
 						{
-								// size_type index = pos - begin();
-
-								// if (len+count <= capcity)
-								// {
-								// 	for (size_type i = len; i > index; --i) {
-								// 		if (i + count < len)
-								// 				v[i + count] = v[i];
-								// 		else
-								// 			_allocator.construct(v + i, v[i+1]);
-								// 	}
-								// 	for (size_type i = index; i < index + count; ++i) {
-								// 		if (i < len)
-								// 			v[i] = value;
-								// 		else
-								// 			_allocator.construct(v + i, value);
-								// 	}
-								// 	len+=count;
-								// }
-								// else
-								// {
-								// 	// if (len == 0)
-								// 	// 	reserve(count);
-								// 	size_type new_cap;
-								// 	if (count > len)
-								// 		new_cap = len+count;
-								// 	else
-								// 		new_cap = len*2;
-								// 	pointer temp = _allocator.allocate(new_cap);
-								// 	for (size_type i=0; i<index; i++)
-								// 		_allocator.construct(temp+i, v[i]);
-								// 	for (size_type i=index; i < (index+count); i++)
-								// 		_allocator.construct(temp+i, value);
-								// 	for (size_type i=(index+count); i< (len+count); i++)
-								// 		_allocator.construct(temp+i, v[i-count]);
-								// 	size_type temp_len = len;
-								// 	clear();
-								// 	_allocator.deallocate(v, capcity);
-								// 	capcity = new_cap;
-								// 	v = temp;
-								// 	len = temp_len+count;
-								// }
-								difference_type index = pos - begin();
-								
-								if (!len)
-									reserve(count);
-								else if (len+count > capcity)
-								{
-									if (count > len)
-										reserve(len+count);
-									else
-										reserve(capcity*2);
-								}
-								for (difference_type i=len-1; i>=index; --i)
-									_allocator.construct(v+(i+count), v[i]);
-								for (size_type i=0; i<count; ++i)
-									_allocator.construct(v+index++, value);
-								len += count;
+							difference_type index = pos - begin();
+							
+							if (!len)
+								reserve(count);
+							else if (len+count > capcity)
+							{
+								if (count > len)
+									reserve(len+count);
+								else
+									reserve(capcity*2);
+							}
+							for (difference_type i=len-1; i>=index; --i)
+								_allocator.construct(v+(i+count), v[i]);
+							for (size_type i=0; i<count; ++i)
+								_allocator.construct(v+index++, value);
+							len += count;
 						}
-						// void insert(iterator position, size_type n, const_reference x) {
-						// 	size_type pos = position - begin();
-						// 	if (pos > len)
-						// 		return ;
-						// 	if (len + n <= capcity) {
-						// 		for (size_type i = len - 1; i >= pos; --i) {
-						// 			if (i + n < len)
-						// 				v[i + n] = v[i];
-						// 			else
-						// 				_allocator.construct(v + i + n, v[i]);
-						// 		}
-						// 		for (size_type i = pos; i < pos + n; i++) {
-						// 			if (i < len)
-						// 				v[i] = x;
-						// 			else
-						// 				_allocator.construct(v + i, x);
-						// 		}
-						// 		len += n;
-						// 	}
-						// 	else if (len + n > capcity) {
-						// 		size_type newCap = n > len ? len + n : len * 2;
-						// 		pointer tmp = _allocator.allocate(newCap);
-						// 		for (size_type i = 0; i < pos; i++)
-						// 			_allocator.construct(tmp + i, v[i]);
-						// 		for (size_type i = pos; i < pos + n; i++)
-						// 			_allocator.construct(tmp + i, x);
-						// 		for (size_type i = pos + n; i < len + n ; i ++)
-						// 			_allocator.construct(tmp + i, v[i - n]);
-						// 		size_type sz = len;
-						// 		clear();
-						// 		_allocator.deallocate(v, capcity);
-						// 		capcity = newCap;
-						// 		v = tmp;
-						// 		len = sz + n;
-						// 	}
-						// }
-						/*constexpr iterator  insert( const_iterator pos, size_type count, const T& value )
+						template< class InputIt > void insert( const_iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = InputIt())
 						{
-							
-						};
-					*/	template< class InputIt > void insert( const_iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = InputIt())
-						{
-							// size_type index = pos - begin(), count = last-first;
-
-							// 	if (len+count < capcity)
-							// 	{
-							// 		for (size_type i = len - 1; i >= index; --i) {
-							// 				if (i + count < len)
-							// 					v[i + count] = v[i];
-							// 				else
-							// 					_allocator.construct(v + i + count, v[i]);
-							// 			}
-							// 			for (size_type i = index; i < index + count; i++) {
-							// 				if (i < len)
-							// 					v[i] = *first++;
-							// 				else
-							// 					_allocator.construct(v + i, *first++);
-							// 			}
-							// 		len+=count;
-							// 	}
-							// 	else
-							// 	{
-							// 		// if (len == 0)
-							// 		// 	reserve(count);
-							// 		size_type new_cap;
-							// 		if (count > len)
-							// 			new_cap = len+count;
-							// 		else
-							// 			new_cap = len*2;
-							// 		pointer temp = _allocator.allocate(new_cap);
-							// 		for (size_type i=0; i<index; i++)
-							// 			_allocator.construct(temp+i, v[i]);
-							// 		for (size_type i=index; i < (index+count); i++)
-							// 			_allocator.construct(temp+i, *first++);
-							// 		for (size_type i=(index+count); i< (len+count); i++)
-							// 			_allocator.construct(temp+i, v[i-count]);
-							// 		size_type temp_len = len;
-							// 		clear();
-							// 		_allocator.deallocate(v, capcity);
-							// 		capcity = new_cap;
-							// 		v = temp;
-							// 		len = temp_len+count;
-							// 	}
-							
 							difference_type index = pos - begin();
 							size_type count = last-first;
 								
-								if (!len)
-									reserve(count);
-								else if (len+count > capcity)
-								{
-									if (count > len)
-										reserve(len+count);
-									else
-										reserve(capcity*2);
-								}
-								for (difference_type i=len-1; i>=index; --i)
-									_allocator.construct(v+(i+count), v[i]);
-								for (size_type i=0; i<count; ++i)
-									_allocator.construct(v+index++, *first);
-								len += count;
-
-								
-							// size_type index = pos - begin(), range = last - first;
-
-							// if (len+range > capcity)
-							// {
-							// 	if (!len)
-							// 		reserve(1);
-							// 	else if (len+range > len*2)
-							// 		reserve(len*2);
-							// 	else
-							// 		reserve(len+range);
-							// }
-							// for (size_type i=len; i > index; i--)
-							// {
-							// 	_allocator.construct(v+i+range, v[i]);
-							// 	_allocator.destroy(v+i);
-
-							// }
-							// for (size_type i=0; i < range; i++)
-							// {
-							// // std::cout << "LMACHAKIL!!!\n";
-							// 	_allocator.construct(v+(i+index), *first);
-							// 	first++;
-							// }
-							// len+=range;
-
-
-
-							// if (len + count > capcity)
-							// 	reserve(capcity + count);
-
-							// size_type index, count;
-							// value_type temp;
-							// InputIt tempf = first, templ = last;
-
-							// count = templ-tempf;
-							// index = &(*pos) - v;
-							// if (len+count > capcity)
-							// 	capcity *= 2;
-							// for (size_type i=0; i < count; i++)
-							// {
-							// 	_allocator.construct(v+len, *first++);
-							// 	len += 1;
-							// }
-							// for (size_type x=0; x < count; x++)
-							// {
-							// 	for (size_type i=len-count+x; i > index; i--)
-							// 	{
-							// 		temp = v[i];
-							// 		v[i] = v[i-1];
-							// 		v[i-1] = temp;
-							// 	}
-							// 	index+=1;
-							// }
+							if (!len)
+								reserve(count);
+							else if (len+count > capcity)
+							{
+								if (count > len)
+									reserve(len+count);
+								else
+									reserve(capcity*2);
+							}
+							for (difference_type i=len-1; i>=index; --i)
+								_allocator.construct(v+(i+count), v[i]);
+							for (size_type i=0; i<count; ++i)
+								_allocator.construct(v+index++, *first);
+							len += count;
 						};
 
 					// erase
@@ -637,25 +349,16 @@ namespace ft
 						{
 							size_type index = pos - begin();
 
-							// index = &(*pos) - v;
 							_allocator.destroy(v+index);
 							for (size_type i=index; i < len; i++)
-							{
 								_allocator.construct(v+i, v[i+1]);
-								// _allocator.destroy(v+i+1);
-
-							}
 							len--;
 							return iterator(v+index);
-							// for (size_type i=index; i<len-1; i++)
-							// 	v[i] = v[i+1];
 						};
 						iterator erase( iterator first, iterator last )
 						{
 							size_type range = last - first, start = first - begin();
 
-							for (; *first != *last; *first++)
-								_allocator.destroy(&(*first));
 							for (size_type i=start; i < len; i++)
 							{
 								_allocator.construct(v+start, v[start+range]);
@@ -663,22 +366,6 @@ namespace ft
 							}
 							len-=range;
 							return iterator(v+start);
-
-							// index = &(*pos) - v;
-
-							// size_type index, count, i;
-
-							// index = &(*first) - v;
-							// count = &(*last) - &(*first);
-							// for (i=index; i<count; i++)
-							// 	_allocator.destroy(v+i);
-							// for (size_type x=index; x<len; x++)
-							// {
-							// 	v[x] = v[x+count];
-							// 	i+=1;
-							// }
-							// len-=count;
-							// return iterator(v+index);
 						};
 
 					// push_back
@@ -693,10 +380,6 @@ namespace ft
 							}
 							_allocator.construct(v+len, value);
 							len++;
-							// if (!capcity)
-							// 	reserve(1);
-							// else if (len+1 > capcity)
-							// 	reserve(capcity * 2);
 						};
 
 					// pop_back
@@ -730,41 +413,11 @@ namespace ft
 									_allocator.construct(v+i, value);
 								len = count;
 							}
-							// else if (count <= capcity)
-							// {
-							// 	for (size_type i=len; i<count; i++)
-							// 		_allocator.construct(v+i, value);
-							// 	len += count;
-							// }
-							// else
-							// {
-							// 	// if (count > capcity*2)
-							// 		capcity = count;
-							// 	// else
-							// 	// 	capcity *= 2;
-							// 	pointer temp;
-							// 	temp = _allocator.allocate(capcity);
-							// 	for (size_type i=0; i<len; i++)
-							// 		_allocator.construct(temp+i, v[i]);
-							// 	for (size_type i=len; i<count; i++)
-							// 		_allocator.construct(temp+i, value);
-							// 	for (size_type i=0; i<len; i++)
-							// 		_allocator.destroy(v+i);
-							// 	v = temp;
-							// 	len = count;
-							// }
 						};
 
 					// swap
 						void swap( vector& other )
 						{
-							// int temp_len = len;
-							// T *temp_v = v;
-							// len = other.len;
-							// v = other.v;
-							// other.len = temp_len;
-							// other.v = temp_v;
-
 							std::swap(_allocator, other._allocator);
 							std::swap(v, other.v);
 							std::swap(capcity, other.capcity);
