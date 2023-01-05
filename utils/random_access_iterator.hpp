@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 13:32:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/28 12:10:49 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/04 20:09:53 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ namespace ft
 		public:
 			random_access_iterator() : p(NULL) {};
 			random_access_iterator( const random_access_iterator &other ) : p(other.p) {};
-			explicit random_access_iterator( pointer _p ) : p(_p) {};
+			random_access_iterator( pointer _p ) : p(_p) {};
 			~random_access_iterator() {};
 
 			random_access_iterator& operator=( const random_access_iterator &other )

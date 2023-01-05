@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/04 15:33:05 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/05 23:48:54 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -2256,7 +2256,7 @@ int main()
 
     std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
     TEST_CASE(testmapConstructors);
-    // testConstructors();
+    testConstructors();
     std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
