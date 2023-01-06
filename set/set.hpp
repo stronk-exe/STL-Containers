@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:00:45 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/06 15:58:14 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/06 22:34:41 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 // #include "../map/map.hpp"
 #include "../map/RBtree.hpp"
+#include "../map/RBiterators.hpp"
 // #include "../utils/exceptions.hpp"
 #include <iostream>
 #include <cstddef>
@@ -24,11 +25,8 @@ namespace ft
     template<class Key, class Compare = std::less<Key>, class Alloc = std::allocator<Key> > class set
 	{
 		public:
-			// typedef	Key											key_type;
+			typedef	Key											key_type;
 			typedef	Key											value_type;
-			// typedef	ft::pair<key_type, mapped_type>							value_type;
-			typedef	size_t										size_type;
-			typedef	ptrdiff_t									difference_type;
 			typedef	Compare										key_compare;
             typedef	Compare										val_comp;
 			typedef	Alloc										allocator_type;
@@ -36,10 +34,12 @@ namespace ft
 			typedef typename allocator_type::const_pointer		const_pointer;
 			typedef typename allocator_type::reference			reference;
 			typedef typename allocator_type::const_reference	const_reference;
+			typedef	size_t										size_type;
+			typedef	ptrdiff_t									difference_type;
 
-			typedef typename ft::RBtree<value_type, val_comp>::iterator				iterator;
+			typedef typename ft::RBtree<value_type, val_comp>::iterator					iterator;
 			typedef typename ft::RBtree<value_type, val_comp>::const_iterator			const_iterator;
-			typedef typename ft::RBtree<value_type, val_comp>::reverse_iterator		reverse_iterator;
+			typedef typename ft::RBtree<value_type, val_comp>::reverse_iterator			reverse_iterator;
 			typedef typename ft::RBtree<value_type, val_comp>::const_reverse_iterator	const_reverse_iterator;
 
 
@@ -174,21 +174,21 @@ namespace ft
 						};
 
 					//	erase
-						iterator erase( iterator pos )
+						void erase( iterator pos )
 						{
-							return rbt.erase(pos);
-						};
-
-						iterator erase( iterator first, iterator last )
-						{
-							return rbt.erase(first, last);
+							rbt.erase(pos);
 						};
 
 						size_type erase( const Key& key )
 						{
-							// return rbt.erase(key);
-							return rbt.erase(ft::make_pair(key, mapped_type()));
+							return rbt.erase(key);
 						};
+						
+						void erase( iterator first, iterator last )
+						{
+							rbt.erase(first, last);
+						};
+
 
 					//	swap
 						void swap( set& other )
@@ -257,7 +257,7 @@ namespace ft
 						};
 
 					//	value_comp
-						set::val_comp value_comp() const
+						val_comp value_comp() const
 						{
 							return val_cmp;
 						};
@@ -273,7 +273,7 @@ namespace ft
 
 	// >> Non-member functions
 		//	operator==
-			template< class Key, class T, class Compare, class Alloc > bool operator==( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
+			template< class Key, class Compare, class Alloc > bool operator==( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
 			{
 				if (lhs.size() != rhs.size())
 					return false;
@@ -281,31 +281,31 @@ namespace ft
 			};
 
 			//	operator!=
-				template< class Key, class T, class Compare, class Alloc > bool operator!=( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
+				template< class Key, class Compare, class Alloc > bool operator!=( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
 				{
 					return !(lhs == rhs);
 				};
 
 			//	operator<
-				template< class Key, class T, class Compare, class Alloc > bool operator<( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
+				template< class Key, class Compare, class Alloc > bool operator<( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
 				{
 					return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 				};
 
 			//	operator<=
-				template< class Key, class T, class Compare, class Alloc > bool operator<=( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
+				template< class Key, class Compare, class Alloc > bool operator<=( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
 				{
 					return !(rhs < lhs);
 				};
 
 			//	operator>
-				template< class Key, class T, class Compare, class Alloc > bool operator>( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
+				template< class Key, class Compare, class Alloc > bool operator>( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
 				{
 					return rhs < lhs;
 				};
 
 			//	operator>=
-				template< class Key, class T, class Compare, class Alloc > bool operator>=( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
+				template< class Key, class Compare, class Alloc > bool operator>=( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
 				{
 					return !(lhs < rhs);
 				};
