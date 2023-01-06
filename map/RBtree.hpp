@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/06 15:55:49 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/06 22:36:59 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,14 +221,35 @@ namespace ft
                 iterator lower_bound( const value_type &value )
                 {
                     for (iterator it = begin(); it != end(); ++it)
-                        if (comp(it.get_itnode()->data, value) == false)
+                        if (!comp(it.get_itnode()->data, value))
                             return it;
                     return end();
                 };
+                // pointer l_b( const value_type &value )
+                // {
+                //     pointer _temp_root=_root, _temp_nil=_nil;
+                //     while (_temp_root != _nil)
+                //     {
+                //         if (comp(value, _temp_root->data))
+                //         {
+                //             _temp_nil = _temp_root;
+                //             _temp_root = _temp_root->left;
+                //         }
+                //         else if (comp(_temp_root->data, value))
+                //             _temp_root = _temp_root->right;
+                //         else
+                //             return _temp_root;
+                //     }
+                //     return _temp_nil;
+                // }
+                // pointer u_b( const value_type &value )
+                // {
+                    
+                // }
                 const_iterator lower_bound( const value_type &value ) const
                 {
                     for (const_iterator it = begin(); it != end(); ++it)
-                        if (comp(it.get_itnode()->data, value) == false)
+                        if (!comp(it.get_itnode()->data, value))
                             return it;
                     return end();
                 };
@@ -250,15 +271,15 @@ namespace ft
 
                 ft::pair<iterator,iterator> equal_range( const value_type &value )
                 {
-                    return ft::make_pair(lower_bound(value), upper_bound(value));
-                    // iterator first=lower_bound(value), last=upper_bound(value);
-                    // return ft::make_pair(first, last);
+                    // return ft::make_pair(lower_bound(value), upper_bound(value));
+                    iterator first=lower_bound(value), last=upper_bound(value);
+                    return ft::make_pair(first, last);
                 };
                 ft::pair<const_iterator,const_iterator> equal_range( const value_type& value ) const
                 {
-                    return ft::make_pair(lower_bound(value), upper_bound(value));
-                    // const_iterator first=lower_bound(value), last=upper_bound(value);
-                    // return ft::make_pair(first, last);
+                    // return ft::make_pair(lower_bound(value), upper_bound(value));
+                    const_iterator first=lower_bound(value), last=upper_bound(value);
+                    return ft::make_pair(first, last);
                 };
                 
                 
@@ -288,7 +309,7 @@ namespace ft
                         _temp_nil->right = n;
 					if (n->parent == _nil)
 					{
-						n->color = BLACK;
+						n->color = M_BLACK;
 						return ft::make_pair(iterator(&_root, n, _nil), true);
 					}
 					if (n->parent->parent == _nil)
@@ -301,16 +322,16 @@ namespace ft
 				{
 					pointer temp;
 
-					while (n->parent->color == RED)
+					while (n->parent->color == M_RED)
 					{
 						if (n->parent == n->parent->parent->right)
 						{
 							temp = n->parent->parent->left;
-							if (temp->color == RED)
+							if (temp->color == M_RED)
 							{
-								temp->color = BLACK;
-								n->parent->color = BLACK;
-								n->parent->parent->color = RED;
+								temp->color = M_BLACK;
+								n->parent->color = M_BLACK;
+								n->parent->parent->color = M_RED;
 								n = n->parent->parent;
 							}
 							else
@@ -320,19 +341,19 @@ namespace ft
 									n = n->parent;
 									rotateRight(n);
 								}
-								n->parent->color = BLACK;
-								n->parent->parent->color = RED;
+								n->parent->color = M_BLACK;
+								n->parent->parent->color = M_RED;
 								rotateLeft(n->parent->parent);
 							}
 						}
 						else
 						{
 							temp = n->parent->parent->right;
-							if (temp->color == RED)
+							if (temp->color == M_RED)
 							{
-								temp->color = BLACK;
-								n->parent->color = BLACK;
-								n->parent->parent->color = RED;
+								temp->color = M_BLACK;
+								n->parent->color = M_BLACK;
+								n->parent->parent->color = M_RED;
 								n = n->parent->parent;
 							}
 							else
@@ -342,15 +363,15 @@ namespace ft
 									n = n->parent;
 									rotateLeft(n);
 								}
-								n->parent->color = BLACK;
-								n->parent->parent->color = RED;
+								n->parent->color = M_BLACK;
+								n->parent->parent->color = M_RED;
 								rotateRight(n->parent->parent);
 							}
 						}
 						if (n == _root)
 							break;
 					}
-					_root->color = BLACK;
+					_root->color = M_BLACK;
 				}
                 void printHelper(pointer root, std::string indent, bool last) {
                     if (root != _nil) {
@@ -363,7 +384,7 @@ namespace ft
                         indent += "|  ";
                     }
 
-                    std::string sColor = root->color ? "RED" : "BLACK";
+                    std::string sColor = root->color ? "M_RED" : "M_BLACK";
                     std::cout << root->data.first << "(" << sColor << ")" << std::endl;
                     printHelper(root->left, indent, false);
                     printHelper(root->right, indent, true);
@@ -381,7 +402,7 @@ namespace ft
                     n->parent = _nil;
                     n->left = _nil;
                     n->right = _nil;
-                    n->color = RED;
+                    n->color = M_RED;
                     n->data = value;
                     // _allocator.construct(n, value);
                     len++;
@@ -391,7 +412,7 @@ namespace ft
                 void new_empty_node()
                 {
                     _nil = _allocator.allocate(1);
-                    _nil->color = BLACK;
+                    _nil->color = M_BLACK;
                     _nil->parent = _nil;
                     _nil->left = _nil;
                     _nil->right = _nil;
@@ -452,42 +473,42 @@ namespace ft
 					_allocator.destroy(z);
 					_allocator.deallocate(z, 1);
 					len--;
-                    if (original_color == BLACK)
+                    if (original_color == M_BLACK)
 						fix_deletion(x);
                 }
                 
                 void    fix_deletion( pointer n )
                 {
                     pointer temp;
-                    while (n != _root && n->color == BLACK)
+                    while (n != _root && n->color == M_BLACK)
                     {
 						if (n == n->parent->left)
                         {
 							temp = n->parent->right;
-							if (temp->color == RED)
+							if (temp->color == M_RED)
 							{
-								temp->color = BLACK;
-								n->parent->color = RED;
+								temp->color = M_BLACK;
+								n->parent->color = M_RED;
 								rotateLeft(n->parent);
 								temp = n->parent->right;
 							}
-							if (temp->left->color == BLACK && temp->right->color == BLACK)
+							if (temp->left->color == M_BLACK && temp->right->color == M_BLACK)
 							{
-								temp->color = RED;
+								temp->color = M_RED;
 								n = n->parent;
 							}
 							else
 							{
-								if (temp->right->color == BLACK)
+								if (temp->right->color == M_BLACK)
 								{
-									temp->left->color = BLACK;
-									temp->color = RED;
+									temp->left->color = M_BLACK;
+									temp->color = M_RED;
 									rotateRight(temp);
 									temp = n->parent->right;
 								}
 								temp->color = n->parent->color;
-								n->parent->color = BLACK;
-								temp->right->color = BLACK;
+								n->parent->color = M_BLACK;
+								temp->right->color = M_BLACK;
                                 rotateLeft(n->parent);
 								n = _root;
 							}
@@ -495,36 +516,36 @@ namespace ft
                         else
                         {
 							temp = n->parent->left;
-							if (temp->color == RED)
+							if (temp->color == M_RED)
 							{
-								temp->color = BLACK;
-								n->parent->color = RED;
+								temp->color = M_BLACK;
+								n->parent->color = M_RED;
 								rotateRight(n->parent);
 								temp = n->parent->left;
 							}
-							if (temp->right->color == BLACK && temp->right->color == BLACK)
+							if (temp->right->color == M_BLACK && temp->right->color == M_BLACK)
 							{
-								temp->color = RED;
+								temp->color = M_RED;
 								n = n->parent;
 							}
 							else
 							{
-								if (temp->left->color == BLACK)
+								if (temp->left->color == M_BLACK)
 								{
-									temp->right->color = BLACK;
-									temp->color = RED;
+									temp->right->color = M_BLACK;
+									temp->color = M_RED;
 									rotateLeft(temp);
 									temp = n->parent->left;
 								}
 								temp->color = n->parent->color;
-								n->parent->color = BLACK;
-								temp->left->color = BLACK;
+								n->parent->color = M_BLACK;
+								temp->left->color = M_BLACK;
 								rotateRight(n->parent);
 								n = _root;
 							}
                         }
                     }
-					n->color = BLACK;
+					n->color = M_BLACK;
                 }
 
 				void	ft_transplant( pointer x, pointer y )
