@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/05 23:47:45 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:55:49 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,9 @@ namespace ft
                         }
                         _allocator = other._allocator;
                         new_empty_node();
-                        // len=other.len;
                         copy_tree(other._root, other._nil);
                     }
                     return *this;
-                }
-                void copy_tree(pointer node, pointer nil) {
-                    if (node == NULL || node == nil)
-                        return;
-                    copy_tree(node->left, nil);
-                    insert_node(node->data);
-                    copy_tree(node->right, nil);
                 }
                 ~RBtree()
                 {
@@ -135,7 +127,7 @@ namespace ft
                 {
                     return const_reverse_iterator(begin());
                 }
-            //----  Memeber functions
+
             // insertion
                 ft::pair<iterator, bool> insert( const value_type& value )
                 {
@@ -148,7 +140,6 @@ namespace ft
                 }
                 template <class InputIterator> void insert(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = NULL)
                 {
-                    // for (; first != last; ++first)
                     while (first != last)
                         insert_node(*first++);
                 }
@@ -176,8 +167,102 @@ namespace ft
                     while (first != last)
                         erase(first++);
                 }
+
+                bool empty() const
+                {
+                    if (!len)
+                        return true;
+                    return false;
+                }
+
+                size_type size() const
+                {
+                    return len;
+                }
+
+                size_type max_size() const
+                {
+                    return _allocator.max_size();
+                }
+
+                void clear()
+                {
+                    ft_destroy(_root);
+                    _root = _nil;
+                    len = 0;
+                }
                 
-            // private:
+                void    swap( RBtree &rbt )
+                {
+                    std::swap(_allocator, rbt._allocator);
+                    std::swap(comp, rbt.comp);
+                    std::swap(_root, rbt._root);
+                    std::swap(_nil, rbt._nil);
+                    std::swap(len, rbt.len);
+                }
+
+                iterator find( const value_type &value )
+                {
+                    pointer n = search(value);
+
+                    if (n)
+                        return iterator(&_root, n, _nil);
+                    return end();
+                }
+                const_iterator find( const value_type &value ) const
+                {
+                    pointer n = search(value);
+
+                    if (n)
+                        return const_iterator(&_root, n, _nil);
+                    return end();
+                }
+
+                iterator lower_bound( const value_type &value )
+                {
+                    for (iterator it = begin(); it != end(); ++it)
+                        if (comp(it.get_itnode()->data, value) == false)
+                            return it;
+                    return end();
+                };
+                const_iterator lower_bound( const value_type &value ) const
+                {
+                    for (const_iterator it = begin(); it != end(); ++it)
+                        if (comp(it.get_itnode()->data, value) == false)
+                            return it;
+                    return end();
+                };
+
+                iterator upper_bound( const value_type &value )
+                {
+                    for (iterator it = begin(); it != end(); ++it)
+                        if (comp(value, it.get_itnode()->data))
+                            return it;
+                    return end();
+                };
+                const_iterator upper_bound( const value_type &value ) const
+                {
+                    for (const_iterator it = begin(); it != end(); ++it)
+                        if (comp(value, it.get_itnode()->data))
+                            return it;
+                    return end();
+                };
+
+                ft::pair<iterator,iterator> equal_range( const value_type &value )
+                {
+                    return ft::make_pair(lower_bound(value), upper_bound(value));
+                    // iterator first=lower_bound(value), last=upper_bound(value);
+                    // return ft::make_pair(first, last);
+                };
+                ft::pair<const_iterator,const_iterator> equal_range( const value_type& value ) const
+                {
+                    return ft::make_pair(lower_bound(value), upper_bound(value));
+                    // const_iterator first=lower_bound(value), last=upper_bound(value);
+                    // return ft::make_pair(first, last);
+                };
+                
+                
+            private:
                 ft::pair<iterator, bool> insert_node(const value_type &value)
                 {
                     pointer temp = search(value);
@@ -211,9 +296,7 @@ namespace ft
                     fix_insertion(n);
                     return ft::make_pair(iterator(&_root, n, _nil), true);
                 }
-
                 
-
 				void    fix_insertion( pointer n )
 				{
 					pointer temp;
@@ -269,28 +352,28 @@ namespace ft
 					}
 					_root->color = BLACK;
 				}
-                // void printHelper(pointer root, std::string indent, bool last) {
-                //     if (root != _nil) {
-                //     std::cout << indent;
-                //     if (last) {
-                //         std::cout << "R----";
-                //         indent += "   ";
-                //     } else {
-                //         std::cout << "L----";
-                //         indent += "|  ";
-                //     }
+                void printHelper(pointer root, std::string indent, bool last) {
+                    if (root != _nil) {
+                    std::cout << indent;
+                    if (last) {
+                        std::cout << "R----";
+                        indent += "   ";
+                    } else {
+                        std::cout << "L----";
+                        indent += "|  ";
+                    }
 
-                //     std::string sColor = root->color ? "RED" : "BLACK";
-                //     std::cout << root->data.first << "(" << sColor << ")" << std::endl;
-                //     printHelper(root->left, indent, false);
-                //     printHelper(root->right, indent, true);
-                //     }
-                // }
-                // void printRBtree() {
-                //     if (_root) {
-                //         printHelper(_root, "", true);
-                //     }
-                // }
+                    std::string sColor = root->color ? "RED" : "BLACK";
+                    std::cout << root->data.first << "(" << sColor << ")" << std::endl;
+                    printHelper(root->left, indent, false);
+                    printHelper(root->right, indent, true);
+                    }
+                }
+                void printRBtree() {
+                    if (_root) {
+                        printHelper(_root, "", true);
+                    }
+                }
 
                 pointer new_node( const value_type &value )
                 {
@@ -299,8 +382,8 @@ namespace ft
                     n->left = _nil;
                     n->right = _nil;
                     n->color = RED;
-                    // n->data = value;
-                    _allocator.construct(n, value);
+                    n->data = value;
+                    // _allocator.construct(n, value);
                     len++;
                     return n;
                 }
@@ -452,8 +535,7 @@ namespace ft
 						x->parent->left = y;
 					else // y is the left child
 						x->parent->right = y;
-					// if (y) //       <<<<<<<<<<<<< HADI 3LAAAACH
-						y->parent = x->parent;
+					y->parent = x->parent;
 				}
                 
 				void    rotateLeft( pointer n )
@@ -492,147 +574,45 @@ namespace ft
 					n->parent = temp;
 				};
 
-            iterator find( const value_type &value )
-            {
-                pointer n = search(value);
-
-                if (n)
-                    return iterator(&_root, n, _nil);
-                return end();
-            }
-            const_iterator find( const value_type &value ) const
-            {
-                pointer n = search(value);
-
-                if (n)
-                    return const_iterator(&_root, n, _nil);
-                return end();
-            }
-
-            bool empty() const
-            {
-                if (!len)
-                    return true;
-                return false;
-            }
-
-            size_type size() const
-            {
-                return len;
-            }
-
-            size_type max_size() const
-            {
-                return _allocator.max_size();
-            }
-
-            void clear()
-            {
-                ft_destroy(_root);
-                _root = _nil;
-                len = 0;
-            }
-            void ft_destroy( pointer n )
-            {
-                if (n == NULL || n == _nil)
-                    return;
-                ft_destroy(n->left);
-                ft_destroy(n->right);
-                _allocator.destroy(n);
-                _allocator.deallocate(n,1);
-                len--;
-            }
-
-            void    swap( RBtree &rbt )
-            {
-                std::swap(_allocator, rbt._allocator);
-                std::swap(comp, rbt.comp);
-                std::swap(_root, rbt._root);
-                std::swap(_nil, rbt._nil);
-                std::swap(len, rbt.len);
-            }
-
-            iterator lower_bound( const value_type &value )
-		    {
-                for (iterator it = begin(); it != end(); ++it) {
-                    if (comp(it.get_itnode()->data, value) == false)
-                        return it;
-                }
-                return end();
-		    };
-		    const_iterator lower_bound( const value_type &value ) const
-		    {
-                for (const_iterator it = begin(); it != end(); ++it) {
-                    if (comp(it.get_itnode()->data, value) == false)
-                        return it;
-                }
-                return end();
-		    };
-
-            iterator upper_bound( const value_type &value )
-		    {
-                for (iterator it = begin(); it != end(); ++it) {
-                    if (comp(value, it.get_itnode()->data))
-                        return it;
-                }
-                return end();
-		    };
-		    const_iterator upper_bound( const value_type &value ) const
-		    {
-                for (const_iterator it = begin(); it != end(); ++it) {
-                    if (comp(value, it.get_itnode()->data))
-                        return it;
-                }
-                return end();
-		    };
-
-            ft::pair<iterator,iterator> equal_range( const value_type &value )
-		    {
-                // return ft::make_pair(lower_bound(value), upper_bound(value));
-                iterator first=lower_bound(value), last=upper_bound(value);
-                return ft::make_pair(first, last);
-		    };
-		    ft::pair<const_iterator,const_iterator> equal_range( const value_type& value ) const
-		    {
-                // return ft::make_pair(lower_bound(value), upper_bound(value));
-                const_iterator first=lower_bound(value), last=upper_bound(value);
-                return ft::make_pair(first, last);
-		    };
-
-            //----  Utils
-            pointer search(const value_type &value) const {
-                pointer node = _root;
-
-                while (node != _nil)
+                void ft_destroy( pointer n )
                 {
-                    if (comp(value, node->data))
-                    // if (value < node->data)
-                        node = node->left;
-                    // if (value == node->data)
-                    else if (comp(node->data, value))
-                    // else if (value > node->data)
-                        node = node->right;
-                    else
-                        return node;
+                    if (n == NULL || n == _nil)
+                        return;
+                    ft_destroy(n->left);
+                    ft_destroy(n->right);
+                    _allocator.destroy(n);
+                    _allocator.deallocate(n,1);
+                    len--;
                 }
-                // std::cout << i << " Yiip\n";
-                return NULL;
-            }
+        
+                void copy_tree(pointer node, pointer nil) {
+                    if (node == NULL || node == nil)
+                        return;
+                    copy_tree(node->left, nil);
+                    insert_node(node->data);
+                    copy_tree(node->right, nil);
+                }
 
-            // pointer min_element( pointer n ) const
-            // {
-            //     std::cout << "nil " << _nil->data.first << std::endl;
-            //     std::cout << "n " << n->data.first << std::endl;
-            //     if (n->left == _nil)
-            //         return n;
-            //     return min_element(n->left);
-            // };
+                pointer search(const value_type &value) const {
+                    pointer node = _root;
 
-            pointer min_element(pointer node) const {
-                while (node->left != _nil)
-                    node = node->left;
-                return node;
-            }
+                    while (node != _nil)
+                    {
+                        if (comp(value, node->data))
+                            node = node->left;
+                        else if (comp(node->data, value))
+                            node = node->right;
+                        else
+                            return node;
+                    }
+                    return NULL;
+                }
+
+                pointer min_element(pointer node) const {
+                    while (node->left != _nil)
+                        node = node->left;
+                    return node;
+                }
     };
 }
 

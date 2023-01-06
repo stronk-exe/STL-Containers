@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/05 23:46:43 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:44:56 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #define MAP_HPP
 
 #include <iostream>
+// #include <cstddef>
 #include "RBtree.hpp"
-#include <cstddef>
 
 namespace ft
 {
@@ -268,9 +268,10 @@ namespace ft
 							return val_comp;
 						};
 
-						// void printTree() {
-						// 	rbt.printRBtree();
-						// }
+					private:
+						void printTree() {
+							rbt.printRBtree();
+						}
 	};
 
 	// >> Non-member functions
