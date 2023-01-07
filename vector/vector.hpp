@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/04 22:52:20 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/07 23:46:18 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,17 @@ namespace ft
 					};
 
 					template< class InputIt >
-					vector( InputIt first, InputIt last, const Allocator& alloc = Allocator(), typename ft::enable_if<!is_integral<InputIt>::value, InputIt>::type = InputIt()) :  _allocator(alloc), v(NULL)
+					vector( InputIt first, InputIt last, const Allocator& alloc = Allocator(), typename ft::enable_if<!is_integral<InputIt>::value, InputIt>::type = InputIt()) :  _allocator(alloc)
 					{
 						size_type i=0,count=0;
 						InputIt temp1=first, temp2=last;
 					
 						while (temp1 != temp2)
 						{
-							count+=1;
+							count++;
 							temp1++;
 						}
-						len = count;
-						capcity = len;
+						capcity = count;
 						v = _allocator.allocate(capcity);
 						while (first != last)
 						{
@@ -81,7 +80,21 @@ namespace ft
 							first++;
 							i++;
 						}
+						len = count;
 					};
+					
+					template<class InputIt> int ft_range( InputIt first, InputIt last, std::random_access_iterator_tag)
+					{
+						return first - last;
+					}
+					template<class InputIt> int ft_range( InputIt first, InputIt last, std::bidirectional_iterator_tag)
+					{
+						return std::distance(first, last);
+					}
+					template<class InputIt> int ft_range( InputIt , InputIt , std::input_iterator_tag)
+					{
+						return -1;
+					}
 
 					vector( const vector& other ) :  _allocator(other._allocator), v(NULL), capcity(other.capcity), len(other.len)
 					{
@@ -93,21 +106,22 @@ namespace ft
 				//----	Destructor
 					~vector()
 					{
-						_allocator.deallocate(v, capcity);
-						// this->clear();
+						clear();
+						if (v)
+							_allocator.deallocate(v, capcity);
 					};
 
 				//----	operator=
 					vector& operator=( const vector& other )
 					{
-						if (*this != other)
+						if (this != &other)
 						{
 							clear();
 							if (capcity < other.len)
 								reserve(other.len);
-							len = other.len;
 							if (v)
-								_allocator.deallocate(v, len);
+								_allocator.deallocate(v, capcity);
+							len = other.len;
 							v = _allocator.allocate(capcity);
 							for (size_type i=0; i < len; i++)
 								_allocator.construct(v+i, other.v[i]);
@@ -265,7 +279,8 @@ namespace ft
 									_allocator.construct(temp_v+i, v[i]);
 								temp_len = len;
 								clear();
-								_allocator.deallocate(v, capcity);
+								if (v)
+									_allocator.deallocate(v, capcity);
 								len = temp_len;
 								v = temp_v;
 								capcity = new_cap;
@@ -292,16 +307,11 @@ namespace ft
 						{
 							size_type index = pos - begin();
 
-							// if (capcity < len+1)
-							// 	throw std::length_error("bad_alloc");
-							if (len == 0)
-								reserve(1);
-							if (len + 1 > capcity)
-								reserve(len*2);
-							for (size_type i=len; i > index; i--)
-								_allocator.construct(v+i, v[i-1]);
-							_allocator.construct(v+index, value);
-							len++;
+							push_back(value);
+							value_type temp = v[len-1];
+							for (size_type i=len-1; i > index; i--)
+								v[i] = v[i-1];
+							v[index] = temp;
 							return iterator(v+index);
 						};
 						void insert( iterator pos, size_type count, const T& value )
@@ -350,19 +360,29 @@ namespace ft
 							size_type index = pos - begin();
 
 							_allocator.destroy(v+index);
-							for (size_type i=index; i < len; i++)
-								_allocator.construct(v+i, v[i+1]);
+							_allocator.construct(v+index, v[index+1]);
+							for (size_type i=index+1; i < len-1; i++)
+								v[i] = v[i+1];
+							_allocator.destroy(v+(len-1));
 							len--;
-							return iterator(v+index);
+							return pos;
 						};
+					
 						iterator erase( iterator first, iterator last )
 						{
 							size_type range = last - first, start = first - begin();
 
-							for (size_type i=start; i < len; i++)
+							for (size_type i=0; (i < range && i < len); i++)
 							{
-								_allocator.construct(v+start, v[start+range]);
-								_allocator.destroy(v+start+range);
+								_allocator.destroy(v+start+i);
+								if (start+range+i < len)
+									_allocator.construct(v+i+start, v[i+start+range]);
+							}
+							for (size_type i=start+range; i < len; i++)
+							{
+								_allocator.destroy(v+i);
+								if (range+i < len)
+									_allocator.construct(v+i, v[i+range]);
 							}
 							len-=range;
 							return iterator(v+start);
