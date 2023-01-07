@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 11:45:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/04 22:56:40 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/07 23:52:55 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,5 +287,6 @@ int main()
 
     std::cout << "* Stack Relational Operators" << std::endl;
     stackRelationalOperators();
+	
 	return 0;
 }
