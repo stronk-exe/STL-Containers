@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:59:24 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/01 17:02:39 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/07 22:43:28 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace ft
         struct integral_constant {
             static const T  value = v;
             typedef T       value_type;
-            typedef integral_constant<T, v>    type; // using injected-class-name
+            typedef integral_constant<T, v>    type;
             operator T() { return value; }
         };
 
@@ -43,9 +43,6 @@ namespace ft
         template <> struct is_integral<char> : public integral_constant<char, true> {};
         template <> struct is_integral<signed char> : public integral_constant<signed char, true> {};
         template <> struct is_integral<unsigned char> : public integral_constant<unsigned char, true> {};
-        // template <> struct is_integral_type<wchar_t> : public integral_constant<wchar_t, true> {};
-        // template <> struct is_integral_type<char16_t> : public integral_constant<char16_t, true> {};
-        // template <> struct is_integral_type<char32_t> : public integral_constant<char32_t, true> {};
 
         template <> struct is_integral<bool> : public integral_constant<bool, true> {};
 }

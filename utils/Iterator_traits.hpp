@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 10:33:44 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/28 12:35:39 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/07 22:44:00 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 #define ITERATOR_TRAITS_HPP
 
 #include <iterator>
-// #include "../map/map.hpp"
-// #include "vector_Iterators.hpp"
-// #include "utils.hpp"
 #include <iostream>
 #include <cstddef>
 
