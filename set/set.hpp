@@ -6,17 +6,15 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:00:45 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/06 22:34:41 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/07 23:13:14 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SET_HPP
 #define SET_HPP
 
-// #include "../map/map.hpp"
-#include "../map/RBtree.hpp"
-#include "../map/RBiterators.hpp"
-// #include "../utils/exceptions.hpp"
+#include "../utils/RBtree.hpp"
+#include "../utils/RBiterators.hpp"
 #include <iostream>
 #include <cstddef>
 
@@ -48,16 +46,10 @@ namespace ft
 			key_compare						_key_comp;
 			val_comp						val_cmp;
 			RBtree<value_type, val_comp>	rbt;
-			// size_type		len;
 
 		public:
 			// >> Member functions
 				//----	Constructors
-					// map() : _allocator(), _key_comp() , val_comp(), rbt()
-					// {
-					// 	std::cout << "map default constractor called" << std::endl;
-					// };
-					// explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) : _allocator(alloc), _key_comp(comp) , val_comp(value_comp()), rbt(_allocator)
 					explicit set( const key_compare& comp=key_compare(), const allocator_type& alloc = allocator_type() ) : _allocator(alloc), _key_comp(comp) , val_cmp(comp), rbt(_allocator) {};
 					
                     template< class InputIt > set( InputIt first, InputIt last, const Compare& comp = Compare(), const Alloc& alloc = Alloc() ) : _allocator(alloc), _key_comp(comp), val_cmp(comp), rbt(_allocator)
@@ -80,7 +72,6 @@ namespace ft
 							val_cmp = other.val_cmp;
 							rbt = other.rbt;
 						}
-						// std::cout << "map assignement operator called" << std::endl;
 						return *this;
 					};
 
@@ -168,7 +159,7 @@ namespace ft
 							return rbt.insert(pos, value);
 						};
 
-						template< class InputIt >void insert( InputIt first, InputIt last /*, typename_sh*tt*/)
+						template< class InputIt >void insert( InputIt first, InputIt last )
 						{
 							return rbt.insert(first, last);
 						};
@@ -261,14 +252,6 @@ namespace ft
 						{
 							return val_cmp;
 						};
-
-			// >> Non-member functions
-				//	operator==
-				//	operator!=
-				//	operator<
-				//	operator<=
-				//	operator>
-				//	operator>=
 	};
 
 	// >> Non-member functions
