@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:47 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/07 23:43:52 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:43:05 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ namespace ft
             {
                 return _node->data;
             };
+        
             pointer	operator->()
             {
                 return &_node->data;

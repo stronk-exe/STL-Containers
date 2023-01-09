@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 18:40:21 by ael-asri          #+#    #+#             */
-/*   Updated: 2022/12/26 17:32:46 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:42:12 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 namespace ft
 {
-	class invalidIndex : public std::exception
+	class invalidIndex :  public std::exception
 	{
 		public:
 			const char *what() const throw() { return "invalid Index!"; };

@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 10:33:44 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/07 22:44:00 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:42:20 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 namespace ft
 {
-
 	struct input_iterator_tag { };
 
 	struct output_iterator_tag { };

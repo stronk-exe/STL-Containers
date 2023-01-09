@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/07 23:44:41 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:43:45 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,6 @@ namespace ft
                     if (this != &other)
                     {
                         clear();
-                        if (_nil != NULL)
-                        {
-                            _allocator.destroy(_nil);
-                            _allocator.deallocate(_nil, 1);
-                            _nil = NULL;
-                        }
                         _allocator = other._allocator;
                         new_empty_node();
                         copy_tree(other._root, other._nil);
@@ -81,12 +75,6 @@ namespace ft
                 ~RBtree()
                 {
                     clear();
-                    if (_nil != NULL)
-                    {
-                        _allocator.destroy(_nil);
-                        _allocator.deallocate(_nil, 1);
-                        _nil = NULL;
-                    }
                 }
 
                 
@@ -151,6 +139,7 @@ namespace ft
                         return;
                     delete_node(pos.get_itnode());
                 }
+            
                 size_type erase( const value_type &value )
                 {
                     pointer n = search(value);
@@ -273,20 +262,6 @@ namespace ft
                         return const_iterator(&_root, successor(x), _nil);
                     return const_iterator(&_root, x, _nil);
                 };
-                pointer successor( pointer x ) const
-                {
-                    if (x == _nil)
-                        return x;
-                    if (x->right != _nil)
-                        return min_element(x->right);
-                    pointer y = x->parent;
-                    while (y != _nil && x == y->right)
-                    {
-                        x = y;
-                        y = y->parent;
-                    }
-                    return y;
-                }
 
                 ft::pair<iterator,iterator> equal_range( const value_type &value )
                 {
@@ -412,15 +387,30 @@ namespace ft
                         printHelper(_root, "", true);
                     }
                 }
+                
+                pointer successor( pointer x ) const
+                {
+                    if (x == _nil)
+                        return x;
+                    if (x->right != _nil)
+                        return min_element(x->right);
+                    pointer y = x->parent;
+                    while (y != _nil && x == y->right)
+                    {
+                        x = y;
+                        y = y->parent;
+                    }
+                    return y;
+                }
 
                 pointer new_node( const value_type &value )
                 {
                     pointer n = _allocator.allocate(1);
+                    _allocator.construct(n, nvalue_type(value));
                     n->parent = _nil;
                     n->left = _nil;
                     n->right = _nil;
                     n->color = M_RED;
-                    n->data = value;
                     len++;
                     return n;
                 }
@@ -616,7 +606,7 @@ namespace ft
                     ft_destroy(n->left);
                     ft_destroy(n->right);
                     _allocator.destroy(n);
-                    _allocator.deallocate(n,1);
+                    _allocator.deallocate(n, 1);
                     len--;
                 }
         
@@ -648,6 +638,8 @@ namespace ft
                         node = node->left;
                     return node;
                 }
+
+                
     };
 }
 
