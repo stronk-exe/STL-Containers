@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:12:15 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/04 22:56:14 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:32:46 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ namespace ft
 						{
 							return s.back();
 						};
+					
 						const value_type& top() const
 						{
 							return s.back();
