@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:23:00 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/07 23:46:18 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:30:20 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,6 @@ namespace ft
 						}
 						len = count;
 					};
-					
-					template<class InputIt> int ft_range( InputIt first, InputIt last, std::random_access_iterator_tag)
-					{
-						return first - last;
-					}
-					template<class InputIt> int ft_range( InputIt first, InputIt last, std::bidirectional_iterator_tag)
-					{
-						return std::distance(first, last);
-					}
-					template<class InputIt> int ft_range( InputIt , InputIt , std::input_iterator_tag)
-					{
-						return -1;
-					}
 
 					vector( const vector& other ) :  _allocator(other._allocator), v(NULL), capcity(other.capcity), len(other.len)
 					{

@@ -6,7 +6,7 @@
 #    By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/10 13:34:48 by ael-asri          #+#    #+#              #
-#    Updated: 2023/01/04 22:48:52 by ael-asri         ###   ########.fr        #
+#    Updated: 2023/01/09 19:30:46 by ael-asri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS =  main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
-FLAGS = -Wall -Wextra -Werror -std=c++98
+FLAGS = -Wall -Wextra -Werror  -std=c++98
 
 all: $(NAME)
 

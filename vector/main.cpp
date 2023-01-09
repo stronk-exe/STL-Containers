@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 15:50:40 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/06 22:49:35 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:30:03 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,14 @@
 void iterator_tests()
 {
     std::cout <<"* Vector iterator tests" << std::endl;
-    /*------------ std::vector ---------*/
     std::vector<int> v(3, 4);
     std::vector<int>::iterator it, it1;
     it = v.begin();
     it1 = v.begin() + 1;
-    /*----------------------------------*/
-    /*------------ ft::vector ---------*/
     ft::vector<int> my_v(3, 4);
     ft::vector<int>::iterator my_it, my_it1, tmp;
     my_it = my_v.begin();
     my_it1 = my_v.begin() + 1;
-    /*----------------------------------*/
     std::cout <<"	copy constructor ---	                ";
     {
         ft::vector<int>::iterator ob(my_it);
