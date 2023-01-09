@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/09 19:33:49 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:37:20 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ bool testmapConstructors()
 
 void iterator_tests(void)
 {
-    /*------------ std::map ---------*/
     std::map<int, char> m;
     std::map<int, char>::iterator it, it1;
 

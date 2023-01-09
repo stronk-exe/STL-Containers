@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/09 19:34:00 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:37:10 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,7 +269,7 @@ namespace ft
 						};
 
 					private:
-						void printTree() {
+						void	printTree() {
 							rbt.printRBtree();
 						}
 	};
