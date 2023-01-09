@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:44:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/07 23:42:22 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:34:00 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include "../utils/RBtree.hpp"
+#include "../utils/RBnode.hpp"
 
 namespace ft
 {

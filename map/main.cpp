@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:11:37 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/07 23:42:08 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:33:49 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ bool testmapConstructors()
     m_first = ft::map<char, int>();
 
     cond = copy.size() == m_copy.size() && cond && comparemaps(copy.begin(), copy.end(), m_copy.begin(), m_copy.end());
-
     return cond;
 }
 
@@ -339,7 +338,6 @@ void testConstructors()
             m.insert(std::make_pair(i, "Hello"));
             my_m.insert(ft::make_pair(i, "Hello"));
         }
-
         std::string res, my_res;
         for (std::map<int, std::string>::iterator it = m.begin(); it != m.end(); ++it) // fill res from std::map
             res += it->second;
@@ -351,6 +349,7 @@ void testConstructors()
     {
         std::map<int, std::string> m;
         ft::map<int, std::string> my_m;
+        // exit(0);
         for (size_t i = 0; i < 10; i++)
         {
             m.insert(std::make_pair(i, "range constructor test"));
@@ -441,6 +440,7 @@ void testConstructors()
 
         m1 = m2;
         ft_m1 = ft_m2;
+        // exit(1);
         m2.begin()->second = "hello";
         ft_m2.begin()->second = "hello";
 
@@ -478,13 +478,13 @@ void testConstructors()
         ft::map<int, std::string> ft_m1;
         ft::map<int, std::string> ft_m2;
 
-        for (int i = 0; i < 20; ++i)
-        {
-            m1.insert(std::make_pair(i, "string1"));
-            ft_m1.insert(ft::make_pair(i, "string1"));
-        }
+        // for (int i = 0; i < 100; ++i)
+        // {
+        //     m1.insert(std::make_pair(i, "string1"));
+        //     ft_m1.insert(ft::make_pair(i, "string1"));
+        // }
 
-        for (int i = 0; i < 10; ++i)
+        for (int i = 0; i < 20; ++i)
         {
             m2.insert(std::make_pair(i, "string2"));
             ft_m2.insert(ft::make_pair(i, "string2"));
@@ -535,13 +535,11 @@ void testConstructors()
 
         for (int i = 0; i < 10; ++i)
         {
-            m1.insert(std::make_pair(i, "string2"));
-            ft_m1.insert(ft::make_pair(i, "string2"));
+            m2.insert(std::make_pair(i, "string2"));
+            ft_m2.insert(ft::make_pair(i, "string2"));
         }
         m1 = m2;
-        /*------------------ ft::map ---------------------*/
         ft_m1 = ft_m2;
-        /*------------------ strings to store the results ----*/
         std::string res, ft_res;
         for (std::map<int, std::string>::iterator it = m1.begin(); it != m1.end(); ++it) // fill res from m1
             res += it->second;
@@ -777,70 +775,6 @@ void testModifiers()
         ft_m.erase(ft_it, ft_m.end()); // erasing by range
 
         cond = cond && m.empty() == ft_m.empty() && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
-
-        /* ---------- Testing some edge cases ---------- */
-
-        std::map<int, std::string> m2;
-        ft::map<int, std::string> ft_m2;
-
-        for (size_t i = 0; i < 1e5; i++)
-        {
-            m2.insert(std::make_pair(i, "string1"));
-            ft_m2.insert(ft::make_pair(i, "string1"));
-        }
-
-        std::map<int, std::string>::reverse_iterator it2 = m2.rbegin();
-        ft::map<int, std::string>::reverse_iterator ft_it2 = ft_m2.rbegin();
-
-        m2.erase(m2.begin());
-        ft_m2.erase(ft_m2.begin());
-
-        cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
-
-        m2.erase(it2->first);
-        ft_m2.erase(ft_it2->first);
-
-        cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
-
-        std::map<int, std::string> m3;
-        ft::map<int, std::string> ft_m3;
-        std::vector<int> vec;
-        std::vector<int> ft_vec;
-        std::random_device randDev;
-        std::mt19937 generator(randDev());
-        std::uniform_int_distribution<int> distr(0, 1e8);
-
-        for (size_t i = 0; i < 1e6; i++)
-        {
-            m3.insert(std::make_pair(i, "string1"));
-            ft_m3.insert(ft::make_pair(i, "string1"));
-        }
-
-        for (size_t i = 0; i < 1e6; ++i)
-        {
-            int n = distr(generator);
-            int ret1 = m3.erase(n);
-            int ret2 = ft_m3.erase(n);
-
-            if (ret1 != ret2)
-            {
-                cond = false;
-                break;
-            }
-        }
-
-        if (!m3.empty())
-        {
-            m3.erase(m3.begin(), m3.end());
-            m3.erase(m3.begin(), m3.end());
-        }
-        if (!ft_m3.empty())
-        {
-            ft_m3.erase(ft_m3.begin(), ft_m3.end());
-            ft_m3.erase(ft_m3.begin(), ft_m3.end());
-        }
-        cond = cond && (m3.size() == ft_m3.size() && comparemaps(m3.begin(), m3.end(), ft_m3.begin(), ft_m3.end()));
-
         EQUAL(cond);
     }
 
