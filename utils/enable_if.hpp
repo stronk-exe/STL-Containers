@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:59:24 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/09 19:41:32 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:45:09 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ namespace ft
         };
 
         template <typename T> struct is_integral : public integral_constant<bool, false> {};
+
         template <> struct is_integral<int> : public integral_constant<int, true> {};
         template <> struct is_integral<unsigned int> : public integral_constant<unsigned int, true> {};
         template <> struct is_integral<short> : public integral_constant<short, true> {};

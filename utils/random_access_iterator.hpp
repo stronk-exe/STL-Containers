@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 13:32:38 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/09 19:42:48 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:44:50 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ namespace ft
 				return p >= it.p;
 			}
 	};
+
 	// >> Non-member functions
 		//	operator+=
 		template< class T > ft::random_access_iterator<T> operator+( typename ft::random_access_iterator<T>::difference_type d, typename ft::random_access_iterator<T> &it )

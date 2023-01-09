@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:00:32 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/09 19:43:45 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:44:42 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ namespace ft
                         return;
                     delete_node(pos.get_itnode());
                 }
-            
                 size_type erase( const value_type &value )
                 {
                     pointer n = search(value);
