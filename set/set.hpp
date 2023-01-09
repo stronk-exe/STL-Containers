@@ -6,7 +6,7 @@
 /*   By: ael-asri <ael-asri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:00:45 by ael-asri          #+#    #+#             */
-/*   Updated: 2023/01/07 23:13:14 by ael-asri         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:39:10 by ael-asri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,13 +255,13 @@ namespace ft
 	};
 
 	// >> Non-member functions
-		//	operator==
-			template< class Key, class Compare, class Alloc > bool operator==( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
-			{
-				if (lhs.size() != rhs.size())
-					return false;
-				return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
-			};
+			//	operator==
+				template< class Key, class Compare, class Alloc > bool operator==( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
+				{
+					if (lhs.size() != rhs.size())
+						return false;
+					return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+				};
 
 			//	operator!=
 				template< class Key, class Compare, class Alloc > bool operator!=( const ft::set<Key,Compare,Alloc>& lhs, const ft::set<Key,Compare,Alloc>& rhs )
